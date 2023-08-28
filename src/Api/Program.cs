@@ -15,12 +15,37 @@ builder.Services.AddAuthentication("Bearer")
         options.TokenValidationParameters.ValidateAudience = false;
     });
 builder.Services.AddAuthorization(options =>
-    options.AddPolicy("ApiScope", policy =>
+{
+    options.AddPolicy(PolicyConstants.ApiScope, policy =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "api1");
-    })
-);
+    });
+
+    options.AddPolicy(PolicyConstants.CanViewEmployeesScope, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("canViewEmployees", "true");
+    });
+
+    options.AddPolicy(PolicyConstants.CanAmendEmployeeScope, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("canAmendEmployee", "true");
+    });
+
+    options.AddPolicy(PolicyConstants.CanViewProductsScope, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("canViewProducts", "true");
+    });
+
+    options.AddPolicy(PolicyConstants.CanAmendProductScope, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("canAmendProduct", "true");
+    });
+});
 
 var app = builder.Build();
 
