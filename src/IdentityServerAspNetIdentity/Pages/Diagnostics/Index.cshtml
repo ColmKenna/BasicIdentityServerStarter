@@ -6,14 +6,13 @@
         <h1>Authentication Cookie</h1>
     </div>
 
-    <div class="row">
-        <div class="col">
+    <div class="card-container">
             <div class="card">
                 <div class="card-header">
                     <h2>Claims</h2>
                 </div>
                 <div class="card-body">
-                    <dl>
+                    <dl class="card-dl-content">
                         @foreach (var claim in Model.View.AuthenticateResult.Principal.Claims)
                         {
                             <dt>@claim.Type</dt>
@@ -21,16 +20,14 @@
                         }
                     </dl>
                 </div>
-            </div>
         </div>
         
-        <div class="col">
             <div class="card">
                 <div class="card-header">
                     <h2>Properties</h2>
                 </div>
                 <div class="card-body">
-                    <dl>
+                    <dl class="card-dl-content">
                         @foreach (var prop in Model.View.AuthenticateResult.Properties.Items)
                         {
                             <dt>@prop.Key</dt>
@@ -55,7 +52,6 @@
                         }
                     </dl>
                 </div>
-            </div>
         </div>
     </div>
 </div>
