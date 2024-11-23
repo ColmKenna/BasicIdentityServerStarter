@@ -7,37 +7,34 @@
     }
 }
 
-<div class="nav-page">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
 
-        <a href="~/" class="navbar-brand">
-            <img src="~/duende-logo.svg" class="icon-banner">
-            Duende IdentityServer
-        </a>
+        <div id="burgerMenu" class="burger-menu">
+            &#9776; <!-- This is the burger icon -->
+        </div>
+        <ul id="nav2" class="dropdown-menu dropdown-menu-right">
+            <li>
+                <a href="#" class="dropdown-toggle closed "><i class="fa-regular fa-circle-user"></i><span>@name</span> </a>
+                <ul>
+                    @if (!string.IsNullOrWhiteSpace(name))
+                    {
 
-        @if (!string.IsNullOrWhiteSpace(name))
-        {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@name <b class="caret"></b></a>
-                    
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-page="/Account/Logout/Index">Logout</a>
-                    </div>
-              </li>
-            </ul>
-        }
-        else
-        {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-page="/Account/Register/Index">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-page="/Account/Login/Index">Login</a>
-                </li>
-            </ul>
-        }
-    
+                        <li>
+                            <a class="dropdown-item" asp-page="/Account/Logout/Index">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-page="/Account/Register/Index">Register</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-page="/Account/Login/Index">Login</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+
+        </ul>
+
     </nav>
-</div>

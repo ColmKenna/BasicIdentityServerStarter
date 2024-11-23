@@ -1,204 +1,229 @@
-﻿
-.nav-page .navbar {
-    padding: 5px 10px;  /* Reduced padding */
+@charset "UTF-8";
+.logged-out-page iframe {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
-.nav-page .navbar-brand img.icon-banner {
-    width: 40px;  /* Reduced width of the logo */
-    height: auto;  /* Maintain aspect ratio */
+.grants-page .card {
+  margin-top: 20px;
+  border-bottom: 1px solid lightgray;
 }
-
-.nav-page .navbar-brand {
-    font-size: 16px;  /* Reduced font size of the brand name */
-    margin-left: 5px;  /* Add some space after the logo */
+.grants-page .card .card-title {
+  font-size: 120%;
+  font-weight: bold;
 }
-
-/* General styling */
-::-webkit-scrollbar {
-    width: 15px;
+.grants-page .card .card-title img {
+  width: 100px;
+  height: 100px;
 }
-
-::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #007bff;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #007bff;
+.grants-page .card label {
+  font-weight: bold;
 }
 
 body {
-    scrollbar-width: thin;
-    scrollbar-color: #007bff #f4f4f4;
+  background-color: #FFF;
+  color: #000;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "nav" "main";
+  grid-template-rows: 80px 1fr;
 }
 
-/* Pages styling */
-.welcome-page .logo,
-.icon-banner {
-    width: 64px;
+main {
+  grid-area: main;
+  padding: 1rem;
+  background-color: #e9ecef;
+  overflow-x: scroll;
 }
 
-.welcome-page li {
-    list-style: none;
-    padding: 4px;
+/* Nav Section */
+nav {
+  grid-area: nav;
+  background-color: #2d2d2d;
+  color: #E7E7E7;
+  display: grid;
+  grid-template-areas: "logo burger title right-dropdown-menu";
+  grid-template-columns: 90px 1fr 1fr 150px;
 }
 
-.body-container {
-    margin-top: 60px;
-    padding-bottom: 40px;
+.logo {
+  grid-area: logo;
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 90px;
 }
 
-.logged-out-page iframe {
-    display: none;
-    width: 0;
-    height: 0;
+.title {
+  grid-area: title;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
 }
 
-/* Grants page styling */
-.grants-page .card {
-    margin-top: 20px;
-    border-bottom: 1px solid lightgray;
+.dropdown-menu {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding-inline-start: 10px;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.dropdown-menu li {
+  flex: 1;
+  position: relative;
+  background-color: #2d2d2d;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.dropdown-menu li a {
+  height: 100%;
+  align-content: center;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding-right: 25px;
+  color: inherit;
+  background-color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+.dropdown-menu li a:hover {
+  background-color: #8E8E8E;
+}
+.dropdown-menu li a.dropdown-toggle::after {
+  content: "▲";
+  position: absolute;
+  right: 10px;
+  font-size: 12px;
+}
+.dropdown-menu li a.dropdown-toggle.closed::after {
+  content: "▼";
+}
+.dropdown-menu ul {
+  padding-inline-start: 10px;
+  list-style: none;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding-left: 0;
+  width: 200px;
+  position: absolute;
+}
+.dropdown-menu ul.show {
+  opacity: 1;
+}
+.dropdown-menu ul ul {
+  position: absolute;
+  left: 200px;
+  top: 0;
+  z-index: 2000;
+}
+.dropdown-menu.dropdown-menu-right {
+  grid-area: right-dropdown-menu;
+  align-self: center;
+  height: 100%;
+}
+.dropdown-menu.dropdown-menu-right > li {
+  display: flex;
+  justify-content: flex-end;
+}
+.dropdown-menu.dropdown-menu-right > li > a {
+  justify-content: flex-end;
+}
+.dropdown-menu.dropdown-menu-right > li > ul {
+  position: fixed;
+  width: 200px;
+  top: 80px;
+  box-sizing: content-box;
 }
 
-.grants-page .card .card-title {
-    font-size: 120%;
+@media screen and (max-width: 1024px) {
+  .burger-menu {
+    grid-area: burger;
+    display: block;
+    padding: 10px 20px;
     font-weight: bold;
-}
-
-.grants-page .card .card-title img,
-.icon-banner {
-    width: 64px;
-    height: 100px;
-}
-
-.grants-page .card label {
-    font-weight: bold;
-}
-
-/* List group styling */
-.list-group-item {
-    align-items: center;
-    justify-content: center;
-}
-
-.list-group-item input {
-    padding: 6px;
-}
-
-
-
-.client-tab .tab-pane {
-    height: 15rem;
-}
-
-.tab-content {
-    height: 410px;
-    margin-bottom: 10px;
-}
-.tab-pane{
-    height: 100%;
-    padding: 20px; /* Add padding around the content */
-    border: 1px solid #eaeaea; /* Add a subtle border */
-    background-color: #fbfbfb; /* A light background color */
-    overflow: auto;
-}
-.nav-tabs {
-    border: none;
-}
-
-/* Details tab styling */
-#users-tab {
-
-}
-
-#users-tab label, #users-tab strong {
-    display: inline-block; /* Use inline-block for labels and strong tags */
-    width: 150px; /* Set a fixed width for alignment */
-    margin-bottom: 10px; /* Add some space below each label */
-}
-
-#users-tab input[type="text"], #users-tab input[type="email"], #users-tab input[type="color"] {
-    width: 100%; /* Make input fields take up full width */
-    box-sizing: border-box; /* Include padding and border in the input's total width */
-    margin-bottom: 10px; /* Add some space below each input field */
-}
-dl {
+    cursor: pointer;
+    font-size: large;
+    align-self: center;
+  }
+  .dropdown-menu {
+    flex-direction: column;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    max-height: 500px;
+    overflow: hidden;
+  }
+  .dropdown-menu li {
+    border-top: 1px solid #CCC;
+  }
+  .dropdown-menu li:first-child {
+    border-top: none;
+  }
+  .dropdown-menu ul {
+    padding-left: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .dropdown-menu ul.show {
+    max-height: 500px;
+  }
+  .dropdown-menu ul ul {
+    position: relative;
+    left: 0;
+    width: 100%;
+    padding-left: 10px;
     margin: 0;
-}
-
-dt {
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-dd {
-    margin-left: 20px;
-    margin-bottom: 8px;
-}
-
-.detail-row {
-    display: flex;       /* Use flexbox for layout */
-    align-items: center; /* Vertically align the content in the center */
-    justify-content: start; /* Align content to the start of the container */
-    margin-bottom: 10px; /* Space between rows */
-}
-
-dt {
-    margin-right: 10px; /* Add some space between dt and dd */
-    flex: 0 0 30%;      /* flex-grow, flex-shrink, flex-basis */
-}
-
-dd {
-    flex: 1;            /* Let dd take up the rest of the space */
-}
-/* For smaller screens, let's assume below 768px which is a typical breakpoint for tablets and mobile devices */
-@media (max-width: 767px) {
-    .detail-row {
-        flex-direction: column; /* Stack the children vertically */
-    }
-
-    dt, dd {
-
-        margin-left: 0;
-        flex: none; /* Remove flex sizing */
-        width: 100%; /* Take up the full width of the container */
-        margin-right: 0; /* Reset the margin */
-    }
-}
-
-.detail-title, .detail-desc {
-    width: 30%;
-    display: inline-block;
-}
-
-.detail-desc {
-    width: 70%;
-}
-
-.list-group-item {
+    box-sizing: border-box;
+    border: none;
+  }
+  .dropdown-menu ul a.dropdown-toggle::after {
+    content: "▲";
+  }
+  .dropdown-menu ul a.dropdown-toggle.closed::after {
+    content: "▼";
+  }
+  .dropdown-menu-right {
     flex-direction: row;
-    justify-content: left;
+  }
+  .dropdown-menu-right li {
+    justify-content: flex-end;
+  }
+  .dropdown-menu-right li a {
+    justify-content: flex-end;
+  }
+  .dropdown-menu-right li a span {
+    display: inline-block;
+    transition: max-width 0.5s ease;
+    max-width: 150px;
+    float: right;
+    overflow: hidden;
+  }
+  .dropdown-menu-right li a.closed span {
+    max-width: 0;
+    overflow: hidden;
+  }
+  .dropdown-menu-right li ul {
+    top: 98px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .hidden-small {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
 }
 
-@media (max-width: 767px) {
-
-    /* CSS for small screens by default */
-    .detail-title, .detail-desc {
-        width: 100%;
-        display: block;
-    }
-
-    .list-group-item {
-        display: flex;
-        flex-direction: column;
-    }
-    .detail-title{
-        font-weight: bold;
-    }
-    
-}
+/*# sourceMappingURL=site.css.map */
