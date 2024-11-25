@@ -1,0 +1,49 @@
+﻿$color-white: #fff;
+$color-light-grey: #f8f9fa;
+$color-border: #dee2e6;
+$color-striped: #f2f2f2;
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: $color-white;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  th,
+  td {
+    padding: 0.5rem;
+    vertical-align: top;
+  }
+
+  th {
+    text-align: left;
+    background-color: $color-light-grey;
+    border-bottom: 2px solid $color-border;
+  }
+}
+
+.table-bordered {
+  border: 1px solid $color-border;
+
+  th,
+  td {
+    border: 1px solid $color-border;
+  }
+}
+
+.table-striped {
+  tbody {
+    tr:nth-of-type(odd) {
+      background-color: $color-striped;
+    }
+  }
+}
+
+.table-sm {
+  th,
+  td {
+    padding: 0.3rem;
+  }
+}
