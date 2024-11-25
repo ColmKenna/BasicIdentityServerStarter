@@ -24,26 +24,21 @@
         foreach (var grant in Model.View.Grants)
         {
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-8 card-title">
-                            @if (grant.ClientLogoUrl != null)
-                            {
-                                <img src="@grant.ClientLogoUrl">
-                            }
-                            <strong>@grant.ClientName</strong>
-                        </div>
+                <div class="card-header with-button">
+                    
+                        @if (grant.ClientLogoUrl != null)
+                        {
+                            <img class="card-icon" src="@grant.ClientLogoUrl">
+                        }
+                        <strong class="card-title">@grant.ClientName</strong>
 
-                        <div class="col-sm-2">
-                            <form asp-page="/Grants/Index">
-                                <input type="hidden" name="clientId" value="@grant.ClientId">
-                                <button class="btn btn-danger">Revoke Access</button>
-                            </form>
-                        </div>
-                    </div>
+                        <form asp-page="/Grants/Index" class="card-header-button">
+                            <input type="hidden" name="clientId" value="@grant.ClientId">
+                            <button class="danger-button">Revoke Access</button>
+                        </form>
                 </div>
                 
-                <ul class="list-group list-group-flush">
+                <ul class="list-group">
                     @if (grant.Description != null)
                     {
                         <li class="list-group-item">
@@ -63,7 +58,7 @@
                     {
                         <li class="list-group-item">
                             <label>Identity Grants</label>
-                            <ul>
+                            <ul class="list-group">
                                 @foreach (var name in grant.IdentityGrantNames)
                                 {
                                     <li>@name</li>
@@ -75,7 +70,7 @@
                     {
                         <li class="list-group-item">
                             <label>API Grants</label>
-                            <ul>
+                            <ul  class="list-group">
                                 @foreach (var name in grant.ApiGrantNames)
                                 {
                                     <li>@name</li>
