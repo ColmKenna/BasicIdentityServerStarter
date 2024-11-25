@@ -35,51 +35,57 @@
                         <form asp-page="/Grants/Index" class="card-header-button">
                             <input type="hidden" name="clientId" value="@grant.ClientId">
                             <button class="danger-button">Revoke Access</button>
+                            
+                            
                         </form>
                 </div>
                 
-                <ul class="list-group">
-                    @if (grant.Description != null)
-                    {
+                <div class="card-body">
+                    <h2>Permissions</h2>
+
+                    <ul class="list-group">
+                        @if (grant.Description != null)
+                        {
+                            <li class="list-group-item">
+                                <label>Description:</label> @grant.Description
+                            </li>   
+                        }
                         <li class="list-group-item">
-                            <label>Description:</label> @grant.Description
-                        </li>   
-                    }
-                    <li class="list-group-item">
-                        <label>Created:</label> @grant.Created.ToString("yyyy-MM-dd")
-                    </li>
-                    @if (grant.Expires.HasValue)
-                    {
-                        <li class="list-group-item">
-                            <label>Expires:</label> @grant.Expires.Value.ToString("yyyy-MM-dd")
+                            <label>Created:</label> @grant.Created.ToString("yyyy-MM-dd")
                         </li>
-                    }
-                    @if (grant.IdentityGrantNames.Any())
-                    {
-                        <li class="list-group-item">
-                            <label>Identity Grants</label>
-                            <ul class="list-group">
-                                @foreach (var name in grant.IdentityGrantNames)
-                                {
-                                    <li>@name</li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                    @if (grant.ApiGrantNames.Any())
-                    {
-                        <li class="list-group-item">
-                            <label>API Grants</label>
-                            <ul  class="list-group">
-                                @foreach (var name in grant.ApiGrantNames)
-                                {
-                                    <li>@name</li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                </ul>
-            </div>
+                        @if (grant.Expires.HasValue)
+                        {
+                            <li class="list-group-item">
+                                <label>Expires:</label> @grant.Expires.Value.ToString("yyyy-MM-dd")
+                            </li>
+                        }
+                        @if (grant.IdentityGrantNames.Any())
+                        {
+                            <li class="list-group-item">
+                                <label>Identity Grants</label>
+                                <ul class="list-group">
+                                    @foreach (var name in grant.IdentityGrantNames)
+                                    {
+                                        <li>@name</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (grant.ApiGrantNames.Any())
+                        {
+                            <li class="list-group-item">
+                                <label>API Grants</label>
+                                <ul  class="list-group">
+                                    @foreach (var name in grant.ApiGrantNames)
+                                    {
+                                        <li>@name</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                </div>
         }
     }
 </div>
