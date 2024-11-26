@@ -3,9 +3,31 @@
 
 <h2>All Users</h2>
 
-<ul>
+<table class="table table-bordered table-striped table-sm">
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Phone Number</th>
+        <th>Locked</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
     @foreach (var user in Model.Users)
     {
-        <li>@user.Email</li>
+        <tr class="@(user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.Now ? "bg-warning" :"")">
+            <td>@user.Email</td>
+            <td>@user.UserName</td>
+            <td>@user.PhoneNumber</td>
+            <td>@(user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.Now ? "Yes" : "No")</td>
+            <td>
+                @* create a button to link to a razor page Details in Acconts *@
+                <a href="@Url.Page("/Admin/Accounts/Details", new {id = user.Id})" class="btn btn-info">Details</a>
+                <a href="@Url.Page("/Admin/Accounts/Edit", new {id = user.Id})" class="btn btn-primary">Edit</a>
+            </td>
+
+        </tr>
     }
-</ul>
+    </tbody>
+</table>
