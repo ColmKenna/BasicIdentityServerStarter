@@ -1,7 +1,7 @@
 ﻿$color-white: #fff;
-$color-light-grey: #f8f9fa;
-$color-border: #dee2e6;
-$color-striped: #f2f2f2;
+$color-light-grey: #f0f0f0; // Updated to a lighter grey for striping effect
+$color-border: #000; // Changed to black for border
+$color-striped: #a9a9a9; // Updated for grey stripes
 
 .table {
   width: 100%;
@@ -20,23 +20,27 @@ $color-striped: #f2f2f2;
   th {
     text-align: left;
     background-color: $color-light-grey;
-    border-bottom: 2px solid $color-border;
+    border-bottom: 2px solid $color-border; // Black border
   }
 }
 
 .table-bordered {
-  border: 1px solid $color-border;
+  border: 1px solid $color-border; // Black border for table
 
   th,
   td {
-    border: 1px solid $color-border;
+    border: 1px solid $color-border; // Black border for cells
   }
 }
 
 .table-striped {
   tbody {
     tr:nth-of-type(odd) {
-      background-color: $color-striped;
+      background-color: $color-striped; // Grey stripe for odd rows
+    }
+
+    tr:nth-of-type(even) {
+      background-color: $color-white; // White stripe for even rows
     }
   }
 }
