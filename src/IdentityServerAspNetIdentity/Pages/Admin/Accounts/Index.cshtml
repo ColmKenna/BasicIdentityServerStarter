@@ -3,7 +3,7 @@
 
 <h2>All Users</h2>
 
-<table class="table table-bordered table-striped table-sm">
+<table class="table table-bordered table-striped table-sm table-responsive">
     <thead>
     <tr>
         <th>Email</th>
@@ -21,10 +21,10 @@
             <td>@user.UserName</td>
             <td>@user.PhoneNumber</td>
             <td>@(user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.Now ? "Yes" : "No")</td>
-            <td>
+            <td class="button-container">
                 @* create a button to link to a razor page Details in Acconts *@
-                <a href="@Url.Page("/Admin/Accounts/Details", new {id = user.Id})" class="btn btn-info">Details</a>
-                <a href="@Url.Page("/Admin/Accounts/Edit", new {id = user.Id})" class="btn btn-primary">Edit</a>
+                <info-link href="@Url.Page("/Admin/Accounts/Details", new {id = user.Id})" size="Small" >Details</info-link>
+                <primary-link href="@Url.Page("/Admin/Accounts/Edit", new {id = user.Id})" size="Small">Edit</primary-link>
             </td>
 
         </tr>
