@@ -8,6 +8,9 @@ $color-danger-disabled: lighten($color-danger, 20%);
 $primary-color: #0056b3;
 $primary-hover-color: #004494;
 
+$info-colour: #17a2b8;
+$info-colour-hover: #138496;
+
 // Common button styles
 @mixin button-styles($bg-color, $hover-bg-color, $text-color: $color-white) {
     display: inline-block;
@@ -22,6 +25,7 @@ $primary-hover-color: #004494;
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    
 
     &:hover {
         background-color: $hover-bg-color;
@@ -53,7 +57,22 @@ $primary-hover-color: #004494;
 // Primary button
 .primary-button {
     @include button-styles($primary-color, $primary-hover-color);
-    padding: 10px 20px;
-    font-size: 14px;
-    margin: 4px 2px;
 }
+
+// Info button
+.info-button {
+    @include button-styles($info-colour, $info-colour-hover);
+}
+
+.btn-small {
+    padding: 0.3rem 0.75rem;
+}
+
+.btn-medium {
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+}
+
