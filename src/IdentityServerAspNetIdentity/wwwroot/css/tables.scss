@@ -1,7 +1,7 @@
 ﻿$colour-white: #fff;
-$colour-light-grey: #f0f0f0; 
-$colour-border: #000; 
-$colour-striped: #a9a9a9; 
+$colour-light-grey: #f0f0f0;
+$colour-border: #000;
+$colour-striped: #a9a9a9;
 
 .table {
   width: 100%;
@@ -20,18 +20,44 @@ $colour-striped: #a9a9a9;
   th {
     text-align: left;
     background-color: $colour-light-grey;
-    border-bottom: 2px solid $colour-border; // Black border
+    border-bottom: 2px solid $colour-border; // Black border    
   }
+
+  @media screen and (max-width: 600px) {
+    td {
+      padding: 0.1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    tr {
+      padding: 0.25rem;      
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid $colour-border; // Black border
+    }
+
+    thead {
+      display: none;
+    }
+  }
+
+
 }
 
 .table-bordered {
   border: 1px solid $colour-border; // Black border for table
 
-  th,
-  td {
-    border: 1px solid $colour-border; // Black border for cells
+  th {
+    border-bottom: 1px solid $colour-border; // Black border for cells
   }
 }
+
+.table.table-column-bordered {
+  th, td {
+    border-left: 1px solid $colour-border; // Black border for cells
+  }
+}
+
 
 .table-striped {
   tbody {
@@ -45,11 +71,35 @@ $colour-striped: #a9a9a9;
   }
 }
 
+.table tr td {
+  padding-top: 1.0rem;
+  padding-bottom: 1.0rem;
+  vertical-align: middle;
+}
+
 .table-sm {
   th,
   td {
     padding: 0.3rem;
   }
 }
-tr{
+
+td label.small-screen-only{
+    display: none;
+    @media screen and (max-width: 600px) {
+      display: block;
+      font-weight: bold;
+      margin-right: 5px;     
+    }
+}
+
+
+td.button-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  
+   > * {     
+    flex: 1;
+   }
 }
