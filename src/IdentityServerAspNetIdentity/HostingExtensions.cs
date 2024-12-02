@@ -184,6 +184,8 @@ internal static class HostingExtensions
                 options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
             });
 
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IClaimsRepository, ClaimsRepository>();
         builder.Services.AddScoped<IScriptHolder,ScriptHolder>();
         builder.Services.AddScoped<IEmailSender, EmailSenderConsole>();
 
