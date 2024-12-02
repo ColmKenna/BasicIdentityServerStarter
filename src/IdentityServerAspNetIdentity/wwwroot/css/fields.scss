@@ -1,0 +1,22 @@
+﻿.field-container {
+    margin-bottom: 20px;
+    width: 50%;
+    padding-left: 10px;
+    box-sizing: border-box;
+
+    >strong {
+        width: 40%;
+        display: inline-block;
+        // smallest screens
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+    }
+    
+    
+        
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
