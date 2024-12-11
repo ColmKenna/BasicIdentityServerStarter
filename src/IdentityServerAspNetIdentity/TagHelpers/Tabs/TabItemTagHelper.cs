@@ -12,7 +12,7 @@ public class TabItemTagHelper : TagHelper
     {
         // Generate header and content
         var headerHtml = $@"
-            <button class='tab-link' data-ck-tab-target='{TabId}'>{Header}</button>";
+            <button type=""button"" class='tab-link' data-ck-tab-target='{TabId}'>{Header}</button>";
         var contentHtml = $@"
             <div id='{TabId}' class='tab'>
                 <div class='tab-content'>
