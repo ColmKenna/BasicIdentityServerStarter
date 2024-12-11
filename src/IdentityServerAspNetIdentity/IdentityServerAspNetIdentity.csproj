@@ -32,6 +32,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Pages\Components\Tab\" />
+	  <Folder Include="Pages\Components\UserClaims\" />
+	  <Folder Include="Pages\Shared\Components\ClaimEdit\" />
 	  <Folder Include="Pages\Shared\Components\List\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
