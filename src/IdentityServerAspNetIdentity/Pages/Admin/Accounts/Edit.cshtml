@@ -1,0 +1,265 @@
+﻿@page
+@using IdentityServerAspNetIdentity.Pages.Components.ClaimEdit
+@using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IdentityServerAspNetIdentity.Pages.Admin.Accounts.Edit
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit User</h2>
+
+<form method="post">
+
+    <tab>
+        <tab-item header="Details" tab-id="details">
+            <input type="hidden" asp-for="Id" value="@Model.Id"/>
+            <input type="hidden" asp-for="User.Id" value="@Model.User.Id"/>
+            <input type="hidden" asp-for="User.PhoneNumberConfirmed" value="@Model.User.PhoneNumberConfirmed"/>
+            <input type="hidden" asp-for="User.TwoFactorEnabled" value="@Model.User.TwoFactorEnabled"/>
+            <input type="hidden" asp-for="User.LockoutEnabled" value="@Model.User.LockoutEnabled"/>
+            <input type="hidden" asp-for="User.LockoutEnd" value="@Model.User.LockoutEnd"/>
+            <input type="hidden" asp-for="User.AccessFailedCount" value="@Model.User.AccessFailedCount"/>
+
+            <!-- Display user details -->
+            <form-row for="User.UserName"> </form-row>
+            <form-row for="User.Email"></form-row>
+            <form-row for="User.PhoneNumber"></form-row>
+
+
+        </tab-item>
+        <tab-item header="Roles" tab-id="roles">
+            <div id="selection-container" class="check-selection-container">
+                @foreach (var role in Model.AllRoles)
+                {
+                    <selection-item name="User.Roles[]" value="@role" checked="@Model.User.Roles.Contains(role)"></selection-item>
+                }
+                <button type="button" class="secondary-button" data-ck-modal-target="addRoleModal">Add Role</button>
+                <template id="addNewRoleTemplate">
+                    <selection-item name="User.Roles[]" value="" checked="true"></selection-item>
+                </template>
+
+            </div>
+        </tab-item>
+        <tab-item header="Claims" tab-id="claims">
+            <template id="addClaimTemplate">
+                @{
+                    var templateIndex = -1;
+                    var templateClaim = new IdentityDataModels.UserClaimSummary();
+                    templateClaim.UserId = Model.User.Id;
+                }
+                <vc:claim-edit index=templateIndex claim=templateClaim></vc:claim-edit>
+            </template>
+            <div id="existing-claims">
+                @for (int i = 0; i < Model.User.UserClaims.Count; i++)
+                {
+                    var claim = Model.User.UserClaims[i];
+                    <vc:claim-edit index="@i" claim="@claim"></vc:claim-edit>
+                }
+            </div>
+            <div id="available-claims" class="with-divider add-claim-row">
+                <select id="available-claims-select" class="form-options">
+                    @foreach (var claim in Model.AvailableClaims)
+                    {
+                        <option value="@claim.ClaimType">@claim.ClaimType</option>
+                    }
+                </select>
+                <input type="text" id="input-claim-value" class="form-input">
+                <button type="button" class="add-icon-button" onclick="addNewClaimFromList()"></button>
+            </div>
+
+            <div class="create-new-claim-row">
+                <button type="button" class="secondary-button" data-ck-modal-target="addClaimModal">Create new claim
+                </button>
+                <!-- Hidden input to store the list of removed claims -->
+                <input type="hidden" id="ClaimsDeleted" name="ClaimsDeleted" value=""/>
+            </div>
+
+        </tab-item>
+    </tab>
+
+
+    <div class="button-container">
+        <button type="submit" class="primary-button">Save</button>
+        <a asp-page="/Admin/Accounts/Details" asp-route-id="@Model.User.Id" class="secondary-button">Cancel</a>
+    </div>
+</form>
+
+@{
+    var modalViewModel = new ModalViewModel(
+        "addClaimModal",
+        "Add New Claim",
+        "Enter the following information:",
+        "Add Claim",
+        "Close",
+        "addNewClaim",
+        new("claimTypeInput", "Claim Type"),
+        new("claimValueInput", "Claim Value")
+    );
+}
+
+@* <vc:boot-strap-modal model="modalViewModel"></vc:boot-strap-modal> *@
+<vc:html-modal model="modalViewModel"/>
+
+
+@{
+    var newRoleModalViewModel = new ModalViewModel(
+        "addRoleModal",
+        "Add New Role",
+        "Enter the following information:",
+        "Add Role",
+        "Close",
+        "addNewRole",
+        new ModalInputs("newRoleInput", "Role Name")
+    );
+}
+
+<vc:html-modal model="newRoleModalViewModel"/>
+
+
+<script>
+    
+    function addNewRole() {
+        const newRole = document.getElementById('newRoleInput').value;
+        const template = addNewRoleTemplate.content.cloneNode(true);
+        
+        // check that newRole is not empty
+        if (!newRole) {
+            alert('Role name cannot be empty.');
+            return;
+        }
+        
+        //select the first input element in the template and set the value to newRole
+        template.querySelector('input').setAttribute('value', newRole);
+        let selectionContainer =  document.getElementById('selection-container')
+        
+        // select the label and set the textContent to newRole
+        template.querySelector('label').textContent = newRole;
+        
+        
+        // check if selectionContainer contains the newRole
+        if (selectionContainer.contains(selectionContainer.querySelector(`input[value="${newRole}"]`))) {
+            alert('Role already exists.');
+            return;
+        }
+        
+        // check if the selectionContainer has a button
+        if (selectionContainer.querySelector('button')) {
+            selectionContainer.insertBefore(template, selectionContainer.querySelector('button'));
+        } else {
+            selectionContainer.appendChild(template);
+        }
+        
+    }
+    
+    let removedClaims = [];
+
+    function toggleRemovedClaim(claimType, rowId, buttonId) {
+        let index = removedClaims.indexOf(claimType);
+        let row = document.getElementById(rowId);
+        let button = document.getElementById(buttonId);
+
+        if (index === -1) {
+            // If the claim type is not in the list, add it, apply `.bg-warning` class, and change the button label to "Undelete"
+            removedClaims.push(claimType);
+            if (row) {
+                row.classList.add('bg-warning');
+            }
+            if (button) {
+                button.innerText = "Undelete";
+            }
+        } else {
+            // If the claim type is already in the list, remove it, reset the row style, and change the button label to "Delete"
+            removedClaims.splice(index, 1);
+            if (row) {
+                row.classList.remove('bg-warning');
+            }
+            if (button) {
+                button.innerText = "Delete";
+            }
+        }
+
+        // Update the hidden input value with the new list
+        document.getElementById('ClaimsDeleted').value = removedClaims.join(',');
+    }
+
+    function addNewClaimFromList() {
+        const claimType = document.getElementById('available-claims-select').value;
+        const claimValue = document.getElementById('input-claim-value').value;
+        addClaim(claimType, claimValue);
+    }
+
+    var existingClaims = @Json.Serialize(Model.AllClaims.Select(c => c.ClaimType));
+
+    function addNewClaim() {
+        // Get user inputs from the modal
+
+
+        var claimType = document.getElementById('claimTypeInput').value;
+        var claimValue = document.getElementById('claimValueInput').value;
+
+        // Check if the claim type already exists
+        if (existingClaims.includes(claimType)) {
+            alert('Claim type already exists.');
+            return;
+        }
+        addClaim(claimType, claimValue);
+        existingClaims.push(claimType);
+    }
+
+
+    function addClaim(claimType, claimValue) {
+
+        // index is count of existing claims
+        const index = document.getElementById('existing-claims').childElementCount;
+        // Get the template
+        const template = addClaimTemplate.content.cloneNode(true);
+
+        // Define a helper function for setting attributes
+        const setAttribute = (selector, attribute, value) => {
+            const element = template.querySelector(selector);
+            if (element) element.setAttribute(attribute, value);
+        };
+
+        // Update the IDs and names with the provided index
+        template.querySelector('.claim-row').id = `claim-row-${index}`;
+
+        // Replace `User.UserClaims[-1].xxx` with `User.UserClaims[index].xxx`
+        const fields = ['ClaimTypeLabel', 'ClaimType', 'Id', 'UserId', 'ClaimValue'];
+        fields.forEach(field => {
+            let element = template.querySelector(`[name="User.UserClaims[-1].${field}"]`);
+            element.setAttribute('name', `User.UserClaims[${index}].${field}`);
+        });
+
+        // Set the ClaimType and ClaimValue values
+        let label = template.querySelector(`label[name="User.UserClaims[${index}].ClaimTypeLabel"]`).textContent;
+        template.querySelector(`label[name="User.UserClaims[${index}].ClaimTypeLabel"]`).textContent = claimType + label;
+        template.querySelector(`input[name="User.UserClaims[${index}].ClaimType"]`).value = claimType;
+        template.querySelector(`input[name="User.UserClaims[${index}].ClaimValue"]`).value = claimValue;
+
+        // Update label and button
+        setAttribute('label', 'name', `User.UserClaims[${index}].ClaimTypeLabel`);
+        setAttribute('button', 'id', `toggle-button-${index}`);
+        setAttribute(
+            'button',
+            'onclick',
+            `toggleRemovedClaim('', 'claim-row-${index}', 'toggle-button-${index}')`
+        );
+
+        // Append the cloned template to the existing claims
+        document.getElementById('existing-claims').appendChild(template);
+
+        // remove the element from the available claims
+        // if the document.getElementById('available-claims-select') selectbox contains the claimType
+        if (document.getElementById('available-claims-select').contains(document.getElementById('available-claims-select').querySelector(`option[value="${claimType}"]`))) {
+            document.getElementById('available-claims-select').remove(document.getElementById('available-claims-select').querySelector(`option[value="${claimType}"]`));
+            document.getElementById('input-claim-value').value = '';
+        }
+
+    }
+
+
+
+</script>

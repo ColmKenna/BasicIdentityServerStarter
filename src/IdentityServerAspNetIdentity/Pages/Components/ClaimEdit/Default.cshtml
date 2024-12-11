@@ -1,0 +1,17 @@
+﻿@model (IdentityDataModels.UserClaimSummary claim, int index)
+
+
+@{
+    var claim = Model.claim;
+    var index = Model.index;
+}
+<div id="claim-row-@index" class="claim-row form-row">
+    <label name="User.UserClaims[@index].ClaimTypeLabel" class="form-label">@claim.ClaimType</label>
+    <input type="hidden" name="User.UserClaims[@index].ClaimType" value="@claim.ClaimType" />
+    <input type="hidden" name="User.UserClaims[@index].Id" value="@claim.Id" />
+    <input type="hidden" name="User.UserClaims[@index].UserId" value="@claim.UserId" />
+    <input type="text" class="form-input" name="User.UserClaims[@index].ClaimValue" value="@claim.ClaimValue" />
+    <button type="button" id="toggle-button-@index" class="delete-icon-button"
+            onclick="toggleRemovedClaim('@claim.ClaimType', 'claim-row-@index', 'toggle-button-@index')"/>
+
+</div>

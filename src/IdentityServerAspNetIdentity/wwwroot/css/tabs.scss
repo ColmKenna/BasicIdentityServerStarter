@@ -72,3 +72,29 @@
     }
   }
 }
+
+.tab-content {
+    // Default left and right padding
+    padding-left: 40px;
+    padding-right: 40px;
+    // For very large screens
+    @media screen and (min-width: 1200px) {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    // For medium screens (e.g., tablets)
+    @media screen and (max-width: 1024px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    // For small screens (e.g., small tablets or large phones)
+    @media screen and (max-width: 768px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    // For extra-small screens (e.g., phones)
+    @media screen and (max-width: 480px) {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
