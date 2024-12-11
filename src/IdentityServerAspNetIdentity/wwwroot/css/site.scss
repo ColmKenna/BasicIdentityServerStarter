@@ -63,6 +63,9 @@ nav {
 }
 
 
+.with-divider {
+    border-top: 1px solid $border-color
+}
 // Title
 .title {
     grid-area: title;
@@ -258,6 +261,142 @@ nav {
     } 
 }
 
+.form-row, .claim-row,  .add-claim-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.add-claim-row {
+    padding-top: 12px;
+}
+// first column that is not hidden
+.form-row > .form-label, .claim-row > .form-label  {
+    width: 160px;
+    text-align: right;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-options{
+    width: 160px;
+    font-weight: 500;
+    color: #555;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+// second column
+//.claim-row > .form-input , .add-claim-row > .form-input {
+.form-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.create-new-claim-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.create-new-claim-row > * {
+    flex: 1;
+}
+
+
+@media screen and (max-width: 600px) {
+    .claim-row, .add-claim-row{
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 32px;
+    }
+    .claim-row > .form-label, .form-options {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-options{
+        padding: 8px 12px;
+        box-sizing: content-box;
+    }
+    .form-input, .form-input{
+        width: 100%;
+        height: 50px;
+    }
+    
+    .claim-row > .delete-icon-button, .add-claim-row > .add-icon-button {
+        width: 100%;
+        padding: 0 12px 0 12px;
+        box-sizing: content-box;
+    }
+    
+     
+}
+
+.check-selection-container {
+    display: flex;
+    flex-wrap: wrap;    
+    gap: 10px;
+    justify-content: center;
+    background-color: inherit; 
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.check-selection-item {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.check-selection-item input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 1;
+}
+
+.check-selection-label {
+    display: block;
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+
+.check-selection-item input[type="checkbox"]:checked + .check-selection-label {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: white;
+}
+
+.check-selection-label:hover {
+    border-color: #4CAF50;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+}
 
 
 
