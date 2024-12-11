@@ -5,36 +5,45 @@ $color-danger-active: darken($color-danger, 20%);
 $color-danger-focus-ring: rgba($color-danger, 0.25);
 $color-danger-disabled: lighten($color-danger, 20%);
 
+$bg-color: #f8f9fa;
+$color-dark-gray: #343a40;
+
 $primary-color: #0056b3;
 $primary-hover-color: #004494;
 
 $info-colour: #17a2b8;
 $info-colour-hover: #138496;
 
+$success-colour: #28a745;
+$success-colour-hover: #218838;
+
+// Secondary button colors
+$secondary-color: #f0f0f0; // Light gray for secondary actions
+$secondary-hover-color: #e0e0e0; // Slightly darker gray for hover
+
 // Common button styles
-@mixin button-styles($bg-color, $hover-bg-color, $text-color: $color-white) {
+// Define placeholder for button styles
+%button-styles {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: bold;
-    color: $text-color;
-    background-color: $bg-color;
+    color: $color-white; // Default text color
     border: none;
     border-radius: 0.375rem;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    
-
+    height: 24px;
+    box-sizing: content-box;
     &:hover {
-        background-color: $hover-bg-color;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 4px rgba($bg-color, 0.25);
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25); // Default focus color
     }
 
     &:disabled {
@@ -44,25 +53,88 @@ $info-colour-hover: #138496;
     }
 }
 
-// Danger button
+// Define specific button types
 .danger-button {
-    @include button-styles($color-danger, $color-danger-hover);
-
+    @extend %button-styles;
+    background-color: $color-danger;
+    &:hover {
+        background-color: $color-danger-hover;
+    }
     &:active {
         background-color: $color-danger-active;
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 }
 
-// Primary button
 .primary-button {
-    @include button-styles($primary-color, $primary-hover-color);
+    @extend %button-styles;
+    background-color: $primary-color;
+    &:hover {
+        background-color: $primary-hover-color;
+    }
 }
 
-// Info button
-.info-button {
-    @include button-styles($info-colour, $info-colour-hover);
+.success-button {
+    @extend %button-styles;
+    background-color: $success-colour;
+    &:hover {
+        background-color: $success-colour-hover;
+    }
 }
+
+.info-button {
+    @extend %button-styles;
+    background-color: $info-colour;    
+    &:hover {
+        background-color: $info-colour-hover;
+    }
+}
+
+.secondary-button {
+    @extend %button-styles;
+    background-color: $secondary-color; // Define a neutral or subtle color in your SCSS variables
+    color: $color-dark-gray;
+    border: 1px solid #ccc; // Add a border for secondary buttons
+     &:hover {
+        background-color: $secondary-hover-color; // Slightly darker or lighter for hover effect
+    }
+}
+
+.icon-only-button {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    &::after {
+        font-size: inherit;
+    }
+}
+
+.delete-icon-button {
+    @extend .icon-only-button;
+    background: #ef4444;
+
+    &::after {
+        content: "\2716"; // Unicode for the "X" symbol
+    }
+}
+
+.add-icon-button {
+    @extend .icon-only-button;
+    background: #10b981;
+
+    &::after {
+        content: "\271A"; // Unicode for the "+" symbol
+    }
+}
+
 
 .btn-small {
     padding: 0.3rem 0.75rem;
