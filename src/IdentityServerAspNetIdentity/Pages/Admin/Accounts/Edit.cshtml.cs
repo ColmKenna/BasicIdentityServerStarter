@@ -25,36 +25,29 @@ public class Edit : PageModel
         _claimsRepository = claimsRepository;
         _userManager = userManager;
         _emailSender = emailSender;
- 
     }
 
 
-    [BindProperty(SupportsGet = true)]
-    public string Id { get; set; }
+    [BindProperty(SupportsGet = true)] public string Id { get; set; }
+
+    [BindProperty] public ApplicationUserDetails User { get; set; }
+
+    [BindProperty] public List<string> AllRoles { get; set; }
+
+    [BindProperty] public List<UserClaim> AllClaims { get; set; }
+
+    [BindProperty] public List<string> SelectedRoles { get; set; }
 
     [BindProperty]
-    public ApplicationUserDetails User { get; set; }
-
-    [BindProperty]
-    public List<string> AllRoles { get; set; }
-
-    [BindProperty]
-    public List<UserClaim> AllClaims { get; set; }
-
-    [BindProperty]
-    public List<string> SelectedRoles { get; set; }
-
-    [BindProperty]
-    public List<string> AvailableRoles 
+    public List<string> AvailableRoles
         => AllRoles.Except(User.Roles).ToList();
 
     [BindProperty]
-    public List<UserClaim> AvailableClaims 
+    public List<UserClaim> AvailableClaims
         => AllClaims.Where(c => User.UserClaims.All(uc => uc.ClaimType != c.ClaimType)).ToList();
 
 
-    [BindProperty]
-    public List<string> ClaimsDeleted { get; set; }
+    [BindProperty] public List<string> ClaimsDeleted { get; set; }
 
     // [BindProperty]
     // public List<string> AllClaims { get => User.UserClaims.Select(uc => uc.ClaimType).Union(AvailableClaims.Select(c => c.ClaimType)).ToList(); }
@@ -63,8 +56,8 @@ public class Edit : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         User = await _userRepository.GetUserById(Id);
-        
-        
+
+
         AllRoles = (await _rolesRepository.GetRoles()).Select(r => r.Name).ToList();
         AllClaims = await _claimsRepository.GetClaims();
 
@@ -73,6 +66,7 @@ public class Edit : PageModel
         {
             return NotFound();
         }
+
         return Page();
     }
 
@@ -83,6 +77,15 @@ public class Edit : PageModel
             return Page();
         }
 
+        foreach (var deletedClaim in ClaimsDeleted)
+        {
+            if (User.UserClaims.Any(uc => uc.ClaimType == deletedClaim))
+            {
+                User.UserClaims.Remove(User.UserClaims.First(uc => uc.ClaimType == deletedClaim));
+            }
+        }
+
+
         var result = await _userRepository.UpdateUser(User);
 
         if (!result)
@@ -91,7 +94,7 @@ public class Edit : PageModel
             return Page();
         }
 
-        return RedirectToPage("/Admin/Accounts/Details", new { Id });
+        return RedirectToPage("/Admin/Accounts/Details", new {Id});
     }
 
     public async Task<IActionResult> OnPostLockAsync(DateTime until)
@@ -99,9 +102,10 @@ public class Edit : PageModel
         var result = await _userRepository.LockUser(Id, until);
         if (!result)
         {
-            return new JsonResult(new { success = false, message = "Failed to lock user" });
+            return new JsonResult(new {success = false, message = "Failed to lock user"});
         }
-        return new JsonResult(new { success = true, message = "User Locked" });
+
+        return new JsonResult(new {success = true, message = "User Locked"});
     }
 
     public async Task<IActionResult> OnPostUnLockAsync()
@@ -109,12 +113,13 @@ public class Edit : PageModel
         var result = await _userRepository.UnlockUser(Id);
         if (!result)
         {
-            return new JsonResult(new { success = false, message = "Failed to unlock user" });
+            return new JsonResult(new {success = false, message = "Failed to unlock user"});
         }
-        return new JsonResult(new { success = true, message = "User UnLocked" });
+
+        return new JsonResult(new {success = true, message = "User UnLocked"});
     }
-    
-    
+
+
     public async Task<IActionResult> OnPostResendConfirmationEmailAsync()
     {
         var user = await _userManager.FindByIdAsync(Id);
@@ -128,15 +133,15 @@ public class Edit : PageModel
         var confirmationLink = Url.Page(
             "/Account/ConfirmEmail/Index",
             pageHandler: null,
-            values: new { userId = user.Id, code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token))},
+            values: new {userId = user.Id, code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token))},
             protocol: Request.Scheme);
 
-        await _emailSender.SendEmailAsync(user.Email, "Confirm your email", 
+        await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
             $"Please confirm your account by <a href='{confirmationLink}'>clicking here</a>.");
 
-        return new JsonResult(new { success = true, message = "Confirmation email sent" });
+        return new JsonResult(new {success = true, message = "Confirmation email sent"});
     }
-    
+
     public async Task<IActionResult> OnPostSendResetPasswordLinkAsync()
     {
         var user = await _userManager.FindByIdAsync(Id);
@@ -150,14 +155,12 @@ public class Edit : PageModel
         var resetPasswordLink = Url.Page(
             "/Account/ResetPassword/Index",
             pageHandler: null,
-            values: new { userId = user.Id, token = code },
+            values: new {userId = user.Id, token = code},
             protocol: Request.Scheme);
 
-        await _emailSender.SendEmailAsync(user.Email, "Reset your password", 
+        await _emailSender.SendEmailAsync(user.Email, "Reset your password",
             $"Please reset your password by <a href='{resetPasswordLink}'>clicking here</a>.");
 
-        return new JsonResult(new { success = true, message = "Reset password link sent" });
+        return new JsonResult(new {success = true, message = "Reset password link sent"});
     }
-        
-        
 }

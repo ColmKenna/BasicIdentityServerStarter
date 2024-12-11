@@ -168,7 +168,8 @@
                 row.classList.add('bg-warning');
             }
             if (button) {
-                button.innerText = "Undelete";
+                button.classList.remove('delete-icon-button');
+                button.classList.add('add-icon-button');
             }
         } else {
             // If the claim type is already in the list, remove it, reset the row style, and change the button label to "Delete"
@@ -177,7 +178,8 @@
                 row.classList.remove('bg-warning');
             }
             if (button) {
-                button.innerText = "Delete";
+                button.classList.remove('add-icon-button');
+                button.classList.add('delete-icon-button');
             }
         }
 
