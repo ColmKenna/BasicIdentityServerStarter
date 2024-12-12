@@ -18,6 +18,7 @@ $background-color: #FFF;
 $border-color: #CCC;
 $text-color: #000;
 $nav-height-wide-screen: 80px;
+$nav-height-small-screen: 60px;
 
 body {
     background-color: $background-color;
@@ -27,9 +28,9 @@ body {
     height: 100vh;
     display: grid;
     grid-template-areas:
-        "nav nav" 
-        "side-menu main";
-    grid-template-columns: 200px 1fr;
+        "nav" 
+        "main";
+    grid-template-columns: 1fr;
     grid-template-rows: $nav-height-wide-screen 1fr;
 }
 
@@ -42,14 +43,19 @@ main {
 
 /* Side Menu Section */
 .side-menu {
-    grid-area: side-menu;
     display: flex;
     flex-direction: column;
     background-color: #555;
     padding: 1em;
     overflow-y: auto;
-    transition: transform 0.3s ease-in-out;
     bottom: 0;
+    position: absolute;
+    top: $nav-height-wide-screen;
+    left: 0;
+    width: 150px;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
 }
 .side-menu a {
     display: block;
@@ -65,19 +71,64 @@ main {
     transform: translateX(0);
 }
 
-.burger-menu {
-    display: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: white;
-    align-self: flex-start;
+
+.side-menu.active {
+    display: block;
+    transform: translateX(0);
 }
+
 .burger-menu div {
     width: 25px;
     height: 3px;
     background-color: white;
     margin: 4px 0;
 }
+
+.burger-menu {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white;
+    align-self: flex-start;
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.burger-menu.expanded>svg {
+    /* rotate 180 on the z-axis */
+    transform: rotate(180deg);
+
+}
+
+main.no-side-menu {
+    margin-left: 130px;
+    animation: animateMarginIn 0.3s ease-in-out 1 forwards;
+}
+
+@keyframes animateMarginOut {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: calc(150px + 1em);
+    }
+}
+
+main.with-side-menu {
+    margin-left: 0;
+    animation: animateMarginOut 0.3s ease-in-out 1 forwards;
+}
+
+@keyframes animateMarginIn {
+    0% {
+        margin-left: calc(150px + 1em);
+    }
+    100% {
+        margin-left: 0;
+    }
+}
+
+
 
 /* Nav Section */
 $nav-background-color: #2d2d2d; // Grayscale of #736C56
@@ -295,69 +346,12 @@ nav {
 
 @media (max-width: 768px) {
     body {
-        grid-template-rows: 50px 1fr;
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-                    "nav"
-                    "main";
+        grid-template-rows: $nav-height-small-screen 1fr;
     }
-
     .side-menu {
-        position: absolute;
-        top: 50px;
-        left: 0;
-        width: 150px;
-        background-color: #555;
-        padding: 1em;
-        z-index: 1000;
-        overflow-y: auto;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
-    }
-    .side-menu.active {
-        display: block;
-        transform: translateX(0);
+        top: $nav-height-small-screen;
     }
 
-    .burger-menu {
-        display: block;
-        position: absolute;
-        top: 10px;
-        left: 10px;
-    }
-    .burger-menu.expanded>svg {
-        /* rotate 180 on the z-axis */
-        transform: rotate(180deg);
-
-    }
-    
-    main.no-side-menu {
-        margin-left: 130px;
-        animation: animateMarginIn 0.3s ease-in-out 1 forwards;
-    }
-    
-    @keyframes animateMarginOut {
-        0% {
-            margin-left: 0;
-        }
-        100% {
-            margin-left: calc(150px + 1em);
-        }
-    }
-    
-    main.with-side-menu {
-        margin-left: 0;
-        animation: animateMarginOut 0.3s ease-in-out 1 forwards;
-    }
-    
-    @keyframes animateMarginIn {
-        0% {
-            margin-left: calc(150px + 1em);
-        }
-        100% {
-            margin-left: 0;
-        }
-    }
 }
 .form-row, .claim-row,  .add-claim-row {
     display: flex;
