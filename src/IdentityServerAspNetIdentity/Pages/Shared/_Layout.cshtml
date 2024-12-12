@@ -15,6 +15,7 @@
     
     @* <link rel="stylesheet" href="~/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"> *@
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/menus.min.css" />
     <link rel="stylesheet" href="~/css/cards.min.css" />
     <link rel="stylesheet" href="~/css/list-group.min.css" />
     <link rel="stylesheet" href="~/css/buttons.min.css" />
@@ -42,7 +43,7 @@
             <a asp-page="/Account/Login">Login</a>
         }
     </div>
-    <main class="no-side-menu">
+    <main class="init-no-side-menu">
         @RenderBody()
     </main>
 
@@ -64,8 +65,16 @@
             burgerMenu.classList.toggle("expanded");
             
             const main = document.querySelector("main");
-            main.classList.toggle("no-side-menu");
-            main.classList.toggle("with-side-menu");
+            main.classList.remove("init-no-side-menu");
+            main.classList.remove("init-with-side-menu");
+
+            if (burgerMenu.classList.contains("expanded")) {
+                main.classList.add("with-side-menu");
+                main.classList.remove("no-side-menu");
+            } else {
+                main.classList.add("no-side-menu");
+                main.classList.remove("with-side-menu");
+            }
         }
     </script>
     </body>
