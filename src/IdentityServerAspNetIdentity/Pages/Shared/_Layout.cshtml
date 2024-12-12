@@ -29,11 +29,18 @@
 <body>
     <partial name="_Nav" />
     <div class="side-menu" id="sideMenu">
-        <a href="#">Category 1</a>
-        <a href="#">Category 2</a>
-        <a href="#">Category 3</a>
-        <a href="#">Category 4</a>
-        <a href="#">Category 5</a>
+        <a asp-page="/Index">Home</a>
+        @* log in and log out links *@
+        @if (User.Identity is {IsAuthenticated: true})
+        {
+            <a asp-page="/Account/Logout">Logout</a>
+            <a asp-page="/Admin/Accounts/Index">Users</a>
+        }
+        else
+        {
+            <a asp-page="/Account/Register">Register</a>
+            <a asp-page="/Account/Login">Login</a>
+        }
     </div>
     <main class="no-side-menu">
         @RenderBody()
