@@ -1,13 +1,9 @@
-@using Duende.IdentityServer.Extensions
 @{
     string name = null;
-    if (!true.Equals(ViewData["signed-out"]))
-    {
-        name = Context.User?.GetDisplayName();
-    }
+    name = User.Identity?.Name;
 }
 
-    <nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
 
         <div class="burger-menu" onclick="toggleMenu()">
             <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -21,9 +17,8 @@
             <li>
                 <a href="#" class="dropdown-toggle closed "><i class="fa-regular fa-circle-user"></i><span>@name</span> </a>
                 <ul>
-                    @if (!string.IsNullOrWhiteSpace(name))
+                    @if (User.Identity is {IsAuthenticated: true})
                     {
-
                         <li>
                             <a class="dropdown-item" asp-page="/Account/Logout/Index">Logout</a>
                         </li>
