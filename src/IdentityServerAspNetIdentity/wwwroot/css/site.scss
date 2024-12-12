@@ -110,7 +110,7 @@ main.no-side-menu {
         margin-left: 0;
     }
     100% {
-        margin-left: calc(150px + 1em);
+        margin-left: calc(150px + 2em);
     }
 }
 
@@ -121,7 +121,7 @@ main.with-side-menu {
 
 @keyframes animateMarginIn {
     0% {
-        margin-left: calc(150px + 1em);
+        margin-left: calc(150px + 2em);
     }
     100% {
         margin-left: 0;
