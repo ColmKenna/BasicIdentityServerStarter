@@ -4,23 +4,24 @@
 
 <tab id="clientDetails">
     <tab-item header="Client Information">
-        <field-container label="ClientId" value="@Model.Client.ClientId" />
-        <field-container label="ClientName" value="@Model.Client.ClientName" />
-        <field-container label="Description" value="@Model.Client.Description" />
-        <field-container label="ClientUri" value="@Model.Client.ClientUri" />
+        <field-container label="ClientId" for="@Model.Client.ClientId" />
+        <field-container label="ClientName" for="@Model.Client.ClientName" />
+        <field-container label="Description" for="@Model.Client.Description" />
+        <field-container label="ClientUri" for="@Model.Client.ClientUri" />
+        
     </tab-item>
     <tab-item header="Security">
         <field-container label="Allowed Grants" value="@string.Join(", ", Model.Client.AllowedGrantTypes)" />
-        <field-container label="Require Consent" value="@Model.Client.RequireConsent" />
-        <field-container label="AllowAccessTokens Via Browser" value="@Model.Client.AllowAccessTokensViaBrowser" />
-        <field-container label="AccessToken Lifetime" value="@Model.Client.AccessTokenLifetime" />
+        <field-container label="Require Consent" for="@Model.Client.RequireConsent" />
+        <field-container label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser" />
+        <field-container label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime" />
 
 
     </tab-item>
     <tab-item header="Scopes">
         @foreach (var scope in Model.Client.AllowedScopes)
         {
-            <field-container label="Scope" value="@scope" />
+            <field-container label="Scope" for="@scope" />
         }
     </tab-item>
     <tab-item header="URIs">
