@@ -1,0 +1,31 @@
+﻿@page
+@model IdentityServerAspNetIdentity.Pages.Admin.Clients.Index
+
+<h2>All Clients</h2>
+
+<table class="table table-bordered table-striped table-sm table-responsive">
+<thead>
+<tr>
+    <th>Client ID</th>
+    <th>Client Name</th>
+    <th>Description</th>
+    <th>Redirect URIs</th>
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody>
+@foreach (var client in Model.Clients)
+{
+    <tr>
+        <td>@client.ClientId</td>
+        <td>@client.ClientName</td>
+        <td>@client.Description</td>
+        <td>@string.Join(", ", client.RedirectUris)</td>
+        <td class="button-container">
+            <info-link href="@Url.Page("/Admin/Clients/Details", new {clientId = client.ClientId})" size="Small">Details</info-link>
+            <primary-link href="@Url.Page("/Admin/Clients/Edit", new {clientId = client.ClientId})" size="Small">Edit</primary-link>
+        </td>
+    </tr>
+}
+</tbody>
+</table>
