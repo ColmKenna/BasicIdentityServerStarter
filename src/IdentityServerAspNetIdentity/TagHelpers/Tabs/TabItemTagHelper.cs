@@ -10,6 +10,10 @@ public class TabItemTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        if (string.IsNullOrWhiteSpace(TabId))
+        {
+            TabId = Header.Replace(" ", string.Empty).ToLower();
+        }
         // Generate header and content
         var headerHtml = $@"
             <button type=""button"" class='tab-link' data-ck-tab-target='{TabId}'>{Header}</button>";
