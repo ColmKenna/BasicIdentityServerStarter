@@ -1,0 +1,34 @@
+﻿@page "{clientId}"
+@model IdentityServerAspNetIdentity.Pages.Admin.Clients.Details
+
+
+<tab id="clientDetails">
+    <tab-item header="Client Information">
+        <field-container label="ClientId" for="@Model.Client.ClientId" />
+        <field-container label="ClientName" for="@Model.Client.ClientName" />
+        <field-container label="Description" for="@Model.Client.Description" />
+        <field-container label="ClientUri" for="@Model.Client.ClientUri" />
+        
+    </tab-item>
+    <tab-item header="Security">
+        <field-container label="Allowed Grants" value="@string.Join(", ", Model.Client.AllowedGrantTypes)" />
+        <field-container label="Require Consent" for="@Model.Client.RequireConsent" />
+        <field-container label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser" />
+        <field-container label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime" />
+
+
+    </tab-item>
+    <tab-item header="Scopes">
+        @foreach (var scope in Model.Client.AllowedScopes)
+        {
+            <field-container label="Scope" for="@scope" />
+        }
+    </tab-item>
+    <tab-item header="URIs">
+        <field-container label="Redirect URIs" value="@string.Join(", ", Model.Client.RedirectUris)" />
+        <field-container label="Post Logout Redirect URIs" value="@string.Join(", ", Model.Client.PostLogoutRedirectUris)" />
+        <field-container label="Allowed CORS Origins" value="@string.Join(", ", Model.Client.AllowedCorsOrigins)" />
+    </tab-item>
+    
+
+</tab>

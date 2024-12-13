@@ -187,6 +187,7 @@ internal static class HostingExtensions
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IClaimsRepository, ClaimsRepository>();
         builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+        builder.Services.AddScoped<IClientsRepository, ClientsRepository>();
         builder.Services.AddScoped<IScriptHolder,ScriptHolder>();
         builder.Services.AddScoped<IEmailSender, EmailSenderConsole>();
 
