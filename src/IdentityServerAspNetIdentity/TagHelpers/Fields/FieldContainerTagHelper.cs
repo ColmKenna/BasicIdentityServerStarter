@@ -15,9 +15,9 @@ public class FieldContainerTagHelper : TagHelper
 
     public string Label { get; set; }
     public string Value { get; set; }
-    
+
     // for 
-    public ModelExpression For { get; set; } 
+    public ModelExpression For { get; set; }
 
     [HtmlAttributeNotBound]
     [ViewContext]
@@ -34,7 +34,7 @@ public class FieldContainerTagHelper : TagHelper
         output.TagMode = TagMode.StartTagAndEndTag; // Ensure it renders a complete tag
         output.Attributes.SetAttribute("class", "field-container");
 
-        
+
         if (For != null)
         {
             output.Content.SetHtmlContent($@"
@@ -42,14 +42,14 @@ public class FieldContainerTagHelper : TagHelper
 
             if (For.Metadata.ModelType == typeof(bool) || For.Metadata.ModelType == typeof(bool?))
             {
-             
+
                 var checkedAttribute = For.Model != null && (bool)For.Model ? "checked" : "";
                 var checkLabelTagHelper = Generator.GenerateCheckBox(
                     ViewContext,
                     For.ModelExplorer,
                     For.Name,
                     isChecked: For.Model != null && (bool)For.Model,
-                    
+
                     htmlAttributes: new Dictionary<string, object>
                     {
                         { "type", "checkbox" },
@@ -63,11 +63,22 @@ public class FieldContainerTagHelper : TagHelper
             else
             {
                 Value = For.Model?.ToString() ?? "";
-                output.Content.SetHtmlContent($@"
-                    <strong>{Label}</strong><span>{Value}</span>
-                ");
+
+                var inputTagHelper = Generator.GenerateTextBox(
+                    ViewContext,
+                    For.ModelExplorer,
+                    For.Name,
+                    Value,
+                    null,
+                    new { @class = "form-control" }
+                );
+                output.Content.AppendHtml("<span>");
+                output.Content.AppendHtml(inputTagHelper);
+                output.Content.AppendHtml("</span>");
+
             }
-        }else
+        }
+        else
         {
             output.Content.SetHtmlContent($@"
                 <strong>{Label}</strong> <span>{Value}</span>
