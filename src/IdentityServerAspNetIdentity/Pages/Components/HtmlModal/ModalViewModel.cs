@@ -11,7 +11,7 @@ public class ModalViewModel
     public string ConfirmButtonText { get; set; }
     public string CancelButtonText { get; set; }
     public List<ModalInputs> Inputs { get; set; }
-    public string ConfirmButtonFunction { get; set; }  // New Property for JavaScript Function
+    public string ConfirmButtonFunction { get; set; }  
 
     public ModalViewModel(
         string modalId,
