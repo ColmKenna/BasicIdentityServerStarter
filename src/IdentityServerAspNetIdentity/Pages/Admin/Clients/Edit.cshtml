@@ -49,14 +49,17 @@
 
             <form-row-container label="grant Types">
 
-                <div id="selection-container" class="check-selection-container check-group-container  with-divider with-bottom-divider ">
+                <selection-container
+                    id="selection-roles-container"
+                    source="@Model.Client.AvailableGrantTypes"
+                    selected="@Model.Client.AllowedGrantTypes"
+                    name="Client.AllowedGrantTypes[]"
+                    title="AllowedGrantTypes"
+                    class="check-group-container  with-divider with-bottom-divider"
+                >
+                </selection-container>
                 
-                @foreach (var grantType in Model.Client.AvailableGrantTypes)
-                    {
-                        // create a checkbox for each grant type
-                        <selection-item name="Client.AllowedGrantTypes[]" value="@grantType"  checked="@Model.Client.AllowedGrantTypes.Contains(grantType)"></selection-item>
-                    }
-                </div>
+         
             </form-row-container>
 
 
