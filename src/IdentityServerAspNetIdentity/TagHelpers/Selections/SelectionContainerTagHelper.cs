@@ -62,7 +62,8 @@ public class SelectionContainerTagHelper : TagHelper
         
         output.TagName = "div";
         output.Attributes.SetAttribute("id", Id);
-        output.Attributes.SetAttribute("class", "check-selection-container");
+        
+        output.AddClass("check-selection-container");
 
 
         var childContext = new TagHelperContext(
