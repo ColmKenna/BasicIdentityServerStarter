@@ -1,15 +1,15 @@
 @use 'siteVariables' as *;
 
 .logged-out-page {
-  iframe {
-    display: none;
-    width: 0;
-    height: 0;
-  }
+    iframe {
+        display: none;
+        width: 0;
+        height: 0;
+    }
 }
 
 
-.bg-warning{
+.bg-warning {
     background-color: $colour-warning;
 }
 
@@ -24,8 +24,7 @@ body {
     height: 100vh;
     display: grid;
     grid-template-areas:
-        "nav" 
-        "main";
+        "nav" "main";
     grid-template-columns: 1fr;
     grid-template-rows: $nav-height-wide-screen 1fr;
 }
@@ -53,6 +52,7 @@ main {
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
 }
+
 .side-menu a {
     display: block;
     color: white;
@@ -60,9 +60,11 @@ main {
     text-decoration: none;
     font-size: 0.9em;
 }
+
 .side-menu a:hover {
     background-color: #666;
 }
+
 .side-menu.active {
     transform: translateX(0);
 }
@@ -90,10 +92,10 @@ main {
     top: 10px;
     left: 10px;
 }
-.burger-menu.expanded>svg {
+
+.burger-menu.expanded > svg {
     /* rotate 180 on the z-axis */
     transform: rotate(180deg);
-
 }
 
 main.no-side-menu {
@@ -105,6 +107,7 @@ main.no-side-menu {
     0% {
         margin-left: 0;
     }
+
     100% {
         margin-left: calc(150px + 2em);
     }
@@ -119,6 +122,7 @@ main.with-side-menu {
     0% {
         margin-left: calc(150px + 2em);
     }
+
     100% {
         margin-left: 0;
     }
@@ -156,6 +160,11 @@ nav {
 .with-divider {
     border-top: 1px solid $border-color
 }
+
+.with-bottom-divider {
+    border-bottom: 1px solid $border-color;
+}
+
 // Title
 .title {
     grid-area: title;
@@ -172,12 +181,13 @@ nav {
     body {
         grid-template-rows: $nav-height-small-screen 1fr;
     }
+
     .side-menu {
         top: $nav-height-small-screen;
     }
-
 }
-.form-row, .claim-row,  .add-claim-row {
+
+.form-row, .claim-row, .add-claim-row {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -188,22 +198,22 @@ nav {
     padding-top: 12px;
 }
 // first column that is not hidden
-.form-row > .form-label, .claim-row > .form-label  {
+.form-row > .form-label, .claim-row > .form-label {
     width: 160px;
     text-align: right;
     font-weight: 500;
     color: #555;
 }
 
-.form-options{
+.form-options {
     width: 160px;
     font-weight: 500;
     color: #555;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-    }
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
 
 // second column
 //.claim-row > .form-input , .add-claim-row > .form-input {
@@ -214,6 +224,28 @@ nav {
     border-radius: 4px;
     font-size: 14px;
 }
+
+.form-input:has(:first-child[type="checkbox"]) {
+    padding-left: 0;
+    border: none;
+}
+
+
+
+.check-group-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.check-group-container > * {
+    flex: 0 0 calc(33.333% - 20px)
+}
+
+
 
 .create-new-claim-row {
     display: flex;
@@ -230,40 +262,40 @@ nav {
 
 
 @media screen and (max-width: 600px) {
-    .claim-row, .add-claim-row{
+    .claim-row, .add-claim-row {
         flex-direction: column;
         gap: 0;
         margin-bottom: 32px;
     }
+
     .claim-row > .form-label, .form-options {
         width: 100%;
         text-align: center;
     }
 
-    .form-options{
+    .form-options {
         padding: 8px 12px;
         box-sizing: content-box;
     }
-    .form-input, .form-input{
+
+    .form-input, .form-input {
         width: 100%;
         height: 50px;
     }
-    
+
     .claim-row > .delete-icon-button, .add-claim-row > .add-icon-button {
         width: 100%;
         padding: 0 12px 0 12px;
         box-sizing: content-box;
     }
-    
-     
 }
 
 .check-selection-container {
     display: flex;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-    background-color: inherit; 
+    background-color: inherit;
     padding: 20px;
     width: 80%;
     margin: 0 auto;
@@ -313,6 +345,3 @@ nav {
     gap: 12px;
     margin-top: 12px;
 }
-
-
-
