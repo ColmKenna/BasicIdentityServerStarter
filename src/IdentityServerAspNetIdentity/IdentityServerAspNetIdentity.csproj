@@ -36,6 +36,7 @@
 	  <Folder Include="Pages\Shared\Components\ClaimEdit\" />
 	  <Folder Include="Pages\Shared\Components\List\" />
 	  <Folder Include="ViewModels\" />
+	  <Folder Include="wwwroot\js\forTagHelpers\" />
 	</ItemGroup>
 
 	<ItemGroup>
