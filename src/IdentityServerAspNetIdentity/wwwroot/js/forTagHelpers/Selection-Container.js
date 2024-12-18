@@ -14,7 +14,10 @@
     template.querySelector('input').setAttribute('value', itemToAdd);
 
     // Set the text content of the label in the template
-    template.querySelector('label').textContent = itemToAdd;
+const label = template.querySelector('label');
+if (label) {
+    label.textContent = itemToAdd;
+}
 
     // Check if the item already exists
     if (selectionContainer.querySelector(`input[value="${itemToAdd}"]`)) {

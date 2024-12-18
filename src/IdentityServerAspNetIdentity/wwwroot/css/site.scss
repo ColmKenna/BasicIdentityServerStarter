@@ -194,6 +194,10 @@ nav {
     margin-bottom: 12px;
 }
 
+.form-row.text-form-row,  {
+    align-items: baseline;
+}
+
 .add-claim-row {
     padding-top: 12px;
 }
@@ -203,6 +207,7 @@ nav {
     text-align: right;
     font-weight: 500;
     color: #555;
+    word-break: break-word;
 }
 
 .form-options {
@@ -230,6 +235,15 @@ nav {
     border: none;
 }
 
+.form-input-holder {
+    padding: 8px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
 
 .check-group-container {
@@ -245,6 +259,11 @@ nav {
     flex: 0 0 calc(33.333% - 20px)
 }
 
+.text-array-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
 
 .create-new-claim-row {
