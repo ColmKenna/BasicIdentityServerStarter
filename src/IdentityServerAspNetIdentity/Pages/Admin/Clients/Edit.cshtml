@@ -47,10 +47,12 @@
             <form-row  label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser"></form-row>
             <form-row  label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime"></form-row>
 
+        </tab-item>
+        <tab-item header="grant Types">
             <form-row-container label="grant Types">
 
                 <selection-container
-                    id="selection-roles-container"
+                    id="selection-grants-container"
                     source="@Model.Client.AvailableGrantTypes"
                     selected="@Model.Client.AllowedGrantTypes"
                     name="Client.AllowedGrantTypes[]"
@@ -65,21 +67,49 @@
 
         </tab-item>
         <tab-item header="Scopes">
-            @for (var i = 0; i < Model.Client.AllowedScopes.Count; i++)
-            {
-                <input asp-for="@Model.Client.AllowedScopes[i]"/>
-            }
-            <template id="scopeTemplate">
-                <input type="text" id="scope" name="scope" value="">
-            </template>
-            <button id="addScope">Add Scope</button>
+
+            <selection-container
+                id="selection-scopes-container"
+                source="@Model.AvailableScopes"
+                selected="@Model.Client.AllowedScopes"
+                name="Client.AllowedScopes[]"
+                title="AllowedScopes"
+                allow-add="true"
+                class="check-group-container  with-divider with-bottom-divider"
+            >
+            </selection-container>
 
         </tab-item>
         <tab-item header="URIs">
-            <field-container label="Redirect URIs" value="@string.Join(", ", Model.Client.RedirectUris)"/>
-            <field-container label="Post Logout Redirect URIs"
-                             value="@string.Join(", ", Model.Client.PostLogoutRedirectUris)"/>
-            <field-container label="Allowed CORS Origins" value="@string.Join(", ", Model.Client.AllowedCorsOrigins)"/>
+
+            <string-array-container
+                id="update-uris-container"
+                current="@Model.Client.RedirectUris"
+                name="Client.RedirectUris[]"
+                title="RedirectUris"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+                
+            </string-array-container>
+            
+            <string-array-container
+                id="update-post-logout-uris-container"
+                current="@Model.Client.PostLogoutRedirectUris"
+                name="Client.PostLogoutRedirectUris[]"
+                title="PostLogoutRedirectUris"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+            </string-array-container>
+
+            <string-array-container
+                id="update-allowed-cors-origins-container"
+                current="@Model.Client.AllowedCorsOrigins"
+                name="Client.AllowedCorsOrigins[]"
+                title="AllowedCorsOrigins"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+            
+            </string-array-container>
         </tab-item>
 
 
