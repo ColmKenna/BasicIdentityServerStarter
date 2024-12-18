@@ -15,13 +15,13 @@
 
     <tab>
         <tab-item header="Details" tab-id="details">
-            <input type="hidden" asp-for="Id" value="@Model.Id"/>
-            <input type="hidden" asp-for="User.Id" value="@Model.User.Id"/>
-            <input type="hidden" asp-for="User.PhoneNumberConfirmed" value="@Model.User.PhoneNumberConfirmed"/>
-            <input type="hidden" asp-for="User.TwoFactorEnabled" value="@Model.User.TwoFactorEnabled"/>
-            <input type="hidden" asp-for="User.LockoutEnabled" value="@Model.User.LockoutEnabled"/>
-            <input type="hidden" asp-for="User.LockoutEnd" value="@Model.User.LockoutEnd"/>
-            <input type="hidden" asp-for="User.AccessFailedCount" value="@Model.User.AccessFailedCount"/>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
+            <input type="hidden" asp-for="User.PhoneNumberConfirmed" value="@Model.User.PhoneNumberConfirmed" />
+            <input type="hidden" asp-for="User.TwoFactorEnabled" value="@Model.User.TwoFactorEnabled" />
+            <input type="hidden" asp-for="User.LockoutEnabled" value="@Model.User.LockoutEnabled" />
+            <input type="hidden" asp-for="User.LockoutEnd" value="@Model.User.LockoutEnd" />
+            <input type="hidden" asp-for="User.AccessFailedCount" value="@Model.User.AccessFailedCount" />
 
             <!-- Display user details -->
             <form-row for="User.UserName"> </form-row>
@@ -31,17 +31,13 @@
 
         </tab-item>
         <tab-item header="Roles" tab-id="roles">
-            <div id="selection-container" class="check-selection-container">
-                @foreach (var role in Model.AllRoles)
-                {
-                    <selection-item name="User.Roles[]" value="@role" checked="@Model.User.Roles.Contains(role)"></selection-item>
-                }
-                <button type="button" class="secondary-button" data-ck-modal-target="addRoleModal">Add Role</button>
-                <template id="addNewRoleTemplate">
-                    <selection-item name="User.Roles[]" value="" checked="true"></selection-item>
-                </template>
-
-            </div>
+            <selection-container id="selection-roles-container"
+                                 source="@Model.AllRoles"
+                                 selected="@Model.User.Roles"
+                                 name="User.Roles[]"
+                                 allow-add="@true"
+                                 title="Role">
+            </selection-container>
         </tab-item>
         <tab-item header="Claims" tab-id="claims">
             <template id="addClaimTemplate">
@@ -71,10 +67,11 @@
             </div>
 
             <div class="create-new-claim-row">
-                <button type="button" class="secondary-button" data-ck-modal-target="addClaimModal">Create new claim
+                <button type="button" class="secondary-button" data-ck-modal-target="addClaimModal">
+                    Create new claim
                 </button>
                 <!-- Hidden input to store the list of removed claims -->
-                <input type="hidden" id="ClaimsDeleted" name="ClaimsDeleted" value=""/>
+                <input type="hidden" id="ClaimsDeleted" name="ClaimsDeleted" value="" />
             </div>
 
         </tab-item>
@@ -94,66 +91,19 @@
         "Enter the following information:",
         "Add Claim",
         "Close",
-        "addNewClaim",
+        "addNewClaim()",
         new("claimTypeInput", "Claim Type"),
         new("claimValueInput", "Claim Value")
     );
 }
 
 @* <vc:boot-strap-modal model="modalViewModel"></vc:boot-strap-modal> *@
-<vc:html-modal model="modalViewModel"/>
+<vc:html-modal model="modalViewModel" />
 
 
-@{
-    var newRoleModalViewModel = new ModalViewModel(
-        "addRoleModal",
-        "Add New Role",
-        "Enter the following information:",
-        "Add Role",
-        "Close",
-        "addNewRole",
-        new ModalInputs("newRoleInput", "Role Name")
-    );
-}
-
-<vc:html-modal model="newRoleModalViewModel"/>
 
 
 <script>
-    
-    function addNewRole() {
-        const newRole = document.getElementById('newRoleInput').value;
-        const template = addNewRoleTemplate.content.cloneNode(true);
-        
-        // check that newRole is not empty
-        if (!newRole) {
-            alert('Role name cannot be empty.');
-            return;
-        }
-        
-        //select the first input element in the template and set the value to newRole
-        template.querySelector('input').setAttribute('value', newRole);
-        let selectionContainer =  document.getElementById('selection-container')
-        
-        // select the label and set the textContent to newRole
-        template.querySelector('label').textContent = newRole;
-        
-        
-        // check if selectionContainer contains the newRole
-        if (selectionContainer.contains(selectionContainer.querySelector(`input[value="${newRole}"]`))) {
-            alert('Role already exists.');
-            return;
-        }
-        
-        // check if the selectionContainer has a button
-        if (selectionContainer.querySelector('button')) {
-            selectionContainer.insertBefore(template, selectionContainer.querySelector('button'));
-        } else {
-            selectionContainer.appendChild(template);
-        }
-        
-    }
-    
     let removedClaims = [];
 
     function toggleRemovedClaim(claimType, rowId, buttonId) {

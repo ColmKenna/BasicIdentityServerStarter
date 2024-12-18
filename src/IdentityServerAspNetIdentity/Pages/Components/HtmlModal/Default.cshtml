@@ -26,9 +26,9 @@
     <div class="button-container">
         @if (!string.IsNullOrEmpty(Model.ConfirmButtonFunction))
         {
-            <button id="@($"confirmButton{@Model.ModalId}")" class="success-button" onclick="@($"{Model.ConfirmButtonFunction}()")">@Model.ConfirmButtonText</button>
+            <button id="@($"confirmButton{@Model.ModalId}")" type="button" class="success-button" onclick="@($"{Model.ConfirmButtonFunction}")">@Model.ConfirmButtonText</button>
         }
-        <button id="@($"closeButton{@Model.ModalId}")" class="danger-button" data-ck-modal-target-close="@Model.ModalId">@Model.CancelButtonText</button>
+        <button id="@($"closeButton{@Model.ModalId}")"  type="button" class="danger-button" data-ck-modal-target-close="@Model.ModalId">@Model.CancelButtonText</button>
     </div>
 </dialog>
 
