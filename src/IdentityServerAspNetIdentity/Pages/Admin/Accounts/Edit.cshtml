@@ -31,13 +31,14 @@
 
         </tab-item>
         <tab-item header="Roles" tab-id="roles">
-	        <vc:selection-container
-		        id="selection-roles-container"
-		        source="@Model.AllRoles"
-		        selected="@Model.User.Roles"
-		        name="User.Roles[]"
-		        allow-add="true"
-		        title="Role"/>
+            <vc:selection-container
+                id="selection-roles-container"
+                source="@Model.AllRoles"
+                selected="@Model.User.Roles"
+                name="User.Roles[]"
+                allow-add="true"
+                title="Role">
+            </vc:selection-container>
 
         </tab-item>
         <tab-item header="Claims" tab-id="claims">
