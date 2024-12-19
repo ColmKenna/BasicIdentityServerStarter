@@ -51,15 +51,15 @@
         <tab-item header="grant Types">
             <form-row-container label="grant Types">
 
-                <selection-container
+                <vc:selection-container
                     id="selection-grants-container"
                     source="@Model.Client.AvailableGrantTypes"
                     selected="@Model.Client.AllowedGrantTypes"
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
                     class="check-group-container  with-divider with-bottom-divider"
-                >
-                </selection-container>
+                />
+                
                 
          
             </form-row-container>
@@ -68,7 +68,7 @@
         </tab-item>
         <tab-item header="Scopes">
 
-            <selection-container
+            <vc:selection-container
                 id="selection-scopes-container"
                 source="@Model.AvailableScopes"
                 selected="@Model.Client.AllowedScopes"
@@ -76,8 +76,8 @@
                 title="AllowedScopes"
                 allow-add="true"
                 class="check-group-container  with-divider with-bottom-divider"
-            >
-            </selection-container>
+            />
+            
 
         </tab-item>
         <tab-item header="URIs">
