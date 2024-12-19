@@ -7,4 +7,5 @@ public interface IClientsRepository
 {
     public Task<List<ClientsSummary>> GetClients();
     Task<ClientViewModel?> GetClient(string clientId);
+    Task<ClientViewModel> UpdateClient(ClientViewModel client);
 }

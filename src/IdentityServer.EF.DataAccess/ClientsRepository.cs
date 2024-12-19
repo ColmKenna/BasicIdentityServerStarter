@@ -69,4 +69,89 @@ public class ClientsRepository : IClientsRepository
             .Select(clientToClientViewModel)
             .FirstOrDefaultAsync();
     }
+
+    public Task<ClientViewModel> UpdateClient(ClientViewModel client)
+    {
+        var existingClient = _dbContext.Clients
+            .Include(c => c.AllowedGrantTypes)
+            .Include(c => c.AllowedScopes)
+            .Include(c => c.RedirectUris)
+            .Include(c => c.PostLogoutRedirectUris)
+            .Include(c => c.AllowedCorsOrigins)
+            .Include(c => c.ClientSecrets)
+            .FirstOrDefault(c => c.Id == client.Id);
+
+        if (existingClient == null)
+        {
+            throw new InvalidOperationException("Client not found");
+        }
+        
+        existingClient.ClientId = client.ClientId;
+        existingClient.ClientName = client.ClientName;
+        existingClient.Description = client.Description;
+        existingClient.AllowAccessTokensViaBrowser = client.AllowAccessTokensViaBrowser;
+        existingClient.RequireConsent = client.RequireConsent;
+        existingClient.AlwaysIncludeUserClaimsInIdToken = client.AlwaysIncludeUserClaimsInIdToken;
+        existingClient.AccessTokenLifetime = client.AccessTokenLifetime;
+        existingClient.ClientUri = client.ClientUri;
+        existingClient.RedirectUris = client.RedirectUris.Select(r => new ClientRedirectUri
+        {
+            RedirectUri = r
+        }).ToList();
+        
+        
+        existingClient.PostLogoutRedirectUris.RemoveAll(p => !client.PostLogoutRedirectUris.Contains(p.PostLogoutRedirectUri));
+        var itemsToAdd = client.PostLogoutRedirectUris.Where(p => existingClient.PostLogoutRedirectUris.All(e => e.PostLogoutRedirectUri != p));
+        existingClient.PostLogoutRedirectUris.AddRange(itemsToAdd.Select(p => new ClientPostLogoutRedirectUri
+        {
+            PostLogoutRedirectUri = p
+        }));
+        
+        existingClient.AllowedCorsOrigins.RemoveAll(o => !client.AllowedCorsOrigins.Contains(o.Origin));
+        var originsToAdd = client.AllowedCorsOrigins.Where(o => existingClient.AllowedCorsOrigins.All(e => e.Origin != o));
+        existingClient.AllowedCorsOrigins.AddRange(originsToAdd.Select(o => new ClientCorsOrigin
+        {
+            Origin = o
+        }));
+        
+        existingClient.ClientSecrets.RemoveAll(s => !client.ClientSecrets.Select(cs => cs.Secret).Contains(s.Value));
+        var secretsToAdd = client.ClientSecrets.Where(s => existingClient.ClientSecrets.All(e => e.Value != s.Secret));
+        existingClient.ClientSecrets.AddRange(secretsToAdd.Select(s => new ClientSecret
+        {
+            Value = s.Secret,
+            Description = s.Description
+        }));
+        
+        existingClient.AllowedGrantTypes.RemoveAll(g => !client.AllowedGrantTypes.Contains(g.GrantType));
+        var grantTypesToAdd = client.AllowedGrantTypes.Where(g => existingClient.AllowedGrantTypes.All(e => e.GrantType != g));
+        existingClient.AllowedGrantTypes.AddRange(grantTypesToAdd.Select(g => new ClientGrantType
+        {
+            GrantType = g
+        }));
+        
+        existingClient.AllowedScopes.RemoveAll(s => !client.AllowedScopes.Contains(s.Scope));
+        var scopesToAdd = client.AllowedScopes.Where(s => existingClient.AllowedScopes.All(e => e.Scope != s));
+        existingClient.AllowedScopes.AddRange(scopesToAdd.Select(s => new ClientScope
+        {
+            Scope = s
+        }));
+        
+        existingClient.AllowedCorsOrigins.RemoveAll(o => !client.AllowedCorsOrigins.Contains(o.Origin));
+        var corsOriginsToAdd = client.AllowedCorsOrigins.Where(o => existingClient.AllowedCorsOrigins.All(e => e.Origin != o));
+        existingClient.AllowedCorsOrigins.AddRange(corsOriginsToAdd.Select(o => new ClientCorsOrigin
+        {
+            Origin = o
+        }));
+        
+        
+        
+        
+        
+        
+        _dbContext.Clients.Update(existingClient);
+        
+        return _dbContext
+            .SaveChangesAsync()
+            .ContinueWith(_ => client);
+    }
 }
