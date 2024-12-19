@@ -1,0 +1,51 @@
+﻿@using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@model IdentityServerAspNetIdentity.Pages.Components.SelectionContainer.SelectionContainerViewModel
+
+
+<div class="check-selection-container" id="@Model.Id">
+
+    @if (@Model.Source != null)
+    {
+        foreach (var item in Model.Source)
+        {
+            bool isChecked = Model.Selected?.Contains(item) == true;
+            
+            <selection-item name="@Model.Name" checked="@isChecked" value="@item">
+            </selection-item>
+        }
+        
+        @if (Model.AllowAdd)
+        {
+            
+            
+            var templateId = @Model.Id + "Template";
+            var modalId = @Model.Id + "Modal";
+            
+            <button type="button" class="secondary-button" data-ck-modal-target="@modalId">Add @Model.Title     </button>
+            
+            <template id="@templateId">
+                <selection-item name="@Model.Name" checked="true" value="">
+                </selection-item>
+            </template>
+            
+            var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}')";
+            
+            var newRoleModalViewModel = new ModalViewModel(
+                @modalId,
+                "Add New " + @Model.Title,
+                "Enter the following information:",
+                "Add " + @Model.Title,
+                "Close",
+                function,
+                new ModalInputs($"new{@Model.Id}Input", @Model.Title)
+            );
+
+            <vc:html-modal model="newRoleModalViewModel"/>
+
+
+            
+        }
+    }
+    
+</div>
+
