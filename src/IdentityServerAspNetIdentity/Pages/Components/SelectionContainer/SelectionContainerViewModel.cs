@@ -14,5 +14,5 @@ public class SelectionContainerViewModel
     public bool AllowAdd { get; set; }
     
     public string Title { get; set; } = String.Empty;
-    
+    public string CssClass { get; set; } = String.Empty;
 }
