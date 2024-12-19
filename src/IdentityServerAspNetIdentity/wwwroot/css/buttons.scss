@@ -1,9 +1,11 @@
-﻿$color-white: #fff;
+@use "sass:color";
+
+$color-white: #fff;
 $color-danger: #dc3545; // Bootstrap danger red
-$color-danger-hover: darken($color-danger, 10%);
-$color-danger-active: darken($color-danger, 20%);
+$color-danger-hover: color.adjust($color-danger, $lightness: -10%);
+$color-danger-active: color.adjust($color-danger, $lightness: -20%);
 $color-danger-focus-ring: rgba($color-danger, 0.25);
-$color-danger-disabled: lighten($color-danger, 20%);
+$color-danger-disabled: color.adjust($color-danger, $lightness: 20%);
 
 $bg-color: #f8f9fa;
 $color-dark-gray: #343a40;
@@ -47,7 +49,7 @@ $secondary-hover-color: #e0e0e0; // Slightly darker gray for hover
     }
 
     &:disabled {
-        background-color: lighten($bg-color, 20%);
+        background-color: color.adjust($bg-color, $lightness: 20%);
         cursor: not-allowed;
         opacity: 0.65;
     }
@@ -147,4 +149,3 @@ $secondary-hover-color: #e0e0e0; // Slightly darker gray for hover
 .btn-large {
     padding: 1rem 2rem;
 }
-
