@@ -8,6 +8,9 @@ using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace IdentityServer.EF.DataAccess;
 
+
+
+
 public class ClientsRepository : IClientsRepository
 {
     private readonly ConfigurationDbContext _dbContext;
@@ -45,7 +48,12 @@ public class ClientsRepository : IClientsRepository
         RedirectUris = c.RedirectUris.Select(r => r.RedirectUri).ToList(),
         PostLogoutRedirectUris = c.PostLogoutRedirectUris.Select(p => p.PostLogoutRedirectUri).ToList(),   
         AllowedCorsOrigins = c.AllowedCorsOrigins.Select(o => o.Origin).ToList(),
-        ClientUri = c.ClientUri
+        ClientUri = c.ClientUri,
+        ClientSecrets = c.ClientSecrets.Select(s => new ClientSecretViewModel
+         {
+             Description = s.Description,
+             Secret = s.Value
+        }).ToList()
     };
 
     public Task<ClientViewModel?> GetClient(string clientId)
@@ -54,6 +62,9 @@ public class ClientsRepository : IClientsRepository
             .Include(c => c.AllowedGrantTypes)
             .Include(c => c.AllowedScopes)
             .Include(c => c.RedirectUris)
+            .Include(c => c.PostLogoutRedirectUris)
+            .Include(c => c.AllowedCorsOrigins)
+            .Include(c => c.ClientSecrets)
             .Where(c => c.ClientId == clientId)
             .Select(clientToClientViewModel)
             .FirstOrDefaultAsync();

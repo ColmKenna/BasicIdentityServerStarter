@@ -1,0 +1,195 @@
+﻿@page "{clientId}"
+@using System.Linq.Expressions
+@using IdentityDataModels
+@using IdentityServerAspNetIdentity.Pages.Admin.Clients
+@using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@using IdentityServerAspNetIdentity.TagHelpers.Fields
+@using IdentityServerAspNetIdentity.TagHelpers.FormRow
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Mvc.ModelBinding.IModelMetadataProvider MetadataProvider
+@model IdentityServerAspNetIdentity.Pages.Admin.Clients.Edit
+
+<h1>Edit @Model.Client.ClientId</h1>
+<form method="post">
+    <tab id="clientDetails">
+        <tab-item header="Client Information">
+            <input type="hidden" asp-for="@Model.Client.ClientId"/>
+            <form-row for="@Model.Client.ClientName"></form-row>
+            <form-row for="@Model.Client.Description"></form-row>
+            <form-row for="@Model.Client.ClientUri"></form-row>
+        </tab-item>
+        <tab-item header="Security">
+
+            <div id="secretsHolder">
+                @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
+                {
+                <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
+                <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
+                }
+
+
+
+                <form-row-container>
+                <button type="button" class="success-button btn-small" data-ck-modal-target="addClientSecretModal">Add Secret
+                </button>
+                </form-row-container>
+
+                <template id="clientSecretTemplate">
+                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Description" root="@Model.Client.Description"></form-row-template>
+                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Secret" root="@Model.Client.ClientSecrets" hidden="true"></form-row-template>
+                </template>
+
+
+            </div>
+            <form-row  label="Require Consent" for="@Model.Client.RequireConsent"></form-row>
+            <form-row  label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser"></form-row>
+            <form-row  label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime"></form-row>
+
+        </tab-item>
+        <tab-item header="grant Types">
+            <form-row-container label="grant Types">
+
+                <selection-container
+                    id="selection-grants-container"
+                    source="@Model.Client.AvailableGrantTypes"
+                    selected="@Model.Client.AllowedGrantTypes"
+                    name="Client.AllowedGrantTypes[]"
+                    title="AllowedGrantTypes"
+                    class="check-group-container  with-divider with-bottom-divider"
+                >
+                </selection-container>
+                
+         
+            </form-row-container>
+
+
+        </tab-item>
+        <tab-item header="Scopes">
+
+            <selection-container
+                id="selection-scopes-container"
+                source="@Model.AvailableScopes"
+                selected="@Model.Client.AllowedScopes"
+                name="Client.AllowedScopes[]"
+                title="AllowedScopes"
+                allow-add="true"
+                class="check-group-container  with-divider with-bottom-divider"
+            >
+            </selection-container>
+
+        </tab-item>
+        <tab-item header="URIs">
+
+            <string-array-container
+                id="update-uris-container"
+                current="@Model.Client.RedirectUris"
+                name="Client.RedirectUris[]"
+                title="RedirectUris"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+                
+            </string-array-container>
+            
+            <string-array-container
+                id="update-post-logout-uris-container"
+                current="@Model.Client.PostLogoutRedirectUris"
+                name="Client.PostLogoutRedirectUris[]"
+                title="PostLogoutRedirectUris"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+            </string-array-container>
+
+            <string-array-container
+                id="update-allowed-cors-origins-container"
+                current="@Model.Client.AllowedCorsOrigins"
+                name="Client.AllowedCorsOrigins[]"
+                title="AllowedCorsOrigins"
+                allow-add="true"
+                class="with-divider with-bottom-divider">
+            
+            </string-array-container>
+        </tab-item>
+
+
+    </tab>
+
+</form>
+
+
+
+
+<script>
+    // addNewSecret
+    function addNewSecret() {
+        var secret = document.getElementById("newSecretInput").value;
+        var secretConfirm = document.getElementById("newSecretInputConfirm").value;
+        var description = document.getElementById("newSecretDescriptionInput").value;
+
+        if (secret !== secretConfirm) {
+            alert("Secrets do not match");
+            return;
+        }
+        // get the index of the new secret amount of field-containers with name starting with Client.ClientSecrets[ and ending with ].Description
+        var secrets = document.querySelectorAll('input[name^="Client.ClientSecrets["][name$="].Secret"]');
+        
+        var index = secrets.length;
+        var newSeceret = cloneClientSecretTemplate(index, description, secret);
+        // if secretsHolder has a button add new node before it
+        
+        var selectionContainer = document.getElementById("secretsHolder");
+        var button = selectionContainer.querySelector('button');
+        if (button) {
+            selectionContainer.insertBefore(newSeceret,button);
+        } else {
+            selectionContainer.appendChild(newSeceret);
+        }
+
+    }
+    function cloneClientSecretTemplate(index, descriptionValue, secretValue) {
+        // Access the template
+        const template = document.getElementById('clientSecretTemplate');
+
+        // Get the template content as a string
+        let templateHTML = template.innerHTML;
+
+        // Replace the placeholder {{index}} with the provided index
+        templateHTML = templateHTML.replace(/replace_with_index/g, index);
+
+        // Create a temporary container to parse the template into DOM elements
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = templateHTML;
+
+        // Select the parsed template content
+        const clonedElement = tempDiv.firstElementChild;
+
+        // Set the value for the description input
+        const descriptionInput = clonedElement.querySelector(`input[name="Client.ClientSecrets[${index}].Description"]`);
+        if (descriptionInput) {
+            descriptionInput.value = descriptionValue || ''; // Default to an empty string if no value is provided
+        }
+
+        // Set the value for the secret input
+        const secretInput = clonedElement.querySelector(`input[name="Client.ClientSecrets[${index}].Secret"]`);
+        if (secretInput) {
+            secretInput.value = secretValue || ''; // Default to an empty string if no value is provided
+        }
+
+        return clonedElement;
+    }
+</script>
+@{
+    var newClientSecretsViewModal = new ModalViewModel(
+        "addClientSecretModal",
+        "Add Client Secret",
+        "Enter the following information:",
+        "Add Secret",
+        "Close",
+        "addNewSecret()",
+        new ModalInputs("newSecretInput", "Secret", "password"),
+        new ModalInputs("newSecretInputConfirm", "Confirm Secret", "password"),
+        new ModalInputs("newSecretDescriptionInput", "Description", "text")
+    );
+}
+<vc:html-modal model="newClientSecretsViewModal"/>
