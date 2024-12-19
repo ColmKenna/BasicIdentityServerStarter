@@ -1,0 +1,65 @@
+﻿@using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@model IdentityServerAspNetIdentity.Pages.Components.StringArrayContainer.StringArrayContainerViewModel
+
+
+
+<div class="with-divider with-bottom-divider @Model.CssClass">
+    <div class="form-row text-form-row">
+        <label class="form-label">@Model.Title</label>
+        <div class="text-array-container form-input" id="@Model.Id">
+            
+            @foreach (var item in Model.Current)
+            {
+                <input
+                    name="@Model.Name"
+                    value="@item"
+                    type="text"
+                    class="form-input">
+            }
+            
+        </div>
+    </div>
+
+    @if (Model.AllowAdd)
+    {
+        var modalId = $"{Model.Id}Modal";
+        var templateId = $"{Model.Id}Template";
+            
+        var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}')";
+            
+        var newRoleModalViewModel = new ModalViewModel(
+            @modalId,
+            "Add New " + @Model.Title,
+            "Enter the following information:",
+            "Add " + @Model.Title,
+            "Close",
+            function,
+            new ModalInputs($"new{@Model.Id}Input", @Model.Title)
+        );
+
+        <template id="@templateId">
+            <input
+                name="@Model.Name"
+                value=""
+                type="text"
+                class="form-input"/>
+        </template>
+        
+        <div class="form-row">
+            <label class="form-label"></label>
+            <button
+                type="button"
+                class="success-button btn-small"
+                data-ck-modal-target="@modalId">
+                Add @Model.Title   
+            </button>
+        </div>
+
+
+        <vc:html-modal model="newRoleModalViewModel"/>
+
+        
+        
+    }
+
+</div>
