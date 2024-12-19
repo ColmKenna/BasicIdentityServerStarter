@@ -13,6 +13,7 @@
 
 <h1>Edit @Model.Client.ClientId</h1>
 <form method="post">
+    @Html.AntiForgeryToken()
     <tab id="clientDetails">
         <tab-item header="Client Information">
             <input type="hidden" asp-for="@Model.Client.ClientId"/>
@@ -25,15 +26,15 @@
             <div id="secretsHolder">
                 @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
                 {
-                <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
-                <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
+                    <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
+                    <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
                 }
 
 
 
                 <form-row-container>
-                <button type="button" class="success-button btn-small" data-ck-modal-target="addClientSecretModal">Add Secret
-                </button>
+                    <button type="button" class="success-button btn-small" data-ck-modal-target="addClientSecretModal">Add Secret
+                    </button>
                 </form-row-container>
 
                 <template id="clientSecretTemplate">
@@ -43,78 +44,80 @@
 
 
             </div>
-            <form-row  label="Require Consent" for="@Model.Client.RequireConsent"></form-row>
-            <form-row  label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser"></form-row>
-            <form-row  label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime"></form-row>
+            <form-row label="Require Consent" for="@Model.Client.RequireConsent"></form-row>
+            <form-row label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser"></form-row>
+            <form-row label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime"></form-row>
 
         </tab-item>
         <tab-item header="grant Types">
             <form-row-container label="grant Types">
 
-                <selection-container
+                <vc:selection-container
                     id="selection-grants-container"
                     source="@Model.Client.AvailableGrantTypes"
                     selected="@Model.Client.AllowedGrantTypes"
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
-                    class="check-group-container  with-divider with-bottom-divider"
-                >
-                </selection-container>
-                
-         
+                    css-class="check-group-container  with-divider with-bottom-divider"/>
+
+
+
             </form-row-container>
 
 
         </tab-item>
         <tab-item header="Scopes">
 
-            <selection-container
+            <vc:selection-container
                 id="selection-scopes-container"
                 source="@Model.AvailableScopes"
                 selected="@Model.Client.AllowedScopes"
                 name="Client.AllowedScopes[]"
                 title="AllowedScopes"
                 allow-add="true"
-                class="check-group-container  with-divider with-bottom-divider"
-            >
-            </selection-container>
+                css-class="check-group-container  with-divider with-bottom-divider"/>
+
 
         </tab-item>
         <tab-item header="URIs">
 
-            <string-array-container
+            <vc:string-array-container
                 id="update-uris-container"
                 current="@Model.Client.RedirectUris"
                 name="Client.RedirectUris[]"
                 title="RedirectUris"
                 allow-add="true"
-                class="with-divider with-bottom-divider">
-                
-            </string-array-container>
-            
-            <string-array-container
+                css-class="with-divider with-bottom-divider">
+
+            </vc:string-array-container>
+
+            <vc:string-array-container
                 id="update-post-logout-uris-container"
                 current="@Model.Client.PostLogoutRedirectUris"
                 name="Client.PostLogoutRedirectUris[]"
                 title="PostLogoutRedirectUris"
                 allow-add="true"
                 class="with-divider with-bottom-divider">
-            </string-array-container>
+            </vc:string-array-container>
 
-            <string-array-container
+            <vc:string-array-container
                 id="update-allowed-cors-origins-container"
                 current="@Model.Client.AllowedCorsOrigins"
                 name="Client.AllowedCorsOrigins[]"
                 title="AllowedCorsOrigins"
                 allow-add="true"
                 class="with-divider with-bottom-divider">
-            
-            </string-array-container>
+
+            </vc:string-array-container>
         </tab-item>
 
 
     </tab>
 
+    <div class="button-container">
+        <button type="submit" class="primary-button">Save</button>
+        <a asp-page="/Admin/Clients/Details" asp-route-clientId="@Model.Client.ClientId" class="secondary-button">Cancel</a>
+    </div>
 </form>
 
 
