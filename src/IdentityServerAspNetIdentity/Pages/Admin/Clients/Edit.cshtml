@@ -23,13 +23,14 @@
         </tab-item>
         <tab-item header="Security">
 
+            <div>
             <div id="secretsHolder">
                 @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
                 {
                     <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
                     <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
                 }
-
+            </div>
 
 
                 <form-row-container>
@@ -50,6 +51,7 @@
 
         </tab-item>
         <tab-item header="grant Types">
+            <form-row label="Require PKCE" for="@Model.Client.RequirePkce"></form-row>
             <form-row-container label="grant Types">
 
                 <vc:selection-container
@@ -59,6 +61,16 @@
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
                     css-class="check-group-container  with-divider with-bottom-divider"/>
+
+
+                <vc:selection-container
+                    id="selection-app-types-container"
+                    source="@Model.Client.AppTypes"
+                    name="Client.AppTypes[]"
+                    title="Application Types"
+                    as-radio="true"
+                    css-class="check-group-container  with-divider with-bottom-divider"/>
+
 
 
 
@@ -87,7 +99,9 @@
                 name="Client.RedirectUris[]"
                 title="RedirectUris"
                 allow-add="true"
-                css-class="with-divider with-bottom-divider">
+                css-class="with-bottom-divider"
+                deleted-items-name="DeletedRedirectUris">
+            >
 
             </vc:string-array-container>
 
@@ -97,7 +111,8 @@
                 name="Client.PostLogoutRedirectUris[]"
                 title="PostLogoutRedirectUris"
                 allow-add="true"
-                class="with-divider with-bottom-divider">
+                css-class="with-bottom-divider"
+                deleted-items-name="DeletedPostLogoutRedirectUris">
             </vc:string-array-container>
 
             <vc:string-array-container
@@ -106,7 +121,7 @@
                 name="Client.AllowedCorsOrigins[]"
                 title="AllowedCorsOrigins"
                 allow-add="true"
-                class="with-divider with-bottom-divider">
+                deleted-items-name="DeletedAllowedCorsOrigins">
 
             </vc:string-array-container>
         </tab-item>
@@ -142,13 +157,9 @@
         // if secretsHolder has a button add new node before it
         
         var selectionContainer = document.getElementById("secretsHolder");
-        var button = selectionContainer.querySelector('button');
-        if (button) {
-            selectionContainer.insertBefore(newSeceret,button);
-        } else {
+        
             selectionContainer.appendChild(newSeceret);
-        }
-
+        
     }
     function cloneClientSecretTemplate(index, descriptionValue, secretValue) {
         // Access the template

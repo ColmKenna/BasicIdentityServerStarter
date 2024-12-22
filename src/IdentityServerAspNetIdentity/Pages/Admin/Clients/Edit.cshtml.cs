@@ -20,6 +20,15 @@ public class Edit : PageModel
     public ClientViewModel Client { get;  set; }
     public List<string> AvailableScopes { get; private set; }
     
+    [BindProperty]
+    public List<string> DeletedRedirectUris { get; set; }
+    
+    [BindProperty]
+    public List<string> DeletedPostLogoutRedirectUris { get; set; }
+   
+    [BindProperty]
+    public List<string> DeletedAllowedCorsOrigins { get; set; }
+    
     public async Task OnGetAsync(string clientId)
     {
         Client = await _clientsRepository.GetClient(clientId);
@@ -34,6 +43,20 @@ public class Edit : PageModel
             return Page();
         }
 
+        foreach (var deletedRedirectUri in DeletedRedirectUris)
+        {
+            Client.RedirectUris.Remove(deletedRedirectUri);
+        }
+        
+        foreach (var deletedPostLogoutRedirectUri in DeletedPostLogoutRedirectUris)
+        {
+            Client.PostLogoutRedirectUris.Remove(deletedPostLogoutRedirectUri);
+        }
+        
+        foreach (var deletedAllowedCorsOrigin in DeletedAllowedCorsOrigins)
+        {
+            Client.AllowedCorsOrigins.Remove(deletedAllowedCorsOrigin);
+        }
         var result = await _clientsRepository.UpdateClient(Client);
         return RedirectToPage("Index");
     }
