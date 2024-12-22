@@ -3,20 +3,45 @@
 
 
 
-<div class="with-divider with-bottom-divider @Model.CssClass">
+<div class="  @Model.CssClass">
     <div class="form-row text-form-row">
         <label class="form-label">@Model.Title</label>
-        <div class="text-array-container form-input" id="@Model.Id">
-            
-            @foreach (var item in Model.Current)
+        <div class="text-array-container " id="@Model.Id">
+            @if(!Model.Current.Any())
             {
-                <input
-                    name="@Model.Name"
-                    value="@item"
-                    type="text"
-                    class="form-input">
+                <label class="empty-list-label">
+                    No entries for @Model.Title   
+                </label>
             }
             
+            @for(int sourceIndex = 0; sourceIndex < Model.Current.Count(); sourceIndex++)
+            {
+
+                var item = Model.Current.ElementAt(sourceIndex);
+               
+                var name = @Model.Name.Replace("[", "").Replace("]", "") + "[" + sourceIndex.ToString() + "]";
+                var currentId = @Model.Name.Replace("[", "").Replace("]", "") + "-" + sourceIndex;
+
+                <div class="text-array-container-row">
+                    <input
+                        name="@name"
+                        value="@item"
+                        type="text"
+                        class="form-input"/>
+
+                    @if (Model.AllowDelete)
+                    {
+                        <button type="button" id="toggle-button-@sourceIndex" class="delete-icon-button"
+                                onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
+                    }
+                </div>
+                sourceIndex++;
+
+            }
+
+            <input type="hidden" name="@Model.DeletedItemsName" value=""/>
+
+
         </div>
     </div>
 
@@ -25,24 +50,26 @@
         var modalId = $"{Model.Id}Modal";
         var templateId = $"{Model.Id}Template";
             
-        var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}')";
+        var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}','text-array-container-row')";
             
-        var newRoleModalViewModel = new ModalViewModel(
-            @modalId,
-            "Add New " + @Model.Title,
-            "Enter the following information:",
-            "Add " + @Model.Title,
-            "Close",
-            function,
-            new ModalInputs($"new{@Model.Id}Input", @Model.Title)
-        );
+
 
         <template id="@templateId">
-            <input
-                name="@Model.Name"
-                value=""
-                type="text"
-                class="form-input"/>
+            @{ var name = @Model.Name.Replace("[", "").Replace("]", "") + "[_replace-with-index_]"; }
+            <div class="text-array-container-row">
+                <input
+                    name="@name"
+                    value=""
+                    type="text"
+                    class="form-input"/>
+                @if (Model.AllowDelete)
+                {
+                    <button type="button" id="toggle-button-_replace-with-index_" class="delete-icon-button"
+                            onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
+                }
+            </div>
+
+
         </template>
         
         <div class="form-row">
@@ -55,11 +82,19 @@
             </button>
         </div>
 
-
+        var newRoleModalViewModel = new ModalViewModel(
+            @modalId,
+            "Add New " + @Model.Title,
+            "Enter the following information:",
+            "Add " + @Model.Title,
+            "Close",
+            function,
+            new ModalInputs($"new{@Model.Id}Input", @Model.Title)
+        );
         <vc:html-modal model="newRoleModalViewModel"/>
 
         
         
     }
-
 </div>
+
