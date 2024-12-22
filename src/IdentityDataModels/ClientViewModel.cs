@@ -21,9 +21,10 @@ public class ClientViewModel
 
     
     public string ClientId { get; set; } = "";
-    public string ClientName { get; set; } = "";
+    public string? ClientName { get; set; } = "";
     public string? Description { get; set; } = "";
     public IList<string> AllowedGrantTypes { get; set; } = new List<string>();
+    public bool RequirePkce { get; set; }
     public bool AllowAccessTokensViaBrowser { get; set; }
     public bool RequireConsent { get; set; }
     public bool AlwaysIncludeUserClaimsInIdToken { get; set; } = false;
@@ -36,6 +37,8 @@ public class ClientViewModel
     public IList<string> AllowedCorsOrigins { get; set; } = new List<string>();
     public string? ClientUri { get; set; }
     public List<ClientSecretViewModel> ClientSecrets { get; set; } = new List<ClientSecretViewModel>();
+    public IEnumerable<string> AppTypes => 
+        new List<string> { "Web", "SPA", "Native/Desktop", "Machine", "Hybrid" };
 }
 
 public class ClientSecretViewModel

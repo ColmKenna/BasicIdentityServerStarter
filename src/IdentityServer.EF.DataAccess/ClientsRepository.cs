@@ -39,6 +39,7 @@ public class ClientsRepository : IClientsRepository
         ClientName = c.ClientName,
         Description = c.Description,
         AllowedGrantTypes = c.AllowedGrantTypes.Select(g => g.GrantType).ToList(),
+        RequirePkce = c.RequirePkce,
         AllowAccessTokensViaBrowser = c.AllowAccessTokensViaBrowser,
         RequireConsent = c.RequireConsent,
         AlwaysIncludeUserClaimsInIdToken = c.AlwaysIncludeUserClaimsInIdToken,
@@ -128,6 +129,7 @@ public class ClientsRepository : IClientsRepository
         {
             GrantType = g
         }));
+        existingClient.RequirePkce = client.RequirePkce;
         
         existingClient.AllowedScopes.RemoveAll(s => !client.AllowedScopes.Contains(s.Scope));
         var scopesToAdd = client.AllowedScopes.Where(s => existingClient.AllowedScopes.All(e => e.Scope != s));
