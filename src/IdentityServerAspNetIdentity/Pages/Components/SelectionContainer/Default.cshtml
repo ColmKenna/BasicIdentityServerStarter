@@ -4,32 +4,32 @@
 
 <div class="check-selection-container " id="@Model.Id">
 
+
     @if (@Model.Source != null)
     {
-        foreach (var item in Model.Source)
-        {
-            bool isChecked = Model.Selected?.Contains(item) == true;
-            
-            <selection-item name="@Model.Name" checked="@isChecked" value="@item">
-            </selection-item>
-        }
-        
+            @foreach (var item in Model.Source)
+            {
+                bool isChecked = Model.Selected?.Contains(item) == true;
+       
+                <vc:selection-item name="@Model.Name" is-checked="@isChecked" value="@item" as-radio="@Model.AsRadio"/>
+                
+            }
+
         @if (Model.AllowAdd)
         {
-            
-            
             var templateId = @Model.Id + "Template";
             var modalId = @Model.Id + "Modal";
-            
-            <button type="button" class="secondary-button" data-ck-modal-target="@modalId">Add @Model.Title     </button>
-            
+
+            <button type="button" class="secondary-button" data-ck-modal-target="@modalId">
+                Add @Model.Title     </button>
+
             <template id="@templateId">
-                <selection-item name="@Model.Name" checked="true" value="">
-                </selection-item>
+                <vc:selection-item name="@Model.Name" is-checked="true" value=""/>
+                
             </template>
-            
-            var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}')";
-            
+
+            var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}','check-selection-item')";
+
             var newRoleModalViewModel = new ModalViewModel(
                 @modalId,
                 "Add New " + @Model.Title,
@@ -41,11 +41,8 @@
             );
 
             <vc:html-modal model="newRoleModalViewModel"/>
-
-
-            
         }
     }
-    
+
 </div>
 

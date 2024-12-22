@@ -4,7 +4,7 @@ namespace IdentityServerAspNetIdentity.Pages.Components.SelectionContainer;
 
 public class SelectionContainerViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(string id, IEnumerable<string> source, IEnumerable<string> selected, string name,string cssClass="",  string title = "", bool allowAdd = false)
+    public IViewComponentResult Invoke(string id, IEnumerable<string> source, IEnumerable<string> selected, string name,string cssClass="",  string title = "", bool allowAdd = false, bool asRadio = false)
     {
         var model = new SelectionContainerViewModel
         {
@@ -14,7 +14,8 @@ public class SelectionContainerViewComponent : ViewComponent
             Name = name,
             Title = title,
             AllowAdd = allowAdd,
-            CssClass = cssClass
+            CssClass = cssClass,
+            AsRadio = asRadio,
         };
 
         return View(model);

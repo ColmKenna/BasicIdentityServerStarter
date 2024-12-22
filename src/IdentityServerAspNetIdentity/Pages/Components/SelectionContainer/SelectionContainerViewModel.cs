@@ -15,4 +15,6 @@ public class SelectionContainerViewModel
     
     public string Title { get; set; } = String.Empty;
     public string CssClass { get; set; } = String.Empty;
+    public bool AsRadio { get; set; }    
+    
 }
