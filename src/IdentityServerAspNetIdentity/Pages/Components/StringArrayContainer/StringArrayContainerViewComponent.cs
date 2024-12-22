@@ -4,7 +4,7 @@ namespace IdentityServerAspNetIdentity.Pages.Components.StringArrayContainer;
 
 public class StringArrayContainerViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(string id, IEnumerable<string> current, string name, string cssClass="", string title="", bool allowAdd= false)
+    public IViewComponentResult Invoke(string id, IEnumerable<string> current, string name, string cssClass="", string title="", bool allowAdd= false, string deletedItemsName="")
     {
         var model = new StringArrayContainerViewModel
         {
@@ -13,7 +13,8 @@ public class StringArrayContainerViewComponent : ViewComponent
             Name = name,
             Title = title,
             AllowAdd = allowAdd,
-            CssClass = cssClass
+            CssClass = cssClass,
+            DeletedItemsName = deletedItemsName
         };
         return View(model);
     }

@@ -12,4 +12,9 @@ public class StringArrayContainerViewModel
     
     public string Title { get; set; } = String.Empty;
     public string CssClass { get; set; } = String.Empty;
+    
+    public string DeletedItemsName { get; set; } = String.Empty;
+    
+    public bool AllowDelete => !String.IsNullOrEmpty(DeletedItemsName);
+
 }
