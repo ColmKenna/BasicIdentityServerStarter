@@ -61,17 +61,109 @@
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
                     css-class="check-group-container  with-divider with-bottom-divider"/>
+            </form-row-container>
+            <form-row-container label="application Types">
 
 
-                <vc:selection-container
+            <vc:selection-container
                     id="selection-app-types-container"
-                    source="@Model.Client.AppTypes"
-                    name="Client.AppTypes[]"
+                    source="@Model.AppTypes"
+                    name="AppTypes"
                     title="Application Types"
                     as-radio="true"
+                    source-details="@Model.GrantTypes"
                     css-class="check-group-container  with-divider with-bottom-divider"/>
 
 
+                @{
+                    var jsonGrantInfo = System.Text.Json.JsonSerializer.Serialize(Model.ApplicationGrantInfo);
+                }
+            <script>
+
+                const applicationGrantInfo = @Html.Raw(jsonGrantInfo);
+
+
+                function getPkceAndGrantInfoByType(data, type) {
+                    if (!data || !data.Applications) {
+                        console.error("Invalid data structure.");
+                        return [];
+                    }
+
+                    return data.Applications
+                        .filter(app => app.Type === type) // Filter by Type
+                        .map(app => ({
+                            PKCE: app.PKCE,
+                            GrantType: app.GrantType
+                        }));
+                }
+                
+                
+                
+                
+                // on document ready
+                document.addEventListener("DOMContentLoaded", function () {
+                    // get the radio buttons within selection-app-types-container
+                    const radios = document.querySelectorAll("#selection-app-types-container input[type='radio']");
+                    
+                    // add event listener to each radio button
+                    radios.forEach(function (radio) {
+                        radio.addEventListener("change", function () {
+                            // get the selected radio button
+                            const selectedRadio = document.querySelector('input[name="AppTypes"]:checked');
+                            // get the value of the selected radio button
+                            const selectedValue = selectedRadio.value;
+                            
+                            // get the pkce and grant info by the selected value
+                            const pkceAndGrantInfo = getPkceAndGrantInfoByType(applicationGrantInfo, selectedValue);
+                            
+                            if (pkceAndGrantInfo.length === 0) {
+                                console.error("No PKCE and Grant Info found for the selected value.");
+                                return;                                
+                            }
+                            
+                            // get the grant types selection container
+                            const grantTypesContainer = document.getElementById("selection-grants-container");
+                            // get the grant types selection items
+                            const grantTypes = grantTypesContainer.querySelectorAll(".check-selection-item");
+                            
+                            // loop through the grant types selection items
+                            grantTypes.forEach(function (grantType) {
+                                const grantTypeValue = grantType.querySelector("input").value;
+                                // check if the grant type value is in the pkceAndGrantInfo
+                                const isGrantTypeInPkceAndGrantInfo = pkceAndGrantInfo.some(function (info) {
+                                    return info.GrantType === grantTypeValue;
+                                });
+                                
+                                // if the grant type is in the pkceAndGrantInfo
+                                if (isGrantTypeInPkceAndGrantInfo) {
+                                    // check the grant type
+                                    grantType.querySelector("input").checked = true;
+                                } else {
+                                    // uncheck the grant type
+                                    grantType.querySelector("input").checked = false;
+                                }
+                                
+                            });
+                            
+                            // set the pkce value
+                            const pkceInput = document.getElementsByName("Client.RequirePkce")[0];
+                            // if the pkce value is Required
+                            pkceInput.checked = pkceAndGrantInfo[0].PKCE === "Required";
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                                                        
+                       
+                        });
+                    });
+                }); 
+                
+            
+            </script>
 
 
             </form-row-container>
