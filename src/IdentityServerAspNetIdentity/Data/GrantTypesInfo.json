@@ -2,67 +2,67 @@
   "Applications": [
     {
       "Type": "Web",
-      "GrantType": "AuthorizationCode",
+      "GrantType": "authorization_code",
       "PKCE": "Optional",
       "Description": "Traditional server-side web applications, such as those built with frameworks like ASP.NET or Django, that securely store the client secret. PKCE is optional but can enhance security by protecting the authorization code exchange process."
     },
     {
       "Type": "SPA",
-      "GrantType": "AuthorizationCode",
+      "GrantType": "authorization_code",
       "PKCE": "Required",
       "Description": "Single Page Applications (e.g., React, Angular, Vue) that run entirely in the browser and cannot securely store client secrets. PKCE is required to protect the authorization code exchange from interception in browser-based environments."
     },
     {
       "Type": "Native/Desktop",
-      "GrantType": "AuthorizationCode",
+      "GrantType": "authorization_code",
       "PKCE": "Required",
       "Description": "Native or desktop applications, such as Windows, macOS, or mobile apps, which cannot securely store client secrets. PKCE is required to ensure secure token exchange in environments where secrets cannot be kept confidential."
     },
     {
       "Type": "Machine",
-      "GrantType": "ClientCredentials",
+      "GrantType": "client_credentials",
       "PKCE": "Not Applicable",
       "Description": "Machine-to-machine communication, such as APIs or background services that operate without user interaction. PKCE is not applicable because these clients use a secure client secret instead of relying on user interaction."
     },
     {
       "Type": "Hybrid",
-      "GrantType": "Hybrid",
+      "GrantType": "hybrid",
       "PKCE": "Recommended",
       "Description": "Applications requiring both front-end and back-end token access, combining immediate and backend-secure access to resources. PKCE is recommended for additional security, especially if the client includes SPA or mobile components."
     },
     {
       "Type": "IoT Device",
-      "GrantType": "DeviceFlow",
+      "GrantType": "device_code",
       "PKCE": "Not Applicable",
       "Description": "Devices with limited input capabilities, such as smart TVs, IoT gadgets, or other devices where user interaction is delegated to another device. PKCE is not applicable since the Device Flow uses an entirely different mechanism for user verification."
     },
     {
       "Type": "CLI Tool",
-      "GrantType": "DeviceFlow",
+      "GrantType": "device_code",
       "PKCE": "Not Applicable",
       "Description": "Command-line interface tools or applications that cannot directly open a browser or interact with the user for authentication. PKCE is not applicable since Device Flow handles user verification separately."
     },
     {
       "Type": "Trusted Legacy App",
-      "GrantType": "ResourceOwnerPassword",
+      "GrantType": "password",
       "PKCE": "Not Applicable",
       "Description": "Legacy or trusted applications that directly handle user credentials, often for compatibility with older systems. PKCE is not applicable as this flow directly exchanges user credentials for tokens."
     },
     {
       "Type": "Multi-Tenant SaaS App",
-      "GrantType": "AuthorizationCode",
+      "GrantType": "authorization_code",
       "PKCE": "Recommended",
       "Description": "Cloud-based Software as a Service (SaaS) applications serving multiple tenants and securely interacting with APIs on behalf of users. PKCE is recommended to ensure secure token exchange, particularly if the app has SPA components."
     },
     {
       "Type": "B2B Integration Service",
-      "GrantType": "ClientCredentials",
+      "GrantType": "client_credentials",
       "PKCE": "Not Applicable",
       "Description": "Business-to-business services that need to exchange tokens for delegation or impersonation scenarios in third-party integrations. PKCE is not applicable as client credentials are securely exchanged using a client secret."
     },
     {
       "Type": "Federated Identity App",
-      "GrantType": "Hybrid",
+      "GrantType": "hybrid",
       "PKCE": "Optional",
       "Description": "Applications leveraging federated identity systems like SAML or OpenID Connect for seamless authentication across systems. PKCE is optional but recommended if there are SPA or mobile components in the application."
     }

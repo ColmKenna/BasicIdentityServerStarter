@@ -1,5 +1,7 @@
-﻿using IdentityDataModels;
+﻿using System.Text.Json;
+using IdentityDataModels;
 using IdentityServer.EF.DataAccess;
+using IdentityServerAspNetIdentity.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -29,10 +31,39 @@ public class Edit : PageModel
     [BindProperty]
     public List<string> DeletedAllowedCorsOrigins { get; set; }
     
+    public Dictionary<string, string> GrantTypes { get; set; }
+
+    public List<string> AppTypes { get; set; }
+    
+    public ApplicationGrantInfo ApplicationGrantInfo { get; set; }
+
+    
+    
+    private ApplicationGrantInfo GetApplicationGrantInfo()
+    {
+        
+        
+        var applicationGrantInfo = new ApplicationGrantInfo();
+        
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "GrantTypesInfo.json");
+        if (System.IO.File.Exists(filePath))
+        {
+            var jsonData = System.IO.File.ReadAllText(filePath);
+            applicationGrantInfo = JsonSerializer.Deserialize<ApplicationGrantInfo>(jsonData);
+
+        }
+        return applicationGrantInfo;
+    }
+    
     public async Task OnGetAsync(string clientId)
     {
         Client = await _clientsRepository.GetClient(clientId);
         AvailableScopes = await _scopesRepository.GetScopes();
+        ApplicationGrantInfo = GetApplicationGrantInfo();
+        // get a dictionary of the grant types and their descriptions
+        GrantTypes = ApplicationGrantInfo.Applications.ToDictionary(x => x.Type, x => x.Description);
+        AppTypes = GrantTypes.Keys.ToList();
+
     }
     
     public async Task<IActionResult> OnPostAsync()

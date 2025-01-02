@@ -10,8 +10,12 @@
             @foreach (var item in Model.Source)
             {
                 bool isChecked = Model.Selected?.Contains(item) == true;
-       
-                <vc:selection-item name="@Model.Name" is-checked="@isChecked" value="@item" as-radio="@Model.AsRadio"/>
+                var details = "";
+                if (Model.SourceDetails.ContainsKey(@item))
+                {
+                    details = Model.SourceDetails[@item];
+                }
+                <vc:selection-item name="@Model.Name" is-checked="@isChecked" value="@item" as-radio="@Model.AsRadio" description="@details"/>
                 
             }
 

@@ -1,7 +1,12 @@
 ﻿@model IdentityServerAspNetIdentity.Pages.Components.SelectionItem.SelectionItemViewComponent
 
 
-@{ var inputType = Model.AsRadio ? "radio" : "checkbox"; }
+@{
+    var inputType = Model.AsRadio ? "radio" : "checkbox";
+    var hasDescription = !string.IsNullOrEmpty(Model.Description);
+}
+
+<div class="check-selection-item-container">
 
 <div class="check-selection-item">
     @if (Model.IsChecked)
@@ -14,4 +19,27 @@
     }
     <label class="check-selection-label" for="@Model.Name">@Model.Value</label>
 
+</div>
+
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+        var popoverId = "popover-description-for-" + Model.Value;
+
+        <button type="button" popovertarget="@popoverId" class="info-icon"></button>
+    
+        <div popover id="@popoverId" class="popover">
+            <div class="popover-header">
+                <h3>@Model.Value</h3>
+            </div>
+            
+            <div class="popover-body">
+                <p>@Model.Description</p>
+            </div>
+            <div class="popover-footer">
+                <button type="button" popovertarget="@popoverId" popovertargetaction="hide">Close</button>
+            </div>
+        </div>
+
+
+            }
 </div>

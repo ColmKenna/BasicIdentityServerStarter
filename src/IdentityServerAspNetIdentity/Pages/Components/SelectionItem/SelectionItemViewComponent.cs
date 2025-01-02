@@ -13,12 +13,17 @@ public class SelectionItemViewComponent : ViewComponent
     public string Value { get; set; }
     public bool AsRadio { get; set; }
     
-    public IViewComponentResult Invoke(string name, bool isChecked, string value, bool asRadio = false)
+    public string Description { get; set; }
+    public string ParentId { get; set; }
+
+    public IViewComponentResult Invoke(string name, bool isChecked, string value, string parentId = "",    bool asRadio = false, string description = "")
     {
         Name = name;
         IsChecked = isChecked;
         Value = value;
         AsRadio = asRadio;
+        Description = description;
+        ParentId = parentId;
         
         return View(this);
     }
