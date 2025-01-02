@@ -210,6 +210,13 @@ nav {
     word-break: break-word;
 }
 
+// 2nd child in the row
+.form-row > :nth-child(2) , .claim-row > :nth-child(2){
+    flex: 1;
+}
+
+
+
 .form-options {
     width: 160px;
     font-weight: 500;
@@ -337,8 +344,12 @@ nav {
 }
 
 .check-selection-item {
-    margin-bottom: 12px;
     position: relative;
+}
+.check-selection-item-container{
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .check-selection-item input[type="checkbox"], .check-selection-item input[type="radio"]  {
@@ -380,4 +391,8 @@ nav {
     justify-content: space-between;
     gap: 12px;
     margin-top: 12px;
+}
+
+.centered {
+    justify-content: center;
 }
