@@ -24,23 +24,26 @@
         <tab-item header="Security">
 
             <div>
-            <div id="secretsHolder">
-                @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
-                {
-                    <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
-                    <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
-                }
-            </div>
+                <div id="secretsHolder">
+                    @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
+                    {
+                        <form-row for="@Model.Client.ClientSecrets[i].Description"></form-row>
+                        <form-row for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row>
+                    }
+                </div>
 
 
                 <form-row-container>
-                    <button type="button" class="success-button btn-small" data-ck-modal-target="addClientSecretModal">Add Secret
+                    <button type="button" class="success-button btn-small" data-ck-modal-target="addClientSecretModal">
+                        Add Secret
                     </button>
                 </form-row-container>
 
                 <template id="clientSecretTemplate">
-                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Description" root="@Model.Client.Description"></form-row-template>
-                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Secret" root="@Model.Client.ClientSecrets" hidden="true"></form-row-template>
+                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Description"
+                                       root="@Model.Client.Description"></form-row-template>
+                    <form-row-template for="@Model.Client.ClientSecrets.FirstOrDefault().Secret"
+                                       root="@Model.Client.ClientSecrets" hidden="true"></form-row-template>
                 </template>
 
 
@@ -51,6 +54,8 @@
 
         </tab-item>
         <tab-item header="grant Types">
+
+
             <form-row label="Require PKCE" for="@Model.Client.RequirePkce"></form-row>
             <form-row-container label="grant Types">
 
@@ -61,113 +66,16 @@
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
                     css-class="check-group-container  with-divider with-bottom-divider"/>
-            </form-row-container>
-            <form-row-container label="application Types">
-
-
-            <vc:selection-container
-                    id="selection-app-types-container"
-                    source="@Model.AppTypes"
-                    name="AppTypes"
-                    title="Application Types"
-                    as-radio="true"
-                    source-details="@Model.GrantTypes"
-                    css-class="check-group-container  with-divider with-bottom-divider"/>
-
-
-                @{
-                    var jsonGrantInfo = System.Text.Json.JsonSerializer.Serialize(Model.ApplicationGrantInfo);
-                }
-            <script>
-
-                const applicationGrantInfo = @Html.Raw(jsonGrantInfo);
-
-
-                function getPkceAndGrantInfoByType(data, type) {
-                    if (!data || !data.Applications) {
-                        console.error("Invalid data structure.");
-                        return [];
-                    }
-
-                    return data.Applications
-                        .filter(app => app.Type === type) // Filter by Type
-                        .map(app => ({
-                            PKCE: app.PKCE,
-                            GrantType: app.GrantType
-                        }));
-                }
-                
-                
-                
-                
-                // on document ready
-                document.addEventListener("DOMContentLoaded", function () {
-                    // get the radio buttons within selection-app-types-container
-                    const radios = document.querySelectorAll("#selection-app-types-container input[type='radio']");
-                    
-                    // add event listener to each radio button
-                    radios.forEach(function (radio) {
-                        radio.addEventListener("change", function () {
-                            // get the selected radio button
-                            const selectedRadio = document.querySelector('input[name="AppTypes"]:checked');
-                            // get the value of the selected radio button
-                            const selectedValue = selectedRadio.value;
-                            
-                            // get the pkce and grant info by the selected value
-                            const pkceAndGrantInfo = getPkceAndGrantInfoByType(applicationGrantInfo, selectedValue);
-                            
-                            if (pkceAndGrantInfo.length === 0) {
-                                console.error("No PKCE and Grant Info found for the selected value.");
-                                return;                                
-                            }
-                            
-                            // get the grant types selection container
-                            const grantTypesContainer = document.getElementById("selection-grants-container");
-                            // get the grant types selection items
-                            const grantTypes = grantTypesContainer.querySelectorAll(".check-selection-item");
-                            
-                            // loop through the grant types selection items
-                            grantTypes.forEach(function (grantType) {
-                                const grantTypeValue = grantType.querySelector("input").value;
-                                // check if the grant type value is in the pkceAndGrantInfo
-                                const isGrantTypeInPkceAndGrantInfo = pkceAndGrantInfo.some(function (info) {
-                                    return info.GrantType === grantTypeValue;
-                                });
-                                
-                                // if the grant type is in the pkceAndGrantInfo
-                                if (isGrantTypeInPkceAndGrantInfo) {
-                                    // check the grant type
-                                    grantType.querySelector("input").checked = true;
-                                } else {
-                                    // uncheck the grant type
-                                    grantType.querySelector("input").checked = false;
-                                }
-                                
-                            });
-                            
-                            // set the pkce value
-                            const pkceInput = document.getElementsByName("Client.RequirePkce")[0];
-                            // if the pkce value is Required
-                            pkceInput.checked = pkceAndGrantInfo[0].PKCE === "Required";
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                                                        
-                       
-                        });
-                    });
-                }); 
-                
-            
-            </script>
 
 
             </form-row-container>
-
+            <form-row-container label="">
+                <div class="button-container centered">
+                    <button type="button" class="btn-large info-button" data-ck-modal-target="addAppTypeModal">Set
+                        defaults based off an application type
+                    </button>
+                </div>
+            </form-row-container>
 
         </tab-item>
         <tab-item header="Scopes">
@@ -193,7 +101,7 @@
                 allow-add="true"
                 css-class="with-bottom-divider"
                 deleted-items-name="DeletedRedirectUris">
-            >
+                >
 
             </vc:string-array-container>
 
@@ -223,9 +131,89 @@
 
     <div class="button-container">
         <button type="submit" class="primary-button">Save</button>
-        <a asp-page="/Admin/Clients/Details" asp-route-clientId="@Model.Client.ClientId" class="secondary-button">Cancel</a>
+        <a asp-page="/Admin/Clients/Details" asp-route-clientId="@Model.Client.ClientId"
+           class="secondary-button">Cancel</a>
     </div>
 </form>
+
+<dialog id="addAppTypeModal" class="standard-modal">
+    <h2>Add Application Type</h2>
+    <div class="modal-body">
+        @foreach (var appType in Model.AppTypes)
+        {
+            <div class="check-selection-item">
+
+                <input type="radio" name="AppTypes" value="@appType"/>
+                @* <label class="check-selection-label" for="AppTypes">@Model.Value</label> *@
+                <label class="check-selection-label" for="AppTypes">@appType</label>
+
+                <div class="modal-details">
+                    @Model.GrantTypes[appType]
+                </div>
+            </div>
+        }
+    </div>
+    <div class="button-container">
+        <button id="use-selected-apptype" type="button" class="success-button"
+                onclick="setGrantsAndPkceFromDialog()"
+                data-ck-modal-target-close="addAppTypeModal">
+            Use Selected
+        </button>
+        <button id="cancel-use-selected-apptype" type="button"
+                class="danger-button"
+                data-ck-modal-target-close="addAppTypeModal">
+            Cancel
+        </button>
+    </div>
+</dialog>
+
+@{
+    var jsonGrantInfo = System.Text.Json.JsonSerializer.Serialize(Model.ApplicationGrantInfo);
+}
+<script>
+
+    const applicationGrantInfo = @Html.Raw(jsonGrantInfo);
+
+
+    function getPkceAndGrantInfoByType(data, type) {
+        if (!data || !data.Applications) {
+            console.error("Invalid data structure.");
+            return [];
+        }
+
+        return data.Applications
+            .filter(app => app.Type === type) // Filter by Type
+            .map(app => ({
+                PKCE: app.PKCE,
+                GrantType: app.GrantType
+            }));
+    }
+
+    function setGrantsAndPkceFromDialog() {
+        const selectedRadio = document.querySelector('input[name="AppTypes"]:checked');
+        if (selectedRadio) {
+            const selectedValue = selectedRadio.value;
+            const pkceAndGrantInfo = getPkceAndGrantInfoByType(applicationGrantInfo, selectedValue);
+
+            if (pkceAndGrantInfo.length === 0) {
+                console.error("No PKCE and Grant Info found for the selected value.");
+                return;
+            }
+
+            const grantTypesContainer = document.getElementById("selection-grants-container");
+            grantTypesContainer
+                .querySelectorAll('input[name="Client.AllowedGrantTypes[]"]')
+                .forEach(input => {
+                    input.checked = pkceAndGrantInfo.some(info => info.GrantType === input.value);
+                });
+
+            const pkceInput = document.getElementsByName("Client.RequirePkce")[0];
+            pkceInput.checked = pkceAndGrantInfo[0].PKCE === "Required";
+
+
+        }
+    }
+</script>
 
 
 
@@ -243,16 +231,17 @@
         }
         // get the index of the new secret amount of field-containers with name starting with Client.ClientSecrets[ and ending with ].Description
         var secrets = document.querySelectorAll('input[name^="Client.ClientSecrets["][name$="].Secret"]');
-        
+
         var index = secrets.length;
         var newSeceret = cloneClientSecretTemplate(index, description, secret);
         // if secretsHolder has a button add new node before it
-        
+
         var selectionContainer = document.getElementById("secretsHolder");
-        
-            selectionContainer.appendChild(newSeceret);
-        
+
+        selectionContainer.appendChild(newSeceret);
+
     }
+
     function cloneClientSecretTemplate(index, descriptionValue, secretValue) {
         // Access the template
         const template = document.getElementById('clientSecretTemplate');
