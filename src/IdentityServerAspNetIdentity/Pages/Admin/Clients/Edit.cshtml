@@ -139,16 +139,19 @@
 <dialog id="addAppTypeModal" class="standard-modal">
     <h2>Add Application Type</h2>
     <div class="modal-body">
-        @foreach (var appType in Model.AppTypes)
+        @foreach (var appType in Model.ApplicationGrantInfo.Applications)
         {
             <div class="check-selection-item">
 
-                <input type="radio" name="AppTypes" value="@appType"/>
+                <input type="radio" name="AppTypes" value="@appType.Type"/>
                 @* <label class="check-selection-label" for="AppTypes">@Model.Value</label> *@
-                <label class="check-selection-label" for="AppTypes">@appType</label>
+                <label class="check-selection-label" >@appType.Type </label>
 
                 <div class="modal-details">
-                    @Model.GrantTypes[appType]
+
+                    <p><label>PCKE:</label>@appType.PKCE</p>
+                    <p><label>Grant Type:</label>@appType.GrantType</p>
+                    @appType.Description
                 </div>
             </div>
         }
