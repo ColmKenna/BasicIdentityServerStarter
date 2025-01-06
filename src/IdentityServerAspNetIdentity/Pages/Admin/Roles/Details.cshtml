@@ -1,0 +1,37 @@
+﻿@page "{roleName}"
+@model IdentityServerAspNetIdentity.Pages.Admin.Roles.Details
+
+
+
+<tab id="role-details">
+    <tab-item header="Role Information" tab-id="role-information">
+        <field-container label="RoleId" value="@Model.Role.Id" />
+        <field-container label="RoleName" value="@Model.Role.Name" />
+    </tab-item>
+
+    <tab-item header="Users" tab-id="users">
+        <table class="table table-sm table-responsive">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </tab-item>
+    
+</tab>
+
+
+
