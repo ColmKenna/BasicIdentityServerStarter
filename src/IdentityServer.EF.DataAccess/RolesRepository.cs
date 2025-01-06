@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using IdentityDataModels;
 using IdentityServer.EF.DataAccess.DataMigrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,35 @@ public class RolesRepository : IRolesRepository
     {
         return applicationDbContext.Roles.Select(mapToRole).FirstOrDefaultAsync(role => role.Name == name);
     }
+    
+    
+    public async Task<List<ApplicationUserSummary>> GetUsersInRole(string roleName)
+    {
+        var userSummaries = await applicationDbContext.UserRoles
+            .Join(applicationDbContext.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => new { ur, r })
+            .Where(joined => joined.r.Name == roleName) // Filter by role name
+            .Join(applicationDbContext.Users, joined => joined.ur.UserId, u => u.Id, (joined, u) => new { joined, u })
+            .GroupJoin(
+                applicationDbContext.UserClaims, 
+                joined => joined.u.Id, 
+                uc => uc.UserId, 
+                (joined, claims) => new { joined.u, joined.joined.r, Claims = claims }
+            )
+            .Select(result => new ApplicationUserSummary
+            {
+                Id = result.u.Id,
+                UserName = result.u.UserName ?? string.Empty,
+                Email = result.u.Email ?? string.Empty,
+                PhoneNumber = result.u.PhoneNumber ?? string.Empty,
+                UserClaims = result.Claims.Select(claim => claim.ClaimType + ":" + claim.ClaimValue).ToList()
+            })
+            .ToListAsync();
+
+        return userSummaries;
+    }
+
+    
+    
     
     // update a role
     public async Task<Role?> UpdateRole(Role role)
