@@ -396,3 +396,20 @@ nav {
 .centered {
     justify-content: center;
 }
+
+.items-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.items-container > * {
+    padding: 12px;
+    border-radius: 8px;
+    min-width: 120px;
+    flex: 1;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: cadetblue;
+}
