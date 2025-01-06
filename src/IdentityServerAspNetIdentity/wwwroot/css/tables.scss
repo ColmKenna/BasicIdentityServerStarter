@@ -22,6 +22,11 @@ $colour-striped: #a9a9a9;
     background-color: $colour-light-grey;
     border-bottom: 2px solid $colour-border; // Black border    
   }
+  
+  th.actions-column {
+    // it shouldn't take up too much space
+    width: 100px;
+  }
 
   @media screen and (max-width: 600px) {
     td {
