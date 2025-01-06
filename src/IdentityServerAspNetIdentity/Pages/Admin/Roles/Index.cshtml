@@ -1,0 +1,25 @@
+﻿@page
+@model IdentityServerAspNetIdentity.Pages.Admin.Roles.Index
+
+<table class="table table-bordered table-striped table-sm table-responsive">
+    <thead>
+    <tr>
+        <th>Role</th>
+        <th class="actions-column">Actions</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    
+    @foreach (var role in Model.Roles)
+    {
+        <tr>
+            <td>@role.Name</td>
+            <td class="button-container">
+                <info-link href="@Url.Page("/Admin/Roles/Details", new {roleName = role.Name})" size="Small">Details</info-link>
+                <primary-link href="@Url.Page("/Admin/Roles/Edit", new {roleName = role.Name})" size="Small">Edit</primary-link>
+            </td>
+        </tr>
+    }
+    
+</table>
