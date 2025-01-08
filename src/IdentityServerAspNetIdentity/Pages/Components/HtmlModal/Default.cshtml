@@ -2,7 +2,7 @@
 @model IdentityServerAspNetIdentity.Pages.Components.HtmlModal.ModalViewModel 
 
 <link rel="stylesheet" href="~/@(nameof(IdentityServerAspNetIdentity)).styles.css" />
-<dialog id="@Model.ModalId">
+<dialog id="@Model.ModalId" class="modal-input">
     <h2>@Model.ModalTitle</h2>
     <p>@Model.Prompt</p>
 
