@@ -1,0 +1,82 @@
+﻿@using IdentityServerAspNetIdentity.Pages.Components.AddScript
+@model IdentityServerAspNetIdentity.Pages.Components.HtmlSelectionDialog.HtmlSelectionViewModel 
+
+<link rel="stylesheet" href="~/@(nameof(IdentityServerAspNetIdentity)).styles.css" />
+<dialog id="@Model.ModalId"  class="modal-input">
+    <h2>@Model.ModalTitle</h2>
+    <p>@Model.Prompt</p>
+
+    
+    @* selection box for @Model.Items *@
+    <select id="@(Model.SelectionId + "Input")"  class="form-control">
+        @foreach (var item in Model.Items)
+        {
+            @if (Model.SelectedValue == item.Value)
+            {
+                <option value="@item.Value" selected>@item.Text</option>
+            }
+            else
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        }
+    </select>
+
+    
+
+    <div class="button-container">
+        @if (!string.IsNullOrEmpty(Model.ConfirmButtonFunction))
+        {
+            <button id="@($"confirmButton{@Model.ModalId}")" type="button" class="success-button" onclick="@($"{Model.ConfirmButtonFunction}")">@Model.ConfirmButtonText</button>
+        }
+        <button id="@($"closeButton{@Model.ModalId}")"  type="button" class="danger-button" data-ck-modal-target-close="@Model.ModalId">@Model.CancelButtonText</button>
+    </div>
+</dialog>
+
+<script>
+    document.getElementById(`@($"confirmButton{@Model.ModalId}")`).addEventListener('click', function () {
+        if (document.getElementById('@Model.ModalId')) {
+            
+            // clear the inputs
+            document.querySelectorAll('#@Model.ModalId input').forEach(input => {
+                input.value = '';
+            });            
+            document.getElementById('@Model.ModalId').close();
+        }
+    });
+    
+</script>
+
+@{
+    var setOpenModalsButton = @"     
+    document.addEventListener('DOMContentLoaded', function() {
+        const openButtons = document.querySelectorAll('[data-ck-modal-target]');
+        openButtons.forEach(button => {
+            button.addEventListener('click', function () {
+            const targetDialogId = this.getAttribute('data-ck-modal-target');
+            const targetDialog = document.getElementById(targetDialogId);
+            if (targetDialog) {
+                targetDialog.showModal();
+            }
+            });
+        });
+    });
+    ";
+
+    var setCloseModalsButton = @"           document.addEventListener('DOMContentLoaded', function() {
+        const closeButtons = document.querySelectorAll('[data-ck-modal-target-close]');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const targetDialogId = this.getAttribute('data-ck-modal-target-close');
+            const targetDialog = document.getElementById(targetDialogId);
+            if (targetDialog) {
+                targetDialog.close();
+            }
+        });
+    });
+    });";
+}
+
+<vc:add-script script="@setOpenModalsButton"></vc:add-script>
+<vc:add-script script="@setCloseModalsButton"></vc:add-script>
