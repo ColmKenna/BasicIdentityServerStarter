@@ -1,4 +1,6 @@
-﻿namespace IdentityServerAspNetIdentity.Pages.Components.SelectionContainer;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace IdentityServerAspNetIdentity.Pages.Components.SelectionContainer;
 
 public class SelectionContainerViewModel
 {
@@ -17,4 +19,5 @@ public class SelectionContainerViewModel
     public string CssClass { get; set; } = String.Empty;
     public bool AsRadio { get; set; }
     public Dictionary<string,string> SourceDetails { get; set; }
+    public List<SelectListItem> AddFromDatasource { get; set; }
 }

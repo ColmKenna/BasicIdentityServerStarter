@@ -1,26 +1,27 @@
 ﻿@using IdentityServerAspNetIdentity.Pages.Components.AddScript
-@model IdentityServerAspNetIdentity.Pages.Components.HtmlModal.ModalViewModel 
+@model IdentityServerAspNetIdentity.Pages.Components.HtmlSelectionDialog.HtmlSelectionViewModel 
 
 <link rel="stylesheet" href="~/@(nameof(IdentityServerAspNetIdentity)).styles.css" />
-<dialog id="@Model.ModalId" class="modal-input">
+<dialog id="@Model.ModalId"  class="modal-input">
     <h2>@Model.ModalTitle</h2>
     <p>@Model.Prompt</p>
 
-    @foreach (var input in Model.Inputs)
-    {
-        <div class="form-group">
-            <label for="@input.InputId">@input.InputLabel</label>
-            <input
-                type="@(!string.IsNullOrEmpty(input.InputType) ? input.InputType : "text")"
-                class="form-control"
-                id="@input.InputId"
-                name="@input.InputId"
-                @(string.IsNullOrEmpty(input.InputPlaceholder) ? string.Empty : $"placeholder='{input.InputPlaceholder}'")
-                @(input.Required.HasValue && input.Required.Value ? "required" : string.Empty) 
-                value="@input.InputDefaultValue"
-                />
-        </div>
-    }
+    
+    @* selection box for @Model.Items *@
+    <select id="@(Model.SelectionId + "Input")"  class="form-control">
+        @foreach (var item in Model.Items)
+        {
+            @if (Model.SelectedValue == item.Value)
+            {
+                <option value="@item.Value" selected>@item.Text</option>
+            }
+            else
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        }
+    </select>
+
     
 
     <div class="button-container">
