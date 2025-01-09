@@ -11,13 +11,13 @@
 <div class="check-selection-item">
     @if (Model.IsChecked)
     {
-        <input type="@inputType" name="@Model.Name" value="@Model.Value" checked/>
+        <input type="@inputType" name="@Model.Name" value="@Model.Value.Id" checked/>
     }
     else
     {
-        <input type="@inputType" name="@Model.Name" value="@Model.Value"/>
+        <input type="@inputType" name="@Model.Name" value="@Model.Value.Id"/>
     }
-    <label class="check-selection-label" for="@Model.Name">@Model.Value</label>
+    <label class="check-selection-label" for="@Model.Name">@Model.Value.Value</label>
 
 </div>
 
