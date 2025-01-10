@@ -1,5 +1,19 @@
 ﻿function addNewItem(nameOfItem, itemToAddId, roleTemplateId, selectionContainerId, rowClass) {
-    const itemToAdd = document.getElementById(itemToAddId).value;
+    const itemToAddElement = document.getElementById(itemToAddId);
+
+    let itemToAdd;
+    let textToAdd;
+
+    if (itemToAddElement.tagName === 'SELECT') {
+        const selectedOption = itemToAddElement.options[itemToAddElement.selectedIndex];
+        itemToAdd = selectedOption.value;
+        textToAdd = selectedOption.textContent;
+    } else {
+        itemToAdd = itemToAddElement.value;
+        textToAdd = itemToAdd;
+    }
+
+    
     
     // Check that the itemToAdd is not empty
     if (!itemToAdd) {
@@ -25,7 +39,7 @@
     // Set the text content of the label in the template
     const label = template.querySelector('label');
     if (label) {
-        label.textContent = itemToAdd;
+        label.textContent = textToAdd;
     }
     
   

@@ -7,9 +7,9 @@ public class SelectionContainerViewModel
     
     public string Id { get; set; }
     
-    public IEnumerable<string> Source { get; set; }
+    public IEnumerable<SelectionContainerItemModel> Source { get; set; }
 
-    public IEnumerable<string> Selected { get; set; }
+    public IEnumerable<SelectionContainerItemModel> Selected { get; set; }
 
     public string Name { get; set; }
 

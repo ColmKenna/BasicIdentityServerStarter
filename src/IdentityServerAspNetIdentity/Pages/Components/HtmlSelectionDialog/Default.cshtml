@@ -8,7 +8,7 @@
 
     
     @* selection box for @Model.Items *@
-    <select id="@(Model.SelectionId + "Input")"  class="form-control">
+    <select id="@Model.SelectionId"  class="form-control">
         @foreach (var item in Model.Items)
         {
             @if (Model.SelectedValue == item.Value)

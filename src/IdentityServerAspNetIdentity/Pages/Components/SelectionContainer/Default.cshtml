@@ -1,5 +1,6 @@
 ﻿@using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
 @using IdentityServerAspNetIdentity.Pages.Components.HtmlSelectionDialog
+@using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
 @using IdentityServerAspNetIdentity.Pages.Components.SelectionItem
 @using Microsoft.EntityFrameworkCore
 @model IdentityServerAspNetIdentity.Pages.Components.SelectionContainer.SelectionContainerViewModel
@@ -14,9 +15,9 @@
         {
             bool isChecked = Model.Selected?.Contains(item) == true;
             var details = "";
-            if (Model.SourceDetails.ContainsKey(@item))
+            if (Model.SourceDetails.ContainsKey(@item.Id))
             {
-                details = Model.SourceDetails[@item];
+                details = Model.SourceDetails[@item.Id];
             }
             <vc:selection-item name="@Model.Name" is-checked="@isChecked" value="@item" as-radio="@Model.AsRadio" description="@details"/>
         }
@@ -30,7 +31,15 @@
                 Add @Model.Title </button>
 
             <template id="@templateId">
-                <vc:selection-item name="@Model.Name" is-checked="true" value=""/>
+                @{
+                    var emptyValue = new SelectionContainerItemModel
+                    {
+                        Id = "",
+                        Value = ""
+                    }
+                    ;
+                }
+                <vc:selection-item name="@Model.Name" is-checked="true" value="@emptyValue"/>
 
             </template>
 
@@ -45,8 +54,9 @@
                     "Add",
                     "Close",
                     function,
-                    "addFromDatasourceInput",
+                    $"new{Model.Id}Input",
                     null,
+                        
                     Model.AddFromDatasource
                 );
 

@@ -1,6 +1,8 @@
 @page
 @using IdentityServerAspNetIdentity.Pages.Components.ClaimEdit
 @using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
+@using IdentityServerAspNetIdentity.TagHelpers.FormRow
 @using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IdentityServerAspNetIdentity.Pages.Admin.Accounts.Edit
@@ -33,8 +35,8 @@
         <tab-item header="Roles" tab-id="roles">
             <vc:selection-container
                 id="selection-roles-container"
-                source="@Model.AllRoles"
-                selected="@Model.User.Roles"
+                source="@Model.AllRoles.Select(x => new SelectionContainerItemModel { Id = x, Value = x})"
+                selected="@Model.User.Roles.Select(x => new SelectionContainerItemModel { Id = x, Value = x})"
                 name="User.Roles[]"
                 allow-add="true"
                 title="Role">

@@ -3,6 +3,8 @@
 @using IdentityDataModels
 @using IdentityServerAspNetIdentity.Pages.Admin.Clients
 @using IdentityServerAspNetIdentity.Pages.Components.HtmlModal
+@using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
+@using IdentityServerAspNetIdentity.Pages.Components.StringArrayContainer
 @using IdentityServerAspNetIdentity.TagHelpers.Fields
 @using IdentityServerAspNetIdentity.TagHelpers.FormRow
 @using IdentityServerAspNetIdentity.TagHelpers.Tabs
@@ -61,8 +63,8 @@
 
                 <vc:selection-container
                     id="selection-grants-container"
-                    source="@Model.Client.AvailableGrantTypes"
-                    selected="@Model.Client.AllowedGrantTypes"
+                    source="@Model.Client.AvailableGrantTypes.Select(x => new SelectionContainerItemModel { Id = x, Value = x })"
+                    selected="@Model.Client.AllowedGrantTypes.Select(x => new SelectionContainerItemModel { Id = x, Value = x })"
                     name="Client.AllowedGrantTypes[]"
                     title="AllowedGrantTypes"
                     css-class="check-group-container  with-divider with-bottom-divider"/>
@@ -82,8 +84,8 @@
 
             <vc:selection-container
                 id="selection-scopes-container"
-                source="@Model.AvailableScopes"
-                selected="@Model.Client.AllowedScopes"
+                source="@Model.AvailableScopes.Select(x => new SelectionContainerItemModel { Id = x, Value = x })"
+                selected="@Model.Client.AllowedScopes.Select(x => new SelectionContainerItemModel { Id = x, Value = x })"
                 name="Client.AllowedScopes[]"
                 title="AllowedScopes"
                 allow-add="true"

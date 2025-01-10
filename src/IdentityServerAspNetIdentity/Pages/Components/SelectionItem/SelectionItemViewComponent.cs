@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace IdentityServerAspNetIdentity.Pages.Components.SelectionItem;
@@ -10,13 +11,13 @@ public class SelectionItemViewComponent : ViewComponent
     
     public string Name { get; set; }
     public bool IsChecked { get; set; }
-    public string Value { get; set; }
+    public SelectionContainerItemModel Value { get; set; }
     public bool AsRadio { get; set; }
     
     public string Description { get; set; }
     public string ParentId { get; set; }
 
-    public IViewComponentResult Invoke(string name, bool isChecked, string value, string parentId = "",    bool asRadio = false, string description = "")
+    public IViewComponentResult Invoke(string name, bool isChecked, SelectionContainerItemModel value, string parentId = "",    bool asRadio = false, string description = "")
     {
         Name = name;
         IsChecked = isChecked;
