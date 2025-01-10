@@ -1,4 +1,8 @@
 ﻿@page "{roleName}"
+@using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
+@using IdentityServerAspNetIdentity.TagHelpers.Fields
+@using IdentityServerAspNetIdentity.TagHelpers.FormRow
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @model IdentityServerAspNetIdentity.Pages.Admin.Roles.Edit
 
 
@@ -14,8 +18,8 @@
 
             <vc:selection-container
                 id="selection-scopes-container"
-                source="@Model.Users.Select(x => x.UserName)"
-                selected="@Model.Users.Select(x => x.UserName)"
+                source="@Model.Users.Select(x =>  new SelectionContainerItemModel { Id = x.Id , Value = x.UserName })"
+                selected="@Model.Users.Select(x =>  new SelectionContainerItemModel { Id = x.Id , Value = x.UserName })"
                 name="Users[]"
                 title="Users"
                 allow-add="true"
