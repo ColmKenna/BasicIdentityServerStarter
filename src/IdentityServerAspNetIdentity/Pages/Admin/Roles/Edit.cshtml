@@ -1,33 +1,45 @@
 ﻿@page "{roleName}"
+@using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
+@using IdentityServerAspNetIdentity.TagHelpers.Fields
+@using IdentityServerAspNetIdentity.TagHelpers.FormRow
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @model IdentityServerAspNetIdentity.Pages.Admin.Roles.Edit
 
 
+<form method="post">
+    <tab id="role-details">
+        <tab-item header="Role Information" tab-id="role-information">
+            <field-container label="RoleId" value="@Model.Role.Id" />
+            <field-container label="RoleName" value="@Model.Role.Name" />
+            
+            <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id" />
+            <input type="hidden" asp-for="Role.Name" value="@Model.Role.Name" />
+        </tab-item>
 
-<tab id="role-details">
-    <tab-item header="Role Information" tab-id="role-information">
-        <field-container label="RoleId" value="@Model.Role.Id" />
-        <field-container label="RoleName" value="@Model.Role.Name" />
-    </tab-item>
+        <tab-item header="Users" tab-id="users">
+            <form-row-container label="Users">
 
-    <tab-item header="Users" tab-id="users">
-        <form-row-container label="Users">
-
-            <vc:selection-container
-                id="selection-scopes-container"
-                source="@Model.Users.Select(x => x.UserName)"
-                selected="@Model.Users.Select(x => x.UserName)"
-                name="Users[]"
-                title="Users"
-                allow-add="true"
-                add-from-datasource="@Model.UserSelectListItems"
-                css-class="check-group-container  with-divider with-bottom-divider"/>
+                <vc:selection-container
+                    id="selection-scopes-container"
+                    source="@Model.Users.Select(x =>  new SelectionContainerItemModel { Id = x.Id , Value = x.UserName })"
+                    selected="@Model.Users.Select(x =>  new SelectionContainerItemModel { Id = x.Id , Value = x.UserName })"
+                    name="Users[]"
+                    title="Users"
+                    allow-add="true"
+                    add-from-datasource="@Model.UserSelectListItems"
+                    css-class="check-group-container  with-divider with-bottom-divider"/>
 
 
-        </form-row-container>
-    </tab-item>
+            </form-row-container>
+        </tab-item>
 
-</tab>
+    </tab>
 
+    <div class="button-container">
+        <button type="submit" class="primary-button">Save</button>
+        <a asp-page="/Admin/Role/Details" asp-route-id="@Model.Role.Name" class="secondary-button">Cancel</a>
+    </div>
+</form>
 
 
 
