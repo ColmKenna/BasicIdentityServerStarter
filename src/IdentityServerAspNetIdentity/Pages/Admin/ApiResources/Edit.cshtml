@@ -33,4 +33,10 @@
         <input asp-for="ApiResource.RequireResourceIndicator" type="checkbox" />
     </div>
     <button type="submit">Save</button>
+    @if (Model.ApiResource == null)
+    {
+        <div>
+            <span>Update failed. Please try again.</span>
+        </div>
+    }
 </form>

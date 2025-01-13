@@ -9,7 +9,7 @@ namespace IdentityServer.EF.DataAccess
         Task<List<ApiResource>> GetApiResources();
         Task<ApiResource> GetApiResourceById(int id);
         Task CreateApiResource(ApiResource apiResource);
-        Task UpdateApiResource(ApiResource apiResource);
+        Task<bool> UpdateApiResource(ApiResource apiResource);
         Task DeleteApiResource(int id);
     }
 }

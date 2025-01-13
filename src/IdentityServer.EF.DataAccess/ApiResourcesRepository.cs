@@ -31,10 +31,11 @@ namespace IdentityServer.EF.DataAccess
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateApiResource(ApiResource apiResource)
+        public async Task<bool> UpdateApiResource(ApiResource apiResource)
         {
             _dbContext.ApiResources.Update(apiResource);
-            await _dbContext.SaveChangesAsync();
+            var result = await _dbContext.SaveChangesAsync();
+            return result > 0;
         }
 
         public async Task DeleteApiResource(int id)
