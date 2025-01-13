@@ -11,5 +11,9 @@ public interface IRolesRepository
     
     Task<Role?> UpdateRole(Role role);
     Task<Role?> CreateRole(Role role);
+
+    Task<bool> DeleteRole(string id);
+    
+    Task<bool> DeleteRoleByName(string id);
     
 }

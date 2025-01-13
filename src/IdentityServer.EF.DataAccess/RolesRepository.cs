@@ -107,6 +107,8 @@ public class RolesRepository : IRolesRepository
     }
     
     
+    
+    
     // delete a role
     public async Task<bool> DeleteRole(string id)
     {
@@ -135,4 +137,17 @@ public class RolesRepository : IRolesRepository
         await applicationDbContext.SaveChangesAsync();
         return true;
     }
+    
+    // delete a role by name
+    public async Task<bool> DeleteRoleByName(string name)
+    {
+        var roleEntity = await applicationDbContext.Roles.FirstOrDefaultAsync(r => r.Name == name);
+        if (roleEntity == null)
+        {
+            return false;
+        }
+        
+        return await DeleteRole(roleEntity.Id); 
+
+    } 
 }

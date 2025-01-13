@@ -18,6 +18,7 @@
             <td class="button-container">
                 <info-link href="@Url.Page("/Admin/Roles/Details", new {roleName = role.Name})" size="Small">Details</info-link>
                 <primary-link href="@Url.Page("/Admin/Roles/Edit", new {roleName = role.Name})" size="Small">Edit</primary-link>
+                <danger-link href="@Url.Page("/Admin/Roles/Delete", new {roleName = role.Name})" size="Small">Delete</danger-link>
             </td>
         </tr>
     }
