@@ -1,4 +1,4 @@
-﻿@page "{roleName}"
+﻿@page "{roleName?}"
 @using IdentityServerAspNetIdentity.Pages.Components.SelectionContainer
 @using IdentityServerAspNetIdentity.TagHelpers.Fields
 @using IdentityServerAspNetIdentity.TagHelpers.FormRow
@@ -9,11 +9,24 @@
 <form method="post">
     <tab id="role-details">
         <tab-item header="Role Information" tab-id="role-information">
-            <field-container label="RoleId" value="@Model.Role.Id" />
-            <field-container label="RoleName" value="@Model.Role.Name" />
             
-            <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id" />
-            <input type="hidden" asp-for="Role.Name" value="@Model.Role.Name" />
+
+            @if(Model.Role.Id != null)
+            {
+                <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id"/>
+                <form-row for="Role.Name"></form-row>
+            }
+            else
+            {
+
+                <field-container label="RoleId" value="@Model.Role.Id"/>
+                 <field-container label="RoleName" value="@Model.Role.Name"/>
+
+
+
+                <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id"/>
+                <input type="hidden" asp-for="Role.Name" value="@Model.Role.Name"/>
+            }
         </tab-item>
 
         <tab-item header="Users" tab-id="users">

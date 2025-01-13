@@ -36,6 +36,8 @@ public class RolesRepository : IRolesRepository
     }
     
     
+    
+    
     public async Task<List<ApplicationUserSummary>> GetUsersInRole(string roleName)
     {
         var userSummaries = await applicationDbContext.UserRoles
@@ -87,8 +89,16 @@ public class RolesRepository : IRolesRepository
             NormalizedName = role.Name.ToUpper()
             
         };
-        await applicationDbContext.Roles.AddAsync(roleEntity).ConfigureAwait(false);
-        await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+        try
+        {
+            await applicationDbContext.Roles.AddAsync(roleEntity).ConfigureAwait(false);
+            await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+        catch (DbUpdateException ex)
+        {
+            // Log the exception or handle it as needed
+            throw new Exception("An error occurred while saving the role to the database.", ex);
+        }
         return new Role
         {
             Id = roleEntity.Id,

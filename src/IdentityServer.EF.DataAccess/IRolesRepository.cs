@@ -8,4 +8,8 @@ public interface IRolesRepository
     Task<Role?> GetRoleById(string id);
     Task<Role?> GetRoleByName(string name);
     Task<List<ApplicationUserSummary>> GetUsersInRole(string roleName);
+    
+    Task<Role?> UpdateRole(Role role);
+    Task<Role?> CreateRole(Role role);
+    
 }
