@@ -1,0 +1,36 @@
+@page "{id}"
+@model IdentityServerAspNetIdentity.Pages.Admin.ApiResources.Edit
+
+<h2>Edit API Resource</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="ApiResource.Name"></label>
+        <input asp-for="ApiResource.Name" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.DisplayName"></label>
+        <input asp-for="ApiResource.DisplayName" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.Description"></label>
+        <input asp-for="ApiResource.Description" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.Enabled"></label>
+        <input asp-for="ApiResource.Enabled" type="checkbox" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.ShowInDiscoveryDocument"></label>
+        <input asp-for="ApiResource.ShowInDiscoveryDocument" type="checkbox" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.AllowedAccessTokenSigningAlgorithms"></label>
+        <input asp-for="ApiResource.AllowedAccessTokenSigningAlgorithms" />
+    </div>
+    <div>
+        <label asp-for="ApiResource.RequireResourceIndicator"></label>
+        <input asp-for="ApiResource.RequireResourceIndicator" type="checkbox" />
+    </div>
+    <button type="submit">Save</button>
+</form>

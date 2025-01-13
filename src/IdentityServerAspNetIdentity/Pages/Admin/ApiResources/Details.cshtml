@@ -1,0 +1,35 @@
+@page "{id}"
+@model IdentityServerAspNetIdentity.Pages.Admin.ApiResources.Details
+
+<h2>API Resource Details</h2>
+
+<div>
+    <label>Name:</label>
+    <span>@Model.ApiResource.Name</span>
+</div>
+<div>
+    <label>Display Name:</label>
+    <span>@Model.ApiResource.DisplayName</span>
+</div>
+<div>
+    <label>Description:</label>
+    <span>@Model.ApiResource.Description</span>
+</div>
+<div>
+    <label>Enabled:</label>
+    <span>@Model.ApiResource.Enabled</span>
+</div>
+<div>
+    <label>Show In Discovery Document:</label>
+    <span>@Model.ApiResource.ShowInDiscoveryDocument</span>
+</div>
+<div>
+    <label>Created:</label>
+    <span>@Model.ApiResource.Created</span>
+</div>
+<div>
+    <label>Updated:</label>
+    <span>@Model.ApiResource.Updated</span>
+</div>
+
+<primary-link href="@Url.Page("/Admin/ApiResources/Edit", new {id = Model.ApiResource.Id})" size="Large">Edit</primary-link>

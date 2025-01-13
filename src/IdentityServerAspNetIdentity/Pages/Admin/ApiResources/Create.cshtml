@@ -1,0 +1,28 @@
+@page
+@model IdentityServerAspNetIdentity.Pages.Admin.ApiResources.Create
+
+<h2>Create New API Resource</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+    <div>
+        <label asp-for="DisplayName"></label>
+        <input asp-for="DisplayName" />
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+    </div>
+    <div>
+        <label asp-for="Enabled"></label>
+        <input asp-for="Enabled" type="checkbox" />
+    </div>
+    <div>
+        <label asp-for="ShowInDiscoveryDocument"></label>
+        <input asp-for="ShowInDiscoveryDocument" type="checkbox" />
+    </div>
+    <button type="submit">Create</button>
+</form>

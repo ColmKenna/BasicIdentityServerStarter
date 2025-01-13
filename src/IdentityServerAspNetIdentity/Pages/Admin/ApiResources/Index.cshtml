@@ -1,0 +1,31 @@
+@page
+@model IdentityServerAspNetIdentity.Pages.Admin.ApiResources.Index
+
+<h2>All API Resources</h2>
+
+<table class="table table-bordered table-striped table-sm table-responsive">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Display Name</th>
+    <th>Description</th>
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody>
+@foreach (var apiResource in Model.ApiResources)
+{
+    <tr>
+        <td>@apiResource.Name</td>
+        <td>@apiResource.DisplayName</td>
+        <td>@apiResource.Description</td>
+        <td class="button-container">
+            <info-link href="@Url.Page("/Admin/ApiResources/Details", new {id = apiResource.Id})" size="Small">Details</info-link>
+            <primary-link href="@Url.Page("/Admin/ApiResources/Edit", new {id = apiResource.Id})" size="Small">Edit</primary-link>
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+
+<primary-link href="@Url.Page("/Admin/ApiResources/Create")" size="Large">Create New API Resource</primary-link>

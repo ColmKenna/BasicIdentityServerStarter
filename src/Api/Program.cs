@@ -1,4 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
+using IdentityServer.EF.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("canAmendProduct", "true");
     });
 });
+
+builder.Services.AddScoped<IApiResourcesRepository, ApiResourcesRepository>();
 
 var app = builder.Build();
 
