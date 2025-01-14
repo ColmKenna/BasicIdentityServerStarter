@@ -57,13 +57,18 @@ public class Edit : PageModel
     
     public async Task OnGetAsync(string clientId)
     {
-        Client = await _clientsRepository.GetClient(clientId);
+        if (string.IsNullOrEmpty(clientId))
+        {
+            Client = new ClientViewModel();
+        }
+        else
+        {
+            Client = await _clientsRepository.GetClient(clientId);
+        }
         AvailableScopes = await _scopesRepository.GetScopes();
         ApplicationGrantInfo = GetApplicationGrantInfo();
-        // get a dictionary of the grant types and their descriptions
         GrantTypes = ApplicationGrantInfo.Applications.ToDictionary(x => x.Type, x => x.Description);
         AppTypes = GrantTypes.Keys.ToList();
-
     }
     
     public async Task<IActionResult> OnPostAsync()
@@ -88,8 +93,16 @@ public class Edit : PageModel
         {
             Client.AllowedCorsOrigins.Remove(deletedAllowedCorsOrigin);
         }
-        var result = await _clientsRepository.UpdateClient(Client);
+
+        if (Client.Id == 0)
+        {
+            await _clientsRepository.CreateClient(Client);
+        }
+        else
+        {
+            await _clientsRepository.UpdateClient(Client);
+        }
+
         return RedirectToPage("Index");
     }
-
 }
