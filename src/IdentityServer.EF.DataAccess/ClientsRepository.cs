@@ -12,10 +12,7 @@ public class ClientsRepository : IClientsRepository
 {
     private readonly ConfigurationDbContext _dbContext;
 
-    public ClientsRepository(ConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options)
-    {
-        _dbContext = new ConfigurationDbContext(options);
-    }
+
 
     public Task<List<ClientsSummary>> GetClients()
     {
@@ -53,6 +50,11 @@ public class ClientsRepository : IClientsRepository
              Secret = s.Value
         }).ToList()
     };
+
+    public ClientsRepository(ConfigurationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public Task<ClientViewModel?> GetClient(string clientId)
     {
