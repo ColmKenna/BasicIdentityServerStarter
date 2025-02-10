@@ -17,55 +17,62 @@ public class Edit : PageModel
         _clientsRepository = clientsRepository;
         _scopesRepository = scopesRepository;
     }
-    
-    [BindProperty(SupportsGet = true)]
-    public ClientViewModel Client { get;  set; }
+
+
+    [BindProperty(SupportsGet = true)] public ClientViewModel Client { get; set; }
+
+
     public List<string> AvailableScopes { get; private set; }
-    
-    [BindProperty]
-    public List<string> DeletedRedirectUris { get; set; }
-    
-    [BindProperty]
-    public List<string> DeletedPostLogoutRedirectUris { get; set; }
-   
-    [BindProperty]
-    public List<string> DeletedAllowedCorsOrigins { get; set; }
-    
+
+
+    [BindProperty] public List<string> DeletedRedirectUris { get; set; }
+
+
+    [BindProperty] public List<string> DeletedPostLogoutRedirectUris { get; set; }
+
+
+    [BindProperty] public List<string> DeletedAllowedCorsOrigins { get; set; }
+
+
     public Dictionary<string, string> GrantTypes { get; set; }
 
+
     public List<string> AppTypes { get; set; }
-    
+
     public ApplicationGrantInfo ApplicationGrantInfo { get; set; }
 
-    
-    
+
     private ApplicationGrantInfo GetApplicationGrantInfo()
     {
-        
-        
         var applicationGrantInfo = new ApplicationGrantInfo();
-        
+
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "GrantTypesInfo.json");
         if (System.IO.File.Exists(filePath))
         {
             var jsonData = System.IO.File.ReadAllText(filePath);
             applicationGrantInfo = JsonSerializer.Deserialize<ApplicationGrantInfo>(jsonData);
-
         }
+
         return applicationGrantInfo;
     }
-    
+
     public async Task OnGetAsync(string clientId)
     {
-        Client = await _clientsRepository.GetClient(clientId);
+        if (string.IsNullOrEmpty(clientId))
+        {
+            Client = new ClientViewModel();
+        }
+        else
+        {
+            Client = await _clientsRepository.GetClient(clientId);
+        }
+
         AvailableScopes = await _scopesRepository.GetScopes();
         ApplicationGrantInfo = GetApplicationGrantInfo();
-        // get a dictionary of the grant types and their descriptions
         GrantTypes = ApplicationGrantInfo.Applications.ToDictionary(x => x.Type, x => x.Description);
         AppTypes = GrantTypes.Keys.ToList();
-
     }
-    
+
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
@@ -78,18 +85,26 @@ public class Edit : PageModel
         {
             Client.RedirectUris.Remove(deletedRedirectUri);
         }
-        
+
         foreach (var deletedPostLogoutRedirectUri in DeletedPostLogoutRedirectUris)
         {
             Client.PostLogoutRedirectUris.Remove(deletedPostLogoutRedirectUri);
         }
-        
+
         foreach (var deletedAllowedCorsOrigin in DeletedAllowedCorsOrigins)
         {
             Client.AllowedCorsOrigins.Remove(deletedAllowedCorsOrigin);
         }
-        var result = await _clientsRepository.UpdateClient(Client);
+
+        if (Client.Id == 0)
+        {
+            await _clientsRepository.CreateClient(Client);
+        }
+        else
+        {
+            await _clientsRepository.UpdateClient(Client);
+        }
+
         return RedirectToPage("Index");
     }
-
 }

@@ -12,7 +12,7 @@ public class FormRowTemplateTagHelper : TagHelper
     public string Label { get; set; } = string.Empty;
 
     [HtmlAttributeName("root")]
-    public ModelExpression Root { get; set; } = null!;
+    public ModelExpression? Root { get; set; } = null;
 
     [HtmlAttributeName("for")]
     public ModelExpression For { get; set; } = null!;
@@ -30,14 +30,9 @@ public class FormRowTemplateTagHelper : TagHelper
     {
         var name = "";
 
-        if (Root != null)
-        {
-            name = Root.Name + "[replace_with_index]" + For.Name;
-        }
-        else
-        {
-            name = For.Name;
-        }
+        name = Root != null 
+            ? $"{Root.Name}[replace_with_index].{For.Name}" 
+            : For.Name;
 
         For = new ModelExpression(name, For.ModelExplorer);
 

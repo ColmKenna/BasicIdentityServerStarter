@@ -1,4 +1,7 @@
-﻿namespace IdentityDataModels;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace IdentityDataModels;
 
 
 public class ClientViewModel
@@ -21,14 +24,23 @@ public class ClientViewModel
 
     
     public string ClientId { get; set; } = "";
+
+    [DisplayName("Client Name")]
+    [Required]
+    [MinLength(3)]
+    [MaxLength(100)]
     public string? ClientName { get; set; } = "";
+    
     public string? Description { get; set; } = "";
     public IList<string> AllowedGrantTypes { get; set; } = new List<string>();
+    [DisplayName("Require PKCE")]
     public bool RequirePkce { get; set; }
     public bool AllowAccessTokensViaBrowser { get; set; }
     public bool RequireConsent { get; set; }
     public bool AlwaysIncludeUserClaimsInIdToken { get; set; } = false;
-    public int AccessTokenLifetime { get; set; }
+    
+    [Range(0,36000)]
+     public int AccessTokenLifetime { get; set; }
     public IList<string> AllowedScopes { get; set; } = new List<string>();
     public int Id { get; set; }
     
