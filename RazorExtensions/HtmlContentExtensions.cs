@@ -12,13 +12,18 @@ public static class HtmlContentExtensions
     /// <param name="cssClass">The CSS class for the wrapper</param>
     /// <returns>A new TagBuilder with the div wrapping the content.</returns>
     public static TagBuilder CreateWrappedDiv(this IHtmlContent content, string cssClass)
+     => content.CreateWrappedTag("div", cssClass);
+    
+    public static TagBuilder CreateWrappedTag(this IHtmlContent content, string tag, string cssClass)
     {
         ArgumentNullException.ThrowIfNull(content);
-        var wrapper = new TagBuilder("div");
+        var wrapper = new TagBuilder(tag);
         wrapper.AddCssClassIfNotNullOrWhiteSpace(cssClass);
         wrapper.InnerHtml.AppendHtml(content);
         return wrapper;
     }
+    
+    
 
     /// <summary>
     /// Adds the specified CSS class to the <see cref="TagBuilder"/> instance if the provided CSS class string is not null, empty, or composed only of white-space characters.
