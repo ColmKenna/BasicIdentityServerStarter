@@ -31,6 +31,7 @@
 
                     @if (Model.AllowDelete)
                     {
+                      
                         <button type="button" id="toggle-button-@sourceIndex" class="delete-icon-button"
                                 onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
                     }
@@ -49,9 +50,12 @@
     {
         var modalId = $"{Model.Id}Modal";
         var templateId = $"{Model.Id}Template";
+        var newInputId = $"new{Model.Id}Input";
+        var countId = $"{Model.Id}Count";
             
-        var function = $@"addNewItem('{@Model.Title}','new{@Model.Id}Input','{@Model.Id}Template','{@Model.Id}','text-array-container-row')";
-            
+        var function = $@"addNewTextInputFromTemplate('{@templateId}','{@Model.Id}','{@newInputId}','{@countId}')";
+        
+        <input type="hidden" id="@countId" value="@Model.Current.Count()"/>
 
 
         <template id="@templateId">
@@ -73,27 +77,19 @@
         </template>
         
         <div class="form-row">
-            <label class="form-label"></label>
+            <label for="@newInputId" class="form-label">Create new</label>
+            <input id="@newInputId" class="form-input" type="text"/>
             <button
                 type="button"
                 class="success-button btn-small"
-                data-ck-modal-target="@modalId">
+                @* data-ck-modal-target="@modalId" *@
+                onclick="@function"
+                >
                 Add @Model.Title   
             </button>
         </div>
 
-        var newRoleModalViewModel = new ModalViewModel(
-            @modalId,
-            "Add New " + @Model.Title,
-            "Enter the following information:",
-            "Add " + @Model.Title,
-            "Close",
-            function,
-            new ModalInputs($"new{@Model.Id}Input", @Model.Title)
-        );
-        <vc:html-modal model="newRoleModalViewModel"/>
-
-        
+      
         
     }
 </div>

@@ -67,3 +67,34 @@
     }
 }
 
+
+function addNewTextInputFromTemplate(templateId, elementToAddToId, newInputId, currentCountId) {
+    const template = document.getElementById(templateId);
+    const elementToAddTo = document.getElementById(elementToAddToId);
+    const newElement = template.content.cloneNode(true);
+    const value = document.getElementById(newInputId).value;
+
+    const currentCount = document.getElementById(currentCountId);
+    const count = parseInt(currentCount.value);
+
+    
+for (let element of newElement.querySelectorAll('[name], [id]')) {
+    if (element.hasAttribute('name')) {
+        element.setAttribute('name', element.getAttribute('name').replace('_replace-with-index_', count));
+    }
+    if (element.hasAttribute('id')) {
+        element.setAttribute('id', element.getAttribute('id').replace('_replace-with-index_', count));
+    }    
+}
+
+    
+
+    
+    newElement.querySelector('input').value =  value; 
+    elementToAddTo.appendChild(newElement);
+
+    document.getElementById(newInputId).value = '';
+    
+    currentCount.value = count + 1;     
+}
+

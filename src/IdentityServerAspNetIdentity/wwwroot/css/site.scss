@@ -188,7 +188,7 @@ nav {
 
 .form-row, .claim-row, .add-claim-row {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 12px;
     margin-bottom: 12px;
 }
@@ -234,6 +234,8 @@ nav {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    display: flex;
+    align-items: center;
 }
 
 .form-input:has(:first-child[type="checkbox"]) {
@@ -255,7 +257,7 @@ nav {
 .check-group-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 8px;
     align-items: center;
     padding: 10px;
     flex-wrap: wrap;
@@ -335,9 +337,8 @@ nav {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;
     background-color: inherit;
-    padding: 20px;
+    padding: 8px;
     width: 80%;
     margin: 0 auto;
 }
@@ -390,6 +391,7 @@ nav {
     justify-content: space-between;
     gap: 12px;
     margin-top: 12px;
+    margin-left: 8px;
 }
 
 .centered {

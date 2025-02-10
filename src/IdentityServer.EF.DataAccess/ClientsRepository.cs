@@ -8,17 +8,11 @@ using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace IdentityServer.EF.DataAccess;
 
-
-
-
 public class ClientsRepository : IClientsRepository
 {
     private readonly ConfigurationDbContext _dbContext;
 
-    public ClientsRepository(ConfigurationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+
 
     public Task<List<ClientsSummary>> GetClients()
     {
@@ -56,6 +50,11 @@ public class ClientsRepository : IClientsRepository
              Secret = s.Value
         }).ToList()
     };
+
+    public ClientsRepository(ConfigurationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public Task<ClientViewModel?> GetClient(string clientId)
     {
@@ -145,15 +144,57 @@ public class ClientsRepository : IClientsRepository
             Origin = o
         }));
         
-        
-        
-        
-        
-        
         _dbContext.Clients.Update(existingClient);
         
         return _dbContext
             .SaveChangesAsync()
             .ContinueWith(_ => client);
+    }
+
+    public async Task<ClientViewModel> CreateClient(ClientViewModel client)
+    {
+        var newClient = new Client
+        {
+            ClientId = client.ClientId,
+            ClientName = client.ClientName,
+            Description = client.Description,
+            AllowAccessTokensViaBrowser = client.AllowAccessTokensViaBrowser,
+            RequireConsent = client.RequireConsent,
+            AlwaysIncludeUserClaimsInIdToken = client.AlwaysIncludeUserClaimsInIdToken,
+            AccessTokenLifetime = client.AccessTokenLifetime,
+            ClientUri = client.ClientUri,
+            RedirectUris = client.RedirectUris.Select(r => new ClientRedirectUri
+            {
+                RedirectUri = r
+            }).ToList(),
+            PostLogoutRedirectUris = client.PostLogoutRedirectUris.Select(p => new ClientPostLogoutRedirectUri
+            {
+                PostLogoutRedirectUri = p
+            }).ToList(),
+            AllowedCorsOrigins = client.AllowedCorsOrigins.Select(o => new ClientCorsOrigin
+            {
+                Origin = o
+            }).ToList(),
+            ClientSecrets = client.ClientSecrets.Select(s => new ClientSecret
+            {
+                Value = s.Secret,
+                Description = s.Description
+            }).ToList(),
+            AllowedGrantTypes = client.AllowedGrantTypes.Select(g => new ClientGrantType
+            {
+                GrantType = g
+            }).ToList(),
+            RequirePkce = client.RequirePkce,
+            AllowedScopes = client.AllowedScopes.Select(s => new ClientScope
+            {
+                Scope = s
+            }).ToList()
+        };
+
+        _dbContext.Clients.Add(newClient);
+        await _dbContext.SaveChangesAsync();
+
+        client.Id = newClient.Id;
+        return client;
     }
 }
