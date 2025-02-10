@@ -87,10 +87,9 @@ main {
     font-size: 1.5em;
     color: white;
     align-self: flex-start;
-    display: block;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    display: flex; 
+    align-items: center;
+    height: 100%;
 }
 
 .burger-menu.expanded > svg {
