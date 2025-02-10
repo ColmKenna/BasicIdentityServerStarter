@@ -1,0 +1,17 @@
+﻿.slider-container {
+    display: flex;
+    gap: 12px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.slider-container > input[type="number"] {
+    padding-left: 0;
+    width: 80px;
+}
+
+.slider-container > input[type="range"] {
+    width: 100%;
+}
+ 
