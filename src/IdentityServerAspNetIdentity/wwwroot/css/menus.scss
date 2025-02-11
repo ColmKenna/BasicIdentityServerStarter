@@ -138,11 +138,20 @@
         }
       }
     }
+
+    &.dropdown-menu-right {
+    > li {
+      > ul {
+        top:$nav-height-small-screen;
+      }
+    }}
+    
   }
 
 
   .dropdown-menu-right {
     flex-direction: row;
+
     li {
       justify-content: flex-end;
       a {
@@ -167,6 +176,8 @@
         overflow: hidden;
       }
     }
+
+
   }
 
 
