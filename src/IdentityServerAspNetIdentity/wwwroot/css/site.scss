@@ -164,13 +164,14 @@ nav {
     border-bottom: 1px solid $border-color;
 }
 
-// Title
 .title {
     grid-area: title;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    margin-top: 0; // heading usually at the top which already has padding
+    margin-bottom: 0.5em;
 }
 
 

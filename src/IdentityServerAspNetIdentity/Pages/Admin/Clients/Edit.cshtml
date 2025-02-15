@@ -13,7 +13,8 @@
 @inject Microsoft.AspNetCore.Mvc.ModelBinding.IModelMetadataProvider MetadataProvider
 @model IdentityServerAspNetIdentity.Pages.Admin.Clients.Edit
 
-<h1>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</h1>
+<page-heading>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</page-heading>
+
 <form method="post">
     @Html.AntiForgeryToken()
     <tab id="clientDetails">
