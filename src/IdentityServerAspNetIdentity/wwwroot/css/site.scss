@@ -32,7 +32,7 @@ body {
 main {
     grid-area: main;
     padding: 1rem;
-    background-color: #e9ecef;
+    background-color: $background-color;// #e9ecef;
     overflow-y: scroll;
 }
 
