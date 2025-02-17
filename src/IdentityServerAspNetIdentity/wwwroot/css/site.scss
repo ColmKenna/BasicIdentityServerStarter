@@ -192,6 +192,7 @@ nav {
     align-items: baseline;
     gap: 12px;
     margin-bottom: 12px;
+    flex-direction: column;
 }
 
 .form-row.text-form-row,  {
@@ -203,11 +204,10 @@ nav {
 }
 // first column that is not hidden
 .form-row > .form-label, .claim-row > .form-label {
-    width: 160px;
-    text-align: right;
     font-weight: 500;
     color: #555;
     word-break: break-word;
+    width: 100%;
 }
 
 // 2nd child in the row
@@ -237,6 +237,7 @@ nav {
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .form-input:has(:first-child[type="checkbox"]) {
