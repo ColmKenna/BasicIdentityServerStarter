@@ -36,6 +36,15 @@ main {
     overflow-y: scroll;
 }
 
+form{
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 600px) {
+        height: initial;
+    }
+}
+
 /* Side Menu Section */
 .side-menu {
     display: flex;
@@ -392,6 +401,8 @@ nav {
     justify-content: space-between;
     gap: 12px;
     margin-top: 12px;
+    flex: 0 0 50px;
+
 }
 
 .centered {

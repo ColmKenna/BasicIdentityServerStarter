@@ -4,12 +4,14 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex: 1;
 
   .tab-headers {
     overflow: hidden;
     background-color: #f1f1f1;
     display: none;
     border-bottom: 1px solid #ccc;
+    flex: 0 0 45px;
   }
 
   .tab-link {
@@ -33,7 +35,7 @@
   .tab {
     display: none;
     border-top: none;
-    height: 340px;
+    //height: 340px;
     overflow: hidden;
 
     &:last-child {
@@ -53,6 +55,8 @@
   .tabs {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
 
     .tab-link {
       display: block;
