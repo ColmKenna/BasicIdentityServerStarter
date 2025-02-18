@@ -1,5 +1,7 @@
 @use 'siteVariables' as *;
-
+* {
+    box-sizing: border-box;
+}
 .logged-out-page {
     iframe {
         display: none;
@@ -282,11 +284,11 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 12px;
-
     flex: 1;
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    width: 100%;
 }
 .text-array-container-row {
     display: flex;
