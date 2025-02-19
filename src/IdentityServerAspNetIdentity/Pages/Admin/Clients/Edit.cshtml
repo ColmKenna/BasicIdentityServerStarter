@@ -13,7 +13,8 @@
 @inject Microsoft.AspNetCore.Mvc.ModelBinding.IModelMetadataProvider MetadataProvider
 @model IdentityServerAspNetIdentity.Pages.Admin.Clients.Edit
 
-<h1>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</h1>
+<page-heading>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</page-heading>
+
 <form method="post">
     @Html.AntiForgeryToken()
     <tab id="clientDetails">
@@ -61,6 +62,13 @@
         </tab-item>
         <tab-item header="grant Types">
 
+            <form-row-container label="">
+                <div class="button-container ">
+                    <button type="button" class="btn-large info-button" data-ck-modal-target="addAppTypeModal">Set
+                        defaults based off an application type
+                    </button>
+                </div>
+            </form-row-container>
 
             @* <form-row label="Require PKCE" for="@Model.Client.RequirePkce"></form-row> *@
             <form-row-checkbox as-slider="true" asp-for="@Model.Client.RequirePkce" ></form-row-checkbox>
@@ -77,13 +85,7 @@
 
 
             </form-row-container>
-            <form-row-container label="">
-                <div class="button-container ">
-                    <button type="button" class="btn-large info-button" data-ck-modal-target="addAppTypeModal">Set
-                        defaults based off an application type
-                    </button>
-                </div>
-            </form-row-container>
+
 
         </tab-item>
         <tab-item header="Scopes">

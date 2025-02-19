@@ -1,5 +1,7 @@
 @use 'siteVariables' as *;
-
+* {
+    box-sizing: border-box;
+}
 .logged-out-page {
     iframe {
         display: none;
@@ -32,8 +34,17 @@ body {
 main {
     grid-area: main;
     padding: 1rem;
-    background-color: #e9ecef;
+    background-color: $background-color;// #e9ecef;
     overflow-y: scroll;
+}
+
+form{
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 600px) {
+        height: initial;
+    }
 }
 
 /* Side Menu Section */
@@ -164,13 +175,14 @@ nav {
     border-bottom: 1px solid $border-color;
 }
 
-// Title
 .title {
     grid-area: title;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    margin-top: 0; // heading usually at the top which already has padding
+    margin-bottom: 0.5em;
 }
 
 
@@ -191,6 +203,7 @@ nav {
     align-items: baseline;
     gap: 12px;
     margin-bottom: 12px;
+    flex-direction: column;
 }
 
 .form-row.text-form-row,  {
@@ -202,11 +215,10 @@ nav {
 }
 // first column that is not hidden
 .form-row > .form-label, .claim-row > .form-label {
-    width: 160px;
-    text-align: right;
     font-weight: 500;
     color: #555;
     word-break: break-word;
+    width: 100%;
 }
 
 // 2nd child in the row
@@ -236,6 +248,7 @@ nav {
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .form-input:has(:first-child[type="checkbox"]) {
@@ -271,11 +284,11 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 12px;
-
     flex: 1;
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    width: 100%;
 }
 .text-array-container-row {
     display: flex;
@@ -338,9 +351,8 @@ nav {
     flex-wrap: wrap;
     gap: 10px;
     background-color: inherit;
-    padding: 8px;
+    padding: 5px 0;
     width: 80%;
-    margin: 0 auto;
 }
 
 .check-selection-item {
@@ -391,7 +403,8 @@ nav {
     justify-content: space-between;
     gap: 12px;
     margin-top: 12px;
-    margin-left: 8px;
+    flex: 0 0 50px;
+
 }
 
 .centered {
