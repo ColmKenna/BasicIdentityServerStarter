@@ -43,56 +43,54 @@
             <input type="hidden" name="@Model.DeletedItemsName" value=""/>
 
 
+        </div>
+    </div>
 
-        @if (Model.AllowAdd)
-        {
-            var modalId = $"{Model.Id}Modal";
-            var templateId = $"{Model.Id}Template";
-            var newInputId = $"new{Model.Id}Input";
-            var countId = $"{Model.Id}Count";
-
-            var function = $@"addNewTextInputFromTemplate('{@templateId}','{@Model.Id}','{@newInputId}','{@countId}')";
-
-            <input type="hidden" id="@countId" value="@Model.Current.Count()"/>
-
-
-            <template id="@templateId">
-                @{ var name = @Model.Name.Replace("[", "").Replace("]", "") + "[_replace-with-index_]"; }
-                <div class="text-array-container-row">
-                    <input
-                        name="@name"
-                        value=""
-                        type="text"
-                        class="form-input"/>
-                    @if (Model.AllowDelete)
-                    {
-                        <button type="button" id="toggle-button-_replace-with-index_" class="delete-icon-button"
-                                onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
-                    }
-                </div>
+    @if (Model.AllowAdd)
+    {
+        var modalId = $"{Model.Id}Modal";
+        var templateId = $"{Model.Id}Template";
+        var newInputId = $"new{Model.Id}Input";
+        var countId = $"{Model.Id}Count";
+            
+        var function = $@"addNewTextInputFromTemplate('{@templateId}','{@Model.Id}','{@newInputId}','{@countId}')";
+        
+        <input type="hidden" id="@countId" value="@Model.Current.Count()"/>
 
 
-            </template>
-
+        <template id="@templateId">
+            @{ var name = @Model.Name.Replace("[", "").Replace("]", "") + "[_replace-with-index_]"; }
             <div class="text-array-container-row">
-                <label for="@newInputId" class="form-label">Create new</label>
-                <input id="@newInputId" class="form-input" type="text"/>
-                <button
-                    type="button"
-                    class="success-button btn-small"
-                    @* data-ck-modal-target="@modalId" *@
-                    onclick="@function"
-                >
-                    Add @Model.Title
-                </button>
+                <input
+                    name="@name"
+                    value=""
+                    type="text"
+                    class="form-input"/>
+                @if (Model.AllowDelete)
+                {
+                    <button type="button" id="toggle-button-_replace-with-index_" class="delete-icon-button"
+                            onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
+                }
             </div>
 
 
+        </template>
+        
+        <div class="form-row">
+            <label for="@newInputId" class="form-label">Create new</label>
+            <input id="@newInputId" class="form-input" type="text"/>
+            <button
+                type="button"
+                class="success-button btn-small"
+                @* data-ck-modal-target="@modalId" *@
+                onclick="@function"
+                >
+                Add @Model.Title   
+            </button>
+        </div>
 
-        }
-    </div>
-
-    </div>
- 
+      
+        
+    }
 </div>
 
