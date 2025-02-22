@@ -34,7 +34,7 @@
 </head>
 <body>
     <partial name="_Nav" />
-    <div class="side-menu" id="sideMenu">
+    <div class="side-menu active" id="sideMenu">
         <a asp-page="/Index">Home</a>
         @* log in and log out links *@
         @if (User.Identity is {IsAuthenticated: true})
@@ -50,7 +50,7 @@
             <a asp-page="/Account/Login">Login</a>
         }
     </div>
-    <main class="init-no-side-menu">
+    <main class="with-side-menu">
         @RenderBody()
     </main>
 
