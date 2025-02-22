@@ -13,18 +13,19 @@
 @inject Microsoft.AspNetCore.Mvc.ModelBinding.IModelMetadataProvider MetadataProvider
 @model IdentityServerAspNetIdentity.Pages.Admin.Clients.Edit
 
-<h1>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</h1>
+<page-heading>@(Model.Client.Id == 0 ? "Create New Client" : $"Edit {Model.Client.ClientId}")</page-heading>
+
 <form method="post">
     @Html.AntiForgeryToken()
     <tab id="clientDetails">
         <tab-item header="Client Information">
-            
-            
-            <form-row-text-input asp-for="@Model.Client.ClientId" hidden="true"></form-row-text-input> 
-            <form-row-text-input asp-for="@Model.Client.ClientName" ></form-row-text-input>
+
+
+            <form-row-text-input asp-for="@Model.Client.ClientId" hidden="true"></form-row-text-input>
+            <form-row-text-input asp-for="@Model.Client.ClientName"></form-row-text-input>
             <form-row-text-input asp-for="@Model.Client.Description"></form-row-text-input>
             <form-row-text-input asp-for="@Model.Client.ClientUri"></form-row-text-input>
-            </tab-item>
+        </tab-item>
         <tab-item header="Security">
 
             <div>
@@ -32,7 +33,8 @@
                     @for (int i = 0; i < Model.Client.ClientSecrets.Count; i++)
                     {
                         <form-row-text-input asp-for="@Model.Client.ClientSecrets[i].Description"></form-row-text-input>
-                        <form-row-text-input asp-for="@Model.Client.ClientSecrets[i].Secret" hidden="true"></form-row-text-input>
+                        <form-row-text-input asp-for="@Model.Client.ClientSecrets[i].Secret"
+                                             hidden="true"></form-row-text-input>
                     }
                 </div>
 
@@ -44,15 +46,18 @@
                 </form-row-container>
 
                 <template id="clientSecretTemplate">
-                    <form-template-row-text-input base-type="@Model.Client.ClientSecrets" asp-for="@Model.Client.ClientSecrets.FirstOrDefault().Description"></form-template-row-text-input>
-                    <form-template-row-text-input base-type="@Model.Client.ClientSecrets" asp-for="@Model.Client.ClientSecrets.FirstOrDefault().Secret" hidden="true"></form-template-row-text-input>
+                    <form-template-row-text-input base-type="@Model.Client.ClientSecrets"
+                                                  asp-for="@Model.Client.ClientSecrets.FirstOrDefault().Description"></form-template-row-text-input>
+                    <form-template-row-text-input base-type="@Model.Client.ClientSecrets"
+                                                  asp-for="@Model.Client.ClientSecrets.FirstOrDefault().Secret"
+                                                  hidden="true"></form-template-row-text-input>
                 </template>
 
 
             </div>
-            <form-row-checkbox as-slider="true" asp-for="@Model.Client.RequireConsent" ></form-row-checkbox>
-            <form-row-checkbox as-slider="true" asp-for="@Model.Client.AllowAccessTokensViaBrowser" ></form-row-checkbox>
-            
+            <form-row-checkbox as-slider="true" asp-for="@Model.Client.RequireConsent"></form-row-checkbox>
+            <form-row-checkbox as-slider="true" asp-for="@Model.Client.AllowAccessTokensViaBrowser"></form-row-checkbox>
+
             @* <form-row label="Require Consent" for="@Model.Client.RequireConsent"></form-row> *@
             @* <form-row label="AllowAccessTokens Via Browser" for="@Model.Client.AllowAccessTokensViaBrowser"></form-row> *@
             @* <form-row label="AccessToken Lifetime" for="@Model.Client.AccessTokenLifetime"></form-row> *@
@@ -61,9 +66,16 @@
         </tab-item>
         <tab-item header="grant Types">
 
+            <form-row-container label="">
+                <div class="button-container ">
+                    <button type="button" class="btn-large info-button" data-ck-modal-target="addAppTypeModal">Set
+                        defaults based off an application type
+                    </button>
+                </div>
+            </form-row-container>
 
             @* <form-row label="Require PKCE" for="@Model.Client.RequirePkce"></form-row> *@
-            <form-row-checkbox as-slider="true" asp-for="@Model.Client.RequirePkce" ></form-row-checkbox>
+            <form-row-checkbox as-slider="true" asp-for="@Model.Client.RequirePkce"></form-row-checkbox>
 
             <form-row-container label="grant Types">
 
@@ -77,13 +89,7 @@
 
 
             </form-row-container>
-            <form-row-container label="">
-                <div class="button-container ">
-                    <button type="button" class="btn-large info-button" data-ck-modal-target="addAppTypeModal">Set
-                        defaults based off an application type
-                    </button>
-                </div>
-            </form-row-container>
+
 
         </tab-item>
         <tab-item header="Scopes">
@@ -103,21 +109,21 @@
 
 
             @* create entry for each @Model.Client.RedirectUris*@
-           
-            
-                                          <vc:string-array-container
-                                              id="update-uris-container"
-                                              current="@Model.Client.RedirectUris"
-                                              name="Client.RedirectUris[]"
-                                              title="RedirectUris"
-                                              allow-add="true"
-                                              css-class="with-bottom-divider"
-                                              deleted-items-name="DeletedRedirectUris">
-                                              >
-                                          
-                                          </vc:string-array-container>
 
-                                          <vc:string-array-container
+
+            <vc:string-array-container
+                id="update-uris-container"
+                current="@Model.Client.RedirectUris"
+                name="Client.RedirectUris[]"
+                title="RedirectUris"
+                allow-add="true"
+                css-class="with-bottom-divider"
+                deleted-items-name="DeletedRedirectUris">
+                >
+
+            </vc:string-array-container>
+
+            <vc:string-array-container
                 id="update-post-logout-uris-container"
                 current="@Model.Client.PostLogoutRedirectUris"
                 name="Client.PostLogoutRedirectUris[]"
@@ -157,7 +163,7 @@
 
                 <input type="radio" name="AppTypes" value="@appType.Type"/>
                 @* <label class="check-selection-label" for="AppTypes">@Model.Value</label> *@
-                <label class="check-selection-label" >@appType.Type </label>
+                <label class="check-selection-label">@appType.Type </label>
 
                 <div class="modal-details">
 
