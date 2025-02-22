@@ -7,18 +7,22 @@
     <div class="form-row text-form-row">
         <label class="form-label">@Model.Title</label>
         <div class="text-array-container " id="@Model.Id">
-            @if(!Model.Current.Any())
+            @{
+                var modelIdContainer = Model.Id + "-container";
+            }
+            <div id="@modelIdContainer" >
+            @if (!Model.Current.Any())
             {
                 <label class="empty-list-label">
-                    No entries for @Model.Title   
+                    No entries for @Model.Title
                 </label>
             }
-            
-            @for(int sourceIndex = 0; sourceIndex < Model.Current.Count(); sourceIndex++)
+
+            @for (int sourceIndex = 0; sourceIndex < Model.Current.Count(); sourceIndex++)
             {
 
                 var item = Model.Current.ElementAt(sourceIndex);
-               
+
                 var name = @Model.Name.Replace("[", "").Replace("]", "") + "[" + sourceIndex.ToString() + "]";
                 var currentId = @Model.Name.Replace("[", "").Replace("]", "") + "-" + sourceIndex;
 
@@ -27,11 +31,12 @@
                         name="@name"
                         value="@item"
                         type="text"
+                        aria-label="amend @Model.Title"
                         class="form-input"/>
 
                     @if (Model.AllowDelete)
                     {
-                      
+
                         <button type="button" id="toggle-button-@sourceIndex" class="delete-icon-button"
                                 onclick="toggleRemoveForStringContainer(this, '@Model.DeletedItemsName')"></button>
                     }
@@ -42,9 +47,8 @@
 
             <input type="hidden" name="@Model.DeletedItemsName" value=""/>
 
+            </div>
 
-        </div>
-    </div>
 
     @if (Model.AllowAdd)
     {
@@ -53,7 +57,7 @@
         var newInputId = $"new{Model.Id}Input";
         var countId = $"{Model.Id}Count";
             
-        var function = $@"addNewTextInputFromTemplate('{@templateId}','{@Model.Id}','{@newInputId}','{@countId}')";
+        var function = $@"addNewTextInputFromTemplate('{@templateId}','{@modelIdContainer}','{@newInputId}','{@countId}')";
         
         <input type="hidden" id="@countId" value="@Model.Current.Count()"/>
 
@@ -65,6 +69,7 @@
                     name="@name"
                     value=""
                     type="text"
+                    aria-label="amend @Model.Title"
                     class="form-input"/>
                 @if (Model.AllowDelete)
                 {
@@ -75,22 +80,24 @@
 
 
         </template>
+        <label for="@newInputId" class="hidden">Create new</label>
         
-        <div class="form-row">
-            <label for="@newInputId" class="form-label">Create new</label>
+        <div class="text-array-container-row">
             <input id="@newInputId" class="form-input" type="text"/>
             <button
                 type="button"
-                class="success-button btn-small"
+                class="add-icon-button btn-small"
+                aria-label="Add @Model.Title"
                 @* data-ck-modal-target="@modalId" *@
                 onclick="@function"
                 >
-                Add @Model.Title   
             </button>
         </div>
 
       
         
     }
+</div>
+    </div>
 </div>
 
