@@ -407,3 +407,16 @@ src/IdentityServerAspNetIdentity/wwwroot/css/tabs.min.css
 src/IdentityServerAspNetIdentity/wwwroot/css/tabs.min.css.map
 src/IdentityServerAspNetIdentity/wwwroot/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.css.map
 src/IdentityServerAspNetIdentity/wwwroot/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css.map
+src/IdentityServerAspNetIdentity/wwwroot/css/menu.css
+src/IdentityServerAspNetIdentity/wwwroot/css/menu.min.css
+src/IdentityServerAspNetIdentity/wwwroot/css/slider.css
+src/IdentityServerAspNetIdentity/wwwroot/css/slider.css.map
+src/IdentityServerAspNetIdentity/wwwroot/css/slider.min.css
+src/IdentityServerAspNetIdentity/wwwroot/css/slider.min.css.map
+src/IdentityServerAspNetIdentity/wwwroot/css/switch.css
+src/IdentityServerAspNetIdentity/wwwroot/css/switch.css.map
+src/IdentityServerAspNetIdentity/wwwroot/css/switch.min.css
+src/IdentityServerAspNetIdentity/wwwroot/css/switch.min.css.map
+src/IdentityServerAspNetIdentity/wwwroot/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.css
+src/IdentityServerAspNetIdentity/wwwroot/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css
+src/IdentityServerAspNetIdentity/wwwroot/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.css
