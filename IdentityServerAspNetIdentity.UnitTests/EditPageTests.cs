@@ -43,7 +43,7 @@ public class EditPageTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task EditPage_RendersWithClientData()
+    public async Task EditPage_BasicFirstTest()
     {
         // Arrange: Mock the repository data
         var mockClientRepo = new Mock<IClientsRepository>();
