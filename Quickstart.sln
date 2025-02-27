@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalExtensionMethods"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorExtensions", "RazorExtensions\RazorExtensions.csproj", "{16A5111A-19CE-4A27-8BCA-0E3CBF4E6EDE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests.Unit", "Tests.Unit", "{F4820282-FCEB-40EE-AEA6-2D8E94127CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerAspNetIdentity.UnitTests", "IdentityServerAspNetIdentity.UnitTests\IdentityServerAspNetIdentity.UnitTests.csproj", "{E6D551CF-A90B-4B42-A448-657959B49DB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{16A5111A-19CE-4A27-8BCA-0E3CBF4E6EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16A5111A-19CE-4A27-8BCA-0E3CBF4E6EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A5111A-19CE-4A27-8BCA-0E3CBF4E6EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6D551CF-A90B-4B42-A448-657959B49DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6D551CF-A90B-4B42-A448-657959B49DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6D551CF-A90B-4B42-A448-657959B49DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6D551CF-A90B-4B42-A448-657959B49DB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{892A49F6-62E3-43AD-A937-92217E452EB7} = {52FE7FA2-9648-4BB9-AFF4-64C0C9A97E44}
 		{BC302D20-5F66-4DF1-884A-97C4DD9DB179} = {52FE7FA2-9648-4BB9-AFF4-64C0C9A97E44}
 		{16A5111A-19CE-4A27-8BCA-0E3CBF4E6EDE} = {52FE7FA2-9648-4BB9-AFF4-64C0C9A97E44}
+		{E6D551CF-A90B-4B42-A448-657959B49DB8} = {F4820282-FCEB-40EE-AEA6-2D8E94127CDE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBA13787-A8D9-4D93-BF51-E159C4DBE432}
