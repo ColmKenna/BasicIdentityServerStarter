@@ -3,6 +3,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RazorExtensions;
 
+
+public static class TagHelperExtensions
+{
+    // with css class
+    public static TagBuilder WithCssClass(this TagBuilder tagBuilder, string cssClass)
+    {
+        tagBuilder.AddCssClass(cssClass);
+        return tagBuilder;
+    }
+}
 public static class HtmlContentExtensions
 {
     /// <summary>
