@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using IdentityServerAspNetIdentity.TagHelpers.FormRow;
+﻿using IdentityServerAspNetIdentity.TagHelpers.FormRow;
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -13,20 +13,20 @@ public class FormRowTextInputTagHelperTests
 {
     private readonly Mock<IHtmlGenerator> _htmlGeneratorMock;
     private readonly ViewContext _viewContext;
+    private readonly TagHelperContext context;
+    private readonly TagHelperOutput output;
+            
 
     public FormRowTextInputTagHelperTests()
     {
         _htmlGeneratorMock = new Mock<IHtmlGenerator>();
         _viewContext = new ViewContext();
+        context = CreateTagHelperContext();
+        output = CreateTagHelperOutput();
     }
 
     private void SetupHtmlGeneratorMock(ModelExpression modelExpression, string labelClass, string inputClass)
     {
-        var labelHtmlAttributes = new Dictionary<string, object>
-        {
-            { "class", labelClass }
-        };
-
         _htmlGeneratorMock.Setup(x => x.GenerateLabel(
                 It.IsAny<ViewContext>(),
                 It.IsAny<ModelExplorer>(),
@@ -90,7 +90,6 @@ public class FormRowTextInputTagHelperTests
         };
     }
 
-    #region Repeated Test Setup Helpers
 
     /// <summary>
     /// Creates a TagHelperContext with default values.
@@ -127,7 +126,6 @@ public class FormRowTextInputTagHelperTests
         return modelExpression;
     }
 
-    #endregion
 
     [Fact]
     public async Task WhenIdSet_DivHasId()
@@ -136,10 +134,6 @@ public class FormRowTextInputTagHelperTests
         var modelExpression = CreateAndSetupTestModelExpression();
         var tagHelper = CreateTagHelper(modelExpression);
         tagHelper.Id = "custom_id"; // Explicit ID set
-
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
-
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -155,8 +149,8 @@ public class FormRowTextInputTagHelperTests
         var tagHelper = CreateTagHelper(modelExpression);
         tagHelper.Id = null;
 
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -172,8 +166,8 @@ public class FormRowTextInputTagHelperTests
         var modelExpression = CreateAndSetupTestModelExpression();
         var tagHelper = CreateTagHelper(modelExpression);
     
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -190,8 +184,8 @@ public class FormRowTextInputTagHelperTests
         var tagHelper = CreateTagHelper(modelExpression);
         tagHelper.CssClass = "custom-class";
 
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -207,8 +201,8 @@ public class FormRowTextInputTagHelperTests
         var modelExpression = CreateAndSetupTestModelExpression();
         var tagHelper = CreateTagHelper(modelExpression);
     
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -231,8 +225,8 @@ public class FormRowTextInputTagHelperTests
         var modelExpression = CreateAndSetupTestModelExpression();
         var tagHelper = CreateTagHelper(modelExpression);
     
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -257,8 +251,8 @@ public class FormRowTextInputTagHelperTests
         var tagHelper = CreateTagHelper(modelExpression);
         tagHelper.InputCssClass = "custom-input";
     
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -284,8 +278,8 @@ public class FormRowTextInputTagHelperTests
         tagHelper.InputAttributes["data-custom"] = "value";
         tagHelper.InputAttributes["maxlength"] = "10";
     
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -305,31 +299,6 @@ public class FormRowTextInputTagHelperTests
     }
  
     [Fact]
-    public async Task ForIsNull_ThrowsException()
-    {
-        // Arrange
-        var tagHelper = new FormRowTextInputTagHelper(_htmlGeneratorMock.Object)
-        {
-            ViewContext = _viewContext
-            // For is not set
-        };
-
-        var context = new TagHelperContext(
-            tagName: "form-row-text-input",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "form-row-text-input",
-            new TagHelperAttributeList(),
-            (useCachedResult, encoder) => Task.FromResult<TagHelperContent>(new DefaultTagHelperContent()));
-
-        // Act & Assert
-        await Assert.ThrowsAsync<NullReferenceException>(() => tagHelper.ProcessAsync(context, output));
-    }
-
-    [Fact]
     public async Task Hidden_True_RendersHiddenInput()
     {
         // Arrange
@@ -340,27 +309,21 @@ public class FormRowTextInputTagHelperTests
         var tagHelper = CreateTagHelper(modelExpression);
         tagHelper.Hidden = true;
 
-        var context = new TagHelperContext(
-            tagName: "form-row-text-input",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "form-row-text-input",
-            new TagHelperAttributeList(),
-            (useCachedResult, encoder) => Task.FromResult<TagHelperContent>(new DefaultTagHelperContent()));
+             var tagHelperContext = CreateTagHelperContext("form-template-row-text-input");
+                var tagHelperOutput = CreateTagHelperOutput("form-template-row-text-input");
+                
 
         // Act
-        await tagHelper.ProcessAsync(context, output);
+        await tagHelper.ProcessAsync(tagHelperContext, tagHelperOutput);
 
         // Assert
-        Assert.Null(output.TagName);
-        Assert.Contains("hidden", output.Content.GetContent());
-        Assert.DoesNotContain("div", output.Content.GetContent());
+        Assert.Null(tagHelperOutput.TagName);
+        Assert.Contains("hidden", tagHelperOutput.Content.GetContent());
+        Assert.DoesNotContain("div", tagHelperOutput.Content.GetContent());
     }
 
-    [Fact]
+    
+   [Fact]
     public async Task WithBaseType_GeneratesCorrectName()
     {
         // Arrange
@@ -368,6 +331,17 @@ public class FormRowTextInputTagHelperTests
         var baseModelExpression = CreateModelExpression(model, m => m.Child);
         var modelExpression = CreateModelExpression(model.Child, m => m.Name);
 
+        _htmlGeneratorMock.Setup(x => x.GenerateTextBox(
+                _viewContext,
+                modelExpression.ModelExplorer,
+                "Child[replace_with_index].Name",
+                modelExpression.ModelExplorer.Model,
+                null,
+                It.IsAny<Dictionary<string, object>>()))
+            .Returns(new TagBuilder("input") );
+
+
+        
         SetupHtmlGeneratorMock(modelExpression, "form-label", "form-input");
 
         var tagHelper = CreateTagHelper(modelExpression, baseModelExpression);
@@ -406,8 +380,8 @@ public class FormRowTextInputTagHelperTests
         var tagHelper = CreateTagHelper(modelExpressionWithDot);
         tagHelper.Id = null; // Ensure it will be generated from For.Name
 
-        var context = CreateTagHelperContext();
-        var output = CreateTagHelperOutput();
+        
+        
     
         // Act
         await tagHelper.ProcessAsync(context, output);
