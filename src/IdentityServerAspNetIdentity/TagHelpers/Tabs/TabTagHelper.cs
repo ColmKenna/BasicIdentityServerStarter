@@ -21,8 +21,8 @@ public class TabTagHelper : TagHelper
             var firstTabItemIndex = content.IndexOf("<input class=\"tabs-panel-input\"");
             if (firstTabItemIndex != -1)
             {
-                var insertIndex = content.IndexOf(">", firstTabItemIndex);
-                content = content.Insert(insertIndex, " checked=\"checked\"");
+                var insertIndex = content.IndexOf("/>", firstTabItemIndex);
+                content = content.Insert(insertIndex, "checked=\"checked\"");
             }
         }
 
