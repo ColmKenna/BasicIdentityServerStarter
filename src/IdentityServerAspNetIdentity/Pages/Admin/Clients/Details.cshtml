@@ -1,9 +1,10 @@
 ﻿@page "{clientId}"
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @model IdentityServerAspNetIdentity.Pages.Admin.Clients.Details
 
 
 <tab id="clientDetails">
-    <tab-item header="Client Information">
+    <tab-item heading="Client Information">
         <field-container label="ClientId" value="@Model.Client.ClientId" />
         <field-container label="ClientName" value="@Model.Client.ClientName" />
         <field-container label="Description" value="@Model.Client.Description" />
@@ -12,7 +13,7 @@
         
         
     </tab-item>
-    <tab-item header="Security">
+    <tab-item heading="Security">
         <field-container label="Allowed Grants" value="@string.Join(", ", Model.Client.AllowedGrantTypes)" />
         <field-container label="Require Consent" value="@Model.Client.RequireConsent" />
         <field-container label="AllowAccessTokens Via Browser" value="@Model.Client.AllowAccessTokensViaBrowser" />
@@ -20,12 +21,12 @@
 
 
     </tab-item>
-    <tab-item header="Scopes">
+    <tab-item heading="Scopes">
         
         <vc:items-view items="@Model.Client.AllowedScopes"></vc:items-view>
         
     </tab-item>
-    <tab-item header="URIs">
+    <tab-item heading="URIs">
         <field-container label="Redirect URIs" value="@string.Join(", ", Model.Client.RedirectUris)" />
         <field-container label="Post Logout Redirect URIs" value="@string.Join(", ", Model.Client.PostLogoutRedirectUris)" />
         <field-container label="Allowed CORS Origins" value="@string.Join(", ", Model.Client.AllowedCorsOrigins)" />

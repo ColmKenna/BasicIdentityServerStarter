@@ -1,15 +1,16 @@
 ﻿@page "{roleName}"
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @model IdentityServerAspNetIdentity.Pages.Admin.Roles.Details
 
 
 
 <tab id="role-details">
-    <tab-item header="Role Information" tab-id="role-information">
+    <tab-item heading="Role Information" id="role-information">
         <field-container label="RoleId" value="@Model.Role.Id" />
         <field-container label="RoleName" value="@Model.Role.Name" />
     </tab-item>
 
-    <tab-item header="Users" tab-id="users">
+    <tab-item heading="Users" id="users">
         <table class="table table-sm table-responsive">
             <thead>
             <tr>
