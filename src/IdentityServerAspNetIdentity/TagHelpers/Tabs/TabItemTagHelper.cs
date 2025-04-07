@@ -1,41 +1,30 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using System.Text;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace IdentityServerAspNetIdentity.TagHelpers.Tabs;
 
 [HtmlTargetElement("tab-item", ParentTag = "tab")]
 public class TabItemTagHelper : TagHelper
 {
-    public string Header { get; set; }
-    public string TabId { get; set; }
+    [HtmlAttributeName("id")]
+    public string Id { get; set; }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
+    [HtmlAttributeName("selected")]
+    public bool Selected { get; set; }
+    
+    [HtmlAttributeName("heading")]
+    public string Heading { get; set; }
+
+    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        if (string.IsNullOrWhiteSpace(TabId))
-        {
-            TabId = Header.Replace(" ", string.Empty).ToLower();
-        }
-        // Generate header and content
-        var headerHtml = $@"
-            <button type=""button"" class='tab-link' data-ck-tab-target='{TabId}'>{Header}</button>";
-        var contentHtml = $@"
-            <div id='{TabId}' class='tab'>
-                <div class='tab-content'>
-                    {output.GetChildContentAsync().Result.GetContent()}
-                </div>
-            </div>";
+        var content = await output.GetChildContentAsync();
+        var sb = new StringBuilder();
 
-        // Append header and content to the parent's context
-        if (context.Items.TryGetValue("TabHeaders", out var headersObj) && headersObj is List<string> headers)
-        {
-            headers.Add(headerHtml);
-        }
+        sb.Append($"<input class=\"tabs-panel-input\" name=\"tabs\" type=\"radio\" id=\"{Id}\" {(Selected ? "checked=\"checked\"" : "")}/>");
+        sb.Append($"<label class=\"tab-heading\" for=\"{Id}\">{Heading}</label>");
+        sb.Append($"<div class=\"panel\"><div class=\"panel-content\">{content.GetContent()}</div></div>");
 
-        if (context.Items.TryGetValue("TabContents", out var contentsObj) && contentsObj is List<string> contents)
-        {
-            contents.Add(contentHtml);
-        }
-
-        // Suppress output as it will be managed by the parent
-        output.SuppressOutput();
+        output.TagName = null; // Remove the original <tab-item> tag
+        output.Content.SetHtmlContent(sb.ToString());
     }
 }
