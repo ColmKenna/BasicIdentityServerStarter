@@ -1,37 +1,31 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Linq;
 
 namespace IdentityServerAspNetIdentity.TagHelpers.Tabs;
-
 
 [HtmlTargetElement("tab")]
 public class TabTagHelper : TagHelper
 {
-    public string Id { get; set; }
-
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        // Initialize shared context for headers and contents
-        context.Items["TabHeaders"] = new List<string>();
-        context.Items["TabContents"] = new List<string>();
-
-        // Process child tags
-        var childContent = await output.GetChildContentAsync();
-
-        // Retrieve aggregated headers and contents
-        var headers = context.Items["TabHeaders"] as List<string> ?? new List<string>();
-        var contents = context.Items["TabContents"] as List<string> ?? new List<string>();
-
-        // Render the parent container
         output.TagName = "div";
-        output.Attributes.SetAttribute("class", "tab-container");
+        output.Attributes.SetAttribute("class", "tabs");
 
-        output.Content.SetHtmlContent($@"
-            <div class='tab-headers'>
-                {string.Join("\n", headers)}
-            </div>
-            <div class='tabs'>
-                {string.Join("\n", contents)}
-            </div>
-        ");
+        var childContent = await output.GetChildContentAsync();
+        var content = childContent.GetContent();
+
+        // Check if any tab-item is selected
+        if (!content.Contains("checked=\"checked\""))
+        {
+            // Find the first tab-item and set it as selected
+            var firstTabItemIndex = content.IndexOf("<input class=\"tabs-panel-input\"");
+            if (firstTabItemIndex != -1)
+            {
+                var insertIndex = content.IndexOf(">", firstTabItemIndex);
+                content = content.Insert(insertIndex, " checked=\"checked\"");
+            }
+        }
+
+        output.Content.SetHtmlContent(content);
     }
 }

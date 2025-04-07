@@ -16,7 +16,7 @@
 <form method="post">
 
     <tab>
-        <tab-item header="Details" tab-id="details">
+        <tab-item heading="Details" id="details" >
             <input type="hidden" asp-for="Id" value="@Model.Id" />
             <input type="hidden" asp-for="User.Id" value="@Model.User.Id" />
             <input type="hidden" asp-for="User.PhoneNumberConfirmed" value="@Model.User.PhoneNumberConfirmed" />
@@ -32,7 +32,7 @@
 
 
         </tab-item>
-        <tab-item header="Roles" tab-id="roles">
+        <tab-item heading="Roles" id="roles">
             <vc:selection-container
                 id="selection-roles-container"
                 source="@Model.AllRoles.Select(x => new SelectionContainerItemModel { Id = x, Value = x})"
@@ -43,7 +43,7 @@
             </vc:selection-container>
 
         </tab-item>
-        <tab-item header="Claims" tab-id="claims">
+        <tab-item heading="Claims" id="claims">
             <template id="addClaimTemplate">
                 @{
                     var templateIndex = -1;

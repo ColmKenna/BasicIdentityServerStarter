@@ -1,8 +1,9 @@
 @page "{id}"
+@using IdentityServerAspNetIdentity.TagHelpers.Tabs
 @model IdentityServerAspNetIdentity.Pages.Admin.Accounts.Details
 
 <tab id="user-details">
-    <tab-item header="Account Information" tab-id="account-information">
+    <tab-item heading="Account Information" id="account-information">
         <field-container label="Username" value="@Model.ApplicationUserDetails.UserName" />
         <field-container label="Email" value="@Model.ApplicationUserDetails.Email" />
         <field-container label="Phone Number" value="@(Model.ApplicationUserDetails.PhoneNumberConfirmed ? Model.ApplicationUserDetails.PhoneNumber : "Not confirmed")" />
@@ -12,7 +13,7 @@
         <field-container label="Access Failed Count" value="@Model.ApplicationUserDetails.AccessFailedCount" />
     </tab-item>
 
-    <tab-item header="Claims" tab-id="claims">
+    <tab-item heading="Claims" id="claims">
         @foreach (var claim in Model.ApplicationUserDetails.UserClaims)
         {
             <field-container label="@claim.ClaimType" value="@claim.ClaimValue" />
@@ -20,7 +21,7 @@
     </tab-item>
     
     
-    <tab-item header="Roles" tab-id="roles">
+    <tab-item heading="Roles" id="roles">
         @foreach (var role in Model.ApplicationUserDetails.Roles)
         {
             <field-container label="Role" value="@role" />

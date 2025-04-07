@@ -8,7 +8,7 @@
 
 <form method="post">
     <tab id="role-details">
-        <tab-item header="Role Information" tab-id="role-information">
+        <tab-item heading="Role Information" id="role-information">
             
 
             @if(Model.Role.Id != null)
@@ -29,7 +29,7 @@
             }
         </tab-item>
 
-        <tab-item header="Users" tab-id="users">
+        <tab-item heading="Users" id="users">
             <form-row-container label="Users">
 
                 <vc:selection-container

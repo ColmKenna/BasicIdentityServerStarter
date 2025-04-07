@@ -1,107 +1,119 @@
-﻿.tab-container {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  flex: 1;
+﻿$tab-bg-color: #e5e5e5;
+$tab-hover-bg-color: #d8d8d8;
+$tab-active-bg-color: #ccc;
+$panel-bg-color: #fff;
+$text-color: #7f7f7f;
+$checked-text-color: #333;
+$border-color: #ccc;
+$radius: 8px;
 
-  .tab-headers {
-    overflow: hidden;
-    background-color: #f1f1f1;
-    display: none;
-    border-bottom: 1px solid #ccc;
-    flex: 0 0 45px;
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  background: $tab-bg-color;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  align-items: stretch;
+  width: 100%;
+
+  .tabs-panel-input {
+    position: absolute;
+    opacity: 0;
+
+    &:focus + .tab-heading {
+      z-index: 1;
+    }
+
+    &:checked + .tab-heading {
+      background: $tab-bg-color;
+      color: $checked-text-color;
+    }
+
+    &:not(:checked) + .tab-heading:last-of-type {
+      border-bottom-left-radius: $radius;
+      border-bottom-right-radius: $radius;
+    }
+
+    &:checked + .tab-heading + .panel {
+      display: block;
+    }
   }
 
-  .tab-link {
-    background-color: #f1f1f1;
-    float: left;
-    border: none;
-    outline: none;
+  .tab-heading {
+    width: 100%;
+    padding: 20px 30px;
+    background: $tab-bg-color;
     cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
+    font-weight: bold;
+    font-size: 18px;
+    color: $text-color;
+    transition: background 0.1s, color 0.1s;
+    border-bottom: 1px solid $border-color;
+    border-radius: $radius $radius 0 0;
 
     &:hover {
-      background-color: #ddd;
+      background: $tab-hover-bg-color;
+      border-radius: 0;
     }
 
-    &.active {
-      background-color: #ccc;
+    &:first-of-type:hover {
+      border-top-left-radius: $radius;
+      border-top-right-radius: $radius;
+    }
+
+    &:last-of-type:hover {
+      border-bottom-left-radius: $radius;
+      border-bottom-right-radius: $radius;
+    }
+
+    &:active {
+      background: $tab-active-bg-color;
     }
   }
 
-  .tab {
+  .panel {
     display: none;
-    border-top: none;
-    //height: 340px;
+    background: $panel-bg-color;
+    width: 100%;
+    height: 450px;
     overflow: hidden;
 
-    &:last-child {
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+    .panel-content {
+      width: 100%;
+      height: 100%;
+      padding: 20px 30px 30px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    .tab-content {
-      padding-top: 5px;
-      padding-bottom: 5px;
-      height: 100%;
-      box-sizing: border-box;
-      overflow: auto;
+    &:last-of-type {
+      border-bottom-left-radius: $radius;
+      border-bottom-right-radius: $radius;
     }
   }
 
-  .tabs {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
+  @media (min-width: 600px) {
+    .tab-heading {
+      width: auto;
+      border-bottom: none;
+      border-radius: $radius $radius 0 0;
 
-    .tab-link {
-      display: block;
-      width: 100%;
-
-      @media screen and (min-width: 600px) {
-        display: none;
+      &:hover {
+        background: $tab-hover-bg-color;
+        border-radius: $radius;
       }
     }
+
+    .panel {
+      border-bottom-left-radius: $radius;
+      border-bottom-right-radius: $radius;
+      order: 99;
+    }
+
+    .tabs-panel-input:checked + .tab-heading {
+      background: $panel-bg-color;
+      color: #000;
+      border-bottom: 2px solid $border-color;
+    }
   }
-
-  @media screen and (min-width: 600px) {
-    .tab-headers {
-      display: block;
-    }
-
-    .tab:last-child {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-}
-
-.tab-content {
-    // Default left and right padding
-    padding-left: 40px;
-    padding-right: 40px;
-    // For very large screens
-    @media screen and (min-width: 1200px) {
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-    // For medium screens (e.g., tablets)
-    @media screen and (max-width: 1024px) {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    // For small screens (e.g., small tablets or large phones)
-    @media screen and (max-width: 768px) {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    // For extra-small screens (e.g., phones)
-    @media screen and (max-width: 480px) {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
 }

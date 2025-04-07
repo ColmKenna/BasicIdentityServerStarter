@@ -18,7 +18,7 @@
 <form method="post">
     @Html.AntiForgeryToken()
     <tab id="clientDetails">
-        <tab-item header="Client Information">
+        <tab-item id="client-information" Heading="Client Information" selected="true">
 
 
             <form-row-text-input asp-for="@Model.Client.ClientId" hidden="true"></form-row-text-input>
@@ -26,7 +26,7 @@
             <form-row-text-input asp-for="@Model.Client.Description"></form-row-text-input>
             <form-row-text-input asp-for="@Model.Client.ClientUri"></form-row-text-input>
         </tab-item>
-        <tab-item header="Security">
+        <tab-item Heading="Security" id="security">
 
             <div>
                 <div id="secretsHolder">
@@ -64,7 +64,7 @@
             <form-row-numeric-slider-input asp-for="@Model.Client.AccessTokenLifetime"></form-row-numeric-slider-input>
 
         </tab-item>
-        <tab-item header="grant Types">
+        <tab-item header="grant Types"  heading="grant Types" id="grant-types">
 
             <form-row-container label="">
                 <div class="button-container ">
@@ -92,7 +92,7 @@
 
 
         </tab-item>
-        <tab-item header="Scopes">
+        <tab-item heading="Scopes" id="scopes">
 
             <vc:selection-container
                 id="selection-scopes-container"
@@ -105,7 +105,7 @@
 
 
         </tab-item>
-        <tab-item header="URIs">
+        <tab-item heading="URIs" id="uris">
 
 
             @* create entry for each @Model.Client.RedirectUris*@
