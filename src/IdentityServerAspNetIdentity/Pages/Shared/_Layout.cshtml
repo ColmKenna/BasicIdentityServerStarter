@@ -14,7 +14,9 @@
     @* <link rel="stylesheet" href="~/lib/bootstrap4-glyphicons/css/bootstrap-glyphicons.min.css" /> *@
     
     @* <link rel="stylesheet" href="~/lib/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"> *@
-    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="~/css/sideMenu.css"/>
+    @* <link rel="stylesheet" href="~/css/site.css" /> *@
     <link rel="stylesheet" href="~/css/menus.min.css" />
     <link rel="stylesheet" href="~/css/cards.min.css" />
     <link rel="stylesheet" href="~/css/list-group.min.css" />
@@ -27,6 +29,8 @@
     <link rel="stylesheet" href="~/css/HtmlModal.min.css" />
     <link rel="stylesheet" href="~/css/switch.min.css" />
     <link rel="stylesheet" href="~/css/slider.min.css" />
+    <link rel="stylesheet" href="~/css/dropdown.min.css" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     
@@ -34,60 +38,79 @@
 </head>
 <body>
     <partial name="_Nav" />
-    <div class="side-menu active" id="sideMenu">
-        <a asp-page="/Index">Home</a>
-        @* log in and log out links *@
-        @if (User.Identity is {IsAuthenticated: true})
-        {
-            <a asp-page="/Account/Logout">Logout</a>
-            <a asp-page="/Admin/Accounts/Index">Users</a>
-            <a asp-page="/Admin/Clients/Index">Clients</a>
-            <a asp-page="/Admin/Roles/Index">Roles</a>
-        }
-        else
-        {
-            <a asp-page="/Account/Register">Register</a>
-            <a asp-page="/Account/Login">Login</a>
-        }
+    <div class="main-container" >
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li data-title="Home">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9.5L12 3L21 9.5V20C21 20.8284 20.3284 21.5 19.5 21.5H4.5C3.67157 21.5 3 20.8284 3 20V9.5Z" />
+                    </svg>
+                    <span><a asp-page="/Index">Home</a></span>
+                </li>
+                @if (User.Identity is { IsAuthenticated: true })
+                {
+                    <li data-title="Logout">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 17L21 12L16 7M21 12H9M13 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H13" />
+                        </svg>
+                        <span><a asp-page="/Account/Logout/Index">Logout</a></span>
+                    </li>
+                    <li data-title="Users">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 21V19C16 17.3431 14.6569 16 13 16H5C3.34315 16 2 17.3431 2 19V21M12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11ZM20 8V14M23 11H17" />
+                        </svg>
+                        <span><a asp-page="/Admin/Accounts/Index">Users</a></span>
+                    </li>
+                    <li data-title="Clients">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12ZM4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4Z" />
+                        </svg>
+                        <span><a asp-page="/Admin/Clients/Index">Clients</a></span>
+                    </li>
+                    <li data-title="Roles">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L20 6V10C20 15.52 16.42 20.74 12 22C7.58 20.74 4 15.52 4 10V6L12 2ZM12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" />
+                        </svg>
+                        <span><a asp-page="/Admin/Roles/Index">Roles</a></span>
+                    </li>
+                }
+                else
+                {
+                    <li data-title="Register">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 13.85 2.5 15.55 3.35 17H5V13H3V11H5V7H9V9H7V11H9V13H7V17H8.65C9.5 18.45 10.85 19.55 12.5 20.05C14.15 20.55 16 20.05 17.35 19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65Z" />
+                        </svg>
+                        <span><a asp-page="/Account/Register/Index">Register</a></span>
+                    </li>
+                    <li data-title="Login">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 17L15 12L10 7M15 12H3M20 4H12C10.8954 4 10 4.89543 10 6V9H12V6H20V18H12V15H10V18C10 19.1046 10.8954 20 12 20H20C21.1046 20 22 19.1046 22 18V6C22 4.89543 21.1046 4 20 4Z" />
+                        </svg>
+                        <span><a asp-page="/Account/Login/Index">Login</a></span>
+                    </li>
+                }
+            </ul>
+        </div>
+        <main class="content">
+            @RenderBody()
+        </main>
     </div>
-    <main class="with-side-menu">
-        @RenderBody()
-    </main>
+ 
 
     @*     <script src="~/lib/jquery/dist/jquery.slim.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  *@
     
-    <script src="~/js/menus.nav.js"></script>
+    <script src="~/js/sideMenu.js"></script>
+    @* <script src="~/js/menus.nav.js"></script> *@
     <script src="~/js/tables.js"></script>
     <script src="~/js/tabs.js"></script>
     <script src="~/js/slider.js"></script>
+    <script src="~/js/dropdown.js"></script>
     <script src="~/js/forViewComponent/Selection-Container.js"></script>
     <script src="~/js/forViewComponent/StringArrayContainerFunctions.js"></script>
     <script src="~/js/forViewComponent/ToggleRemoveSelection.js"></script>
 
     @RenderSection("scripts", required: false)
-    
-    <script>
-        function toggleMenu() {
-            const sideMenu = document.getElementById("sideMenu");
-            sideMenu.classList.toggle("active");
-
-            const burgerMenu = document.querySelector(".burger-menu");
-            burgerMenu.classList.toggle("expanded");
-            
-            const main = document.querySelector("main");
-            main.classList.remove("init-no-side-menu");
-            main.classList.remove("init-with-side-menu");
-
-            if (burgerMenu.classList.contains("expanded")) {
-                main.classList.add("with-side-menu");
-                main.classList.remove("no-side-menu");
-            } else {
-                main.classList.add("no-side-menu");
-                main.classList.remove("with-side-menu");
-            }
-        }
-    </script>
     </body>
 </html>
