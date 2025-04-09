@@ -47,124 +47,14 @@ form{
     }
 }
 
-/* Side Menu Section */
-.side-menu {
-    display: flex;
-    flex-direction: column;
-    background-color: #555;
-    padding: 1em;
-    overflow-y: auto;
-    bottom: 0;
-    position: absolute;
-    top: $nav-height-wide-screen;
-    left: 0;
-    width: 150px;
-    z-index: 1000;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-}
-
-.side-menu a {
-    display: block;
-    color: white;
-    padding: 0.5em 0;
-    text-decoration: none;
-    font-size: 0.9em;
-}
-
-.side-menu a:hover {
-    background-color: #666;
-}
-
-.side-menu.active {
-    transform: translateX(0);
-}
 
 
-.side-menu.active {
-    display: block;
-    transform: translateX(0);
-}
-
-.burger-menu div {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 4px 0;
-}
-
-.burger-menu {
-    cursor: pointer;
-    font-size: 1.5em;
-    color: white;
-    align-self: flex-start;
-    display: flex; 
-    align-items: center;
-    height: 100%;
-}
-
-.burger-menu.expanded > svg {
-    /* rotate 180 on the z-axis */
-    transform: rotate(180deg);
-}
-
-main.no-side-menu {
-    margin-left: 130px;
-    animation: animateMarginIn 0.3s ease-in-out 1 forwards;
-}
-
-@keyframes animateMarginOut {
-    0% {
-        margin-left: 0;
-    }
-
-    100% {
-        margin-left: calc(150px + 2em);
-    }
-}
-
-main.with-side-menu {
-    margin-left: 0;
-    animation: animateMarginOut 0.3s ease-in-out 1 forwards;
-}
-
-@keyframes animateMarginIn {
-    0% {
-        margin-left: calc(150px + 2em);
-    }
-
-    100% {
-        margin-left: 0;
-    }
-}
 
 
-.init-no-side-menu {
-    margin-left: 0;
-}
 
-.init-with-side-menu {
-    margin-left: 150px;
-}
 
-nav {
-    grid-area: nav;
-    background-color: $nav-background-color;
-    color: $nav-text-color;
-    display: grid;
-    grid-template-areas: "logo burger title right-dropdown-menu";
-    grid-template-columns: 90px 1fr 1fr 150px;
-}
 
-.logo {
-    grid-area: logo;
-    display: flex;
-    align-items: center;
 
-    img {
-        height: 90px;
-    }
-}
 
 
 .with-divider {
@@ -193,9 +83,6 @@ nav {
         grid-template-rows: $nav-height-small-screen 1fr;
     }
 
-    .side-menu {
-        top: $nav-height-small-screen;
-    }
 }
 
 .form-row, .claim-row, .add-claim-row {
