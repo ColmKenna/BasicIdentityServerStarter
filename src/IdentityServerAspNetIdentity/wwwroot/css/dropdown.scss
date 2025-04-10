@@ -43,13 +43,15 @@
 
     .nav-item {
       position: relative;
+      height: 50px;
+      align-content: center;
 
       .nav-link {
         color: var(--navbar-text);
         text-decoration: none;
-        padding: 1rem;
         display: block;
         transition: background-color 0.2s ease;
+        
 
         &:hover,
         &:not(.dropdown-toggle):hover {
