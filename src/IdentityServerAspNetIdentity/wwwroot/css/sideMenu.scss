@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; 
   margin: 0;
   padding: 0;
 }
@@ -79,43 +79,6 @@ html, body {
 
       li {
         position: relative;        
-
-        &::after {
-          content: attr(data-title);
-          position: absolute;
-          left: 74px;
-          background: #222;
-          color: #fff;
-          padding: 0.6rem 1.2rem;
-          border-radius: 6px;
-          white-space: nowrap;
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(-50%);
-          top: 50%;
-          transition: opacity 0.2s, transform 0.2s;
-          font-size: 1.125rem;
-          z-index: 1001;
-        }
-
-        &:hover::after {
-          opacity: 1;
-          transform: translateY(-50%) scale(1.03);
-        }
-      }
-    }
-  }
-
-  @media (max-width: 767px) {
-    width: 68px;
-
-    ul {
-      span {
-        display: none;
-      }
-
-      li {
-        position: relative;
 
         &::after {
           content: attr(data-title);
