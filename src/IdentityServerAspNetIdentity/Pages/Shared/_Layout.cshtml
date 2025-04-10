@@ -42,48 +42,52 @@
         <ul>
             <li data-title="Home">
                 <a asp-page="/Index">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M3 9.5L12 3L21 9.5V20C21 20.8284 20.3284 21.5 19.5 21.5H4.5C3.67157 21.5 3 20.8284 3 20V9.5Z"/>
-                </svg>
-                <span>Home</span></a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
             </li>
             @if (User.Identity is { IsAuthenticated: true })
             {
                 <li data-title="Logout">
                     <a asp-page="/Account/Logout/Index">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16 17L21 12L16 7M21 12H9M13 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H13"/>
-                    </svg>
-                    <span>Logout</span></a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" x2="9" y1="12" y2="12"/>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
                 </li>
+                <hr>
                 <li data-title="Users">
                     <a asp-page="/Admin/Accounts/Index">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 21V19C16 17.3431 14.6569 16 13 16H5C3.34315 16 2 17.3431 2 19V21M12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11ZM20 8V14M23 11H17"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
                         <span>Users</span></a>
                 </li>
                 <li data-title="Clients">
                     <a asp-page="/Admin/Clients/Index">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12ZM4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4Z"/>
-                    </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="14" height="8" x="5" y="2" rx="2"/>
+                            <rect width="20" height="8" x="2" y="14" rx="2"/>
+                            <path d="M6 18h2"/>
+                            <path d="M12 18h6"/>
+                        </svg>
                     <span>Clients</span></a>
                 </li>
                 <li data-title="Roles">
                     <a asp-page="/Admin/Roles/Index">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2L20 6V10C20 15.52 16.42 20.74 12 22C7.58 20.74 4 15.52 4 10V6L12 2ZM12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"/>
-                    </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
                     <span>Roles</span></a>
                 </li>
             }
@@ -91,21 +95,26 @@
             {
                 <li data-title="Register">
                     <a asp-page="/Account/Register/Index">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12C2 13.85 2.5 15.55 3.35 17H5V13H3V11H5V7H9V9H7V11H9V13H7V17H8.65C9.5 18.45 10.85 19.55 12.5 20.05C14.15 20.55 16 20.05 17.35 19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V7H17V11H15V7H13V11H11V7H9V11H7V7H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65C8 20.05 9.85 20.55 11.5 20.05C13.15 19.55 14.5 18.45 15.35 17H17V13H15V17H13V13H11V17H9V13H7V17H5V19H19V13H21V11H19V5H17V11H15V5H13V11H11V5H9V11H7V5H5V11H3V13H5V19H6.65Z"/>
-                    </svg>
-                    <span>Register</span></a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="19" x2="19" y1="8" y2="14"/>
+                            <line x1="22" x2="16" y1="11" y2="11"/>
+                        </svg>
+
+                        <span>Register</span>
+                    </a>
                 </li>
                 <li data-title="Login">
                     <a asp-page="/Account/Login/Index">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10 17L15 12L10 7M15 12H3M20 4H12C10.8954 4 10 4.89543 10 6V9H12V6H20V18H12V15H10V18C10 19.1046 10.8954 20 12 20H20C21.1046 20 22 19.1046 22 18V6C22 4.89543 21.1046 4 20 4Z"/>
-                    </svg>
-                    <span>Login</span></a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" x2="3" y1="12" y2="12"/>
+                        </svg>
+
+                        <span>Login</span>
+                    </a>
                 </li>
             }
         </ul>
